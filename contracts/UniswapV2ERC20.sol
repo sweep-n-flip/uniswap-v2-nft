@@ -29,14 +29,14 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
     }
 
     function _mint(address to, uint value) internal {
-        totalSupply = totalSupply + value;
-        balanceOf[to] = balanceOf[to] + value;
+        totalSupply += value;
+        balanceOf[to] += value;
         emit Transfer(address(0), to, value);
     }
 
     function _burn(address from, uint value) internal {
-        balanceOf[from] = balanceOf[from] - value;
-        totalSupply = totalSupply - value;
+        balanceOf[from] -= value;
+        totalSupply -= value;
         emit Transfer(from, address(0), value);
     }
 
@@ -46,8 +46,8 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
     }
 
     function _transfer(address from, address to, uint value) private {
-        balanceOf[from] = balanceOf[from] - value;
-        balanceOf[to] = balanceOf[to] + value;
+        balanceOf[from] -= value;
+        balanceOf[to] += value;
         emit Transfer(from, to, value);
     }
 
@@ -63,7 +63,7 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
 
     function transferFrom(address from, address to, uint value) external returns (bool) {
         if (allowance[from][msg.sender] != type(uint).max) {
-            allowance[from][msg.sender] = allowance[from][msg.sender] - value;
+            allowance[from][msg.sender] -= value;
         }
         _transfer(from, to, value);
         return true;
