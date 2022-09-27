@@ -12,6 +12,7 @@ interface IUniswapV2Factory {
     function allPairs(uint) external view returns (address pair);
     function allPairsLength() external view returns (uint);
 
+    function getCollection(address wrapper) external view returns (address collection);
     function getWrapper(address collection) external view returns (address wrapper);
     function allWrappers(uint) external view returns (address wrapper);
     function allWrappersLength() external view returns (uint);

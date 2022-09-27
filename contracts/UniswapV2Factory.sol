@@ -14,6 +14,7 @@ contract UniswapV2Factory is IUniswapV2Factory {
     mapping(address => mapping(address => address)) public getPair;
     address[] public allPairs;
 
+    mapping(address => address) public getCollection;
     mapping(address => address) public getWrapper;
     address[] public allWrappers;
 
@@ -34,9 +35,12 @@ contract UniswapV2Factory is IUniswapV2Factory {
         (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
         require(token0 != address(0), "UniswapV2: ZERO_ADDRESS");
         require(getPair[token0][token1] == address(0), "UniswapV2: PAIR_EXISTS"); // single check is sufficient
+        bool discrete0 = getCollection[token0] != address(0);
+        bool discrete1 = getCollection[token1] != address(0);
+        require(!(discrete0 && discrete1), "UniswapV2: DISCRETE_CLASH");
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
         pair = address(new UniswapV2Pair{salt: salt}());
-        IUniswapV2Pair(pair).initialize(token0, token1);
+        IUniswapV2Pair(pair).initialize(token0, token1, discrete0, discrete1);
         getPair[token0][token1] = pair;
         getPair[token1][token0] = pair; // populate mapping in the reverse direction
         allPairs.push(pair);
@@ -49,6 +53,7 @@ contract UniswapV2Factory is IUniswapV2Factory {
         bytes32 salt = keccak256(abi.encodePacked(collection));
         wrapper = address(new WNFT{salt: salt}());
         IWNFT(wrapper).initialize(collection);
+        getCollection[wrapper] = collection;
         getWrapper[collection] = wrapper;
         allWrappers.push(wrapper);
         emit WrapperCreated(collection, wrapper, allWrappers.length);

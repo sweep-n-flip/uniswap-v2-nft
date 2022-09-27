@@ -31,5 +31,5 @@ interface IUniswapV2Pair is IUniswapV2ERC20 {
     function skim(address to) external;
     function sync() external;
 
-    function initialize(address, address) external;
+    function initialize(address, address, bool, bool) external;
 }

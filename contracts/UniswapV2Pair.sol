@@ -27,6 +27,9 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     uint public price1CumulativeLast;
     uint public kLast; // reserve0 * reserve1, as of immediately after the most recent liquidity event
 
+    bool public discrete0;
+    bool public discrete1;
+
     uint private unlocked = 1;
     modifier lock() {
         require(unlocked == 1, "UniswapV2: LOCKED");
@@ -51,10 +54,12 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     }
 
     // called once by the factory at time of deployment
-    function initialize(address _token0, address _token1) external {
+    function initialize(address _token0, address _token1, bool _discrete0, bool _discrete1) external {
         require(msg.sender == factory, "UniswapV2: FORBIDDEN"); // sufficient check
         token0 = _token0;
         token1 = _token1;
+        discrete0 = _discrete0;
+        discrete1 = _discrete1;
     }
 
     // update reserves and, on the first call per block, price accumulators
@@ -133,6 +138,21 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         uint _totalSupply = totalSupply; // gas savings, must be defined here since totalSupply can update in _mintFee
         amount0 = liquidity * balance0 / _totalSupply; // using balances ensures pro-rata distribution
         amount1 = liquidity * balance1 / _totalSupply; // using balances ensures pro-rata distribution
+        if (discrete0) {
+                uint residual0 = amount0 % 1e18;
+                if (residual0 > 0) {
+                        amount0 -= residual0;
+                        amount1 += residual0 * (balance1 - amount1) / (balance0 - amount0);
+                }
+        }
+        else
+        if (discrete1) {
+                uint residual1 = amount1 % 1e18;
+                if (residual1 > 0) {
+                        amount1 -= residual1;
+                        amount0 += residual1 * (balance0 - amount0) / (balance1 - amount1);
+                }
+        }
         require(amount0 > 0 && amount1 > 0, "UniswapV2: INSUFFICIENT_LIQUIDITY_BURNED");
         _burn(address(this), liquidity);
         _safeTransfer(_token0, to, amount0);
