@@ -71,14 +71,12 @@ contract WNFT is IERC20 {
         return true;
     }
 
-    function mint(uint[] memory tokenIds) external lock returns (bool) {
+    function mint(uint[] memory tokenIds) external lock {
         _mint(msg.sender, tokenIds);
-        return true;
     }
 
-    function burn(uint[] memory tokenIds) external lock returns (bool) {
+    function burn(uint[] memory tokenIds) external lock {
         _burn(msg.sender, tokenIds);
-        return true;
     }
 
     function transfer(address to, uint value) external returns (bool) {
