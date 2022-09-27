@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity 0.8.9;
 
-import { IERC20 } from "./interfaces/IERC20.sol";
+import { IWNFT } from "./interfaces/IWNFT.sol";
 import { IERC721 } from "./interfaces/IERC721.sol";
 
-contract WNFT is IERC20 {
+contract WNFT is IWNFT {
     string public constant name = "Wrapped NFT";
     string public constant symbol = "WNFT";
     uint8 public constant decimals = 18;
@@ -41,6 +41,7 @@ contract WNFT is IERC20 {
         for (uint i = 0; i < count; i++) {
             IERC721(collection).transferFrom(to, address(this), tokenIds[i]);
         }
+        emit Mint(to, tokenIds);
     }
 
     function _burn(address from, uint[] memory tokenIds) private {
@@ -52,6 +53,7 @@ contract WNFT is IERC20 {
         for (uint i = 0; i < count; i++) {
             IERC721(collection).transferFrom(address(this), from, tokenIds[i]);
         }
+        emit Burn(from, tokenIds);
     }
 
     function _approve(address owner, address spender, uint value) private {
