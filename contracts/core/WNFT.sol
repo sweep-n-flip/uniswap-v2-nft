@@ -32,28 +32,28 @@ contract WNFT is IWNFT {
         collection = _collection;
     }
 
-    function _mint(address to, uint[] memory tokenIds) private {
+    function _mint(address from, address to, uint[] memory tokenIds) private {
         uint count = tokenIds.length;
         uint value = count * 1e18;
         totalSupply += value;
         balanceOf[to] += value;
         emit Transfer(address(0), to, value);
         for (uint i = 0; i < count; i++) {
-            IERC721(collection).transferFrom(to, address(this), tokenIds[i]);
+            IERC721(collection).transferFrom(from, address(this), tokenIds[i]);
         }
-        emit Mint(to, tokenIds);
+        emit Mint(from, to, tokenIds);
     }
 
-    function _burn(address from, uint[] memory tokenIds) private {
+    function _burn(address from, address to, uint[] memory tokenIds) private {
         uint count = tokenIds.length;
         uint value = count * 1e18;
         balanceOf[from] -= value;
         totalSupply -= value;
         emit Transfer(from, address(0), value);
         for (uint i = 0; i < count; i++) {
-            IERC721(collection).transferFrom(address(this), from, tokenIds[i]);
+            IERC721(collection).transferFrom(address(this), to, tokenIds[i]);
         }
-        emit Burn(from, tokenIds);
+        emit Burn(from, to, tokenIds);
     }
 
     function _approve(address owner, address spender, uint value) private {
@@ -73,12 +73,12 @@ contract WNFT is IWNFT {
         return true;
     }
 
-    function mint(uint[] memory tokenIds) external lock {
-        _mint(msg.sender, tokenIds);
+    function mint(address to, uint[] memory tokenIds) external lock {
+        _mint(msg.sender, to, tokenIds);
     }
 
-    function burn(uint[] memory tokenIds) external lock {
-        _burn(msg.sender, tokenIds);
+    function burn(address to, uint[] memory tokenIds) external lock {
+        _burn(msg.sender, to, tokenIds);
     }
 
     function transfer(address to, uint value) external returns (bool) {

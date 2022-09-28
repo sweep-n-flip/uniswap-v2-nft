@@ -4,14 +4,14 @@ pragma solidity 0.8.9;
 import { IERC20 } from "./IERC20.sol";
 
 interface IWNFT is IERC20 {
-    event Mint(address indexed sender, uint[] tokenIds);
-    event Burn(address indexed sender, uint[] tokenIds);
+    event Mint(address indexed from, address indexed to, uint[] tokenIds);
+    event Burn(address indexed from, address indexed to, uint[] tokenIds);
 
     function factory() external view returns (address);
     function collection() external view returns (address);
 
-    function mint(uint[] memory tokenIds) external;
-    function burn(uint[] memory tokenIds) external;
+    function mint(address to, uint[] memory tokenIds) external;
+    function burn(address to, uint[] memory tokenIds) external;
 
     function initialize(address) external;
 }
