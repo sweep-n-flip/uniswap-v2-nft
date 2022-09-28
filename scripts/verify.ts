@@ -45,11 +45,23 @@ async function main(args: string[]): Promise<void> {
   console.log('FUNDING=' + FUNDING);
   console.log('WETH=' + WETH);
 
-  const FACTORY = '0x0000000000000000000000000000000000000000';
-  const ROUTER = '0x0000000000000000000000000000000000000000';
+  const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
+  console.log('BLOCKIES=' + BLOCKIES);
 
-  await verifyContract(FACTORY, 'contracts/core/UniswapV2Factory.sol:UniswapV2Factory', ADMIN);
+  const ROUTER = '0x53FF820713B9a805FCfbb3117630643BCbbb1513';
+  const router = await hardhat.ethers.getContractAt('UniswapV2Router01NFT', ROUTER);
+
+  const FACTORY = await router.factory();
+  const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
+
+  const WRAPPER = await factory.getWrapper(BLOCKIES);
+
+  const PAIR = await factory.getPair(WETH, WRAPPER);
+
   await verifyContract(ROUTER, 'contracts/periphery/UniswapV2Router01NFT.sol:UniswapV2Router01NFT', FACTORY, WETH);
+  await verifyContract(FACTORY, 'contracts/core/UniswapV2Factory.sol:UniswapV2Factory', ADMIN);
+  await verifyContract(PAIR, 'contracts/core/UniswapV2Pair.sol:UniswapV2Pair');
+  await verifyContract(WRAPPER, 'contracts/core/WNFT.sol:WNFT');
 
 }
 

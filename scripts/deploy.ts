@@ -44,6 +44,9 @@ async function main(args: string[]): Promise<void> {
   console.log('FUNDING=' + FUNDING);
   console.log('WETH=' + WETH);
 
+  const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
+  console.log('BLOCKIES=' + BLOCKIES);
+
   const FACTORY = await deployContract('UniswapV2Factory', ADMIN);
   console.log('FACTORY=' + FACTORY);
 
@@ -51,6 +54,20 @@ async function main(args: string[]): Promise<void> {
     const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
     const initCodeHash = await factory._initCodeHash();
     console.log('initCodeHash=' + initCodeHash);
+
+    const WRAPPER = await factory.callStatic.createWrapper(BLOCKIES);
+    console.log('WRAPPER=' + WRAPPER);
+    {
+      const tx = await factory.createWrapper(BLOCKIES);
+      await tx.wait();
+    }
+
+    const PAIR = await factory.callStatic.createPair(WETH, WRAPPER);
+    console.log('PAIR=' + PAIR);
+    {
+      const tx = await factory.createPair(WETH, WRAPPER);
+      await tx.wait();
+    }
   }
 
   const ROUTER = await deployContract('UniswapV2Router01NFT', FACTORY, WETH);
