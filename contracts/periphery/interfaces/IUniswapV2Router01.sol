@@ -40,6 +40,7 @@ interface IUniswapV2Router01 {
         address to,
         uint deadline
     ) external returns (uint amountToken, uint amountETH);
+/*
     function removeLiquidityWithPermit(
         address tokenA,
         address tokenB,
@@ -59,6 +60,7 @@ interface IUniswapV2Router01 {
         uint deadline,
         bool approveMax, uint8 v, bytes32 r, bytes32 s
     ) external returns (uint amountToken, uint amountETH);
+*/
     function swapExactTokensForTokens(
         uint amountIn,
         uint amountOutMin,
