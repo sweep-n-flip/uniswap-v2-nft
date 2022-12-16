@@ -34,7 +34,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
     }
 
     // **** ADD LIQUIDITY ****
-    function addLiquidity(
+    function addLiquidityCollection(
         address tokenA,
         address collectionB,
         uint amountADesired,
@@ -58,7 +58,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         _mint(wrapperB, pair, tokenIdsB);
         liquidity = IUniswapV2Pair(pair).mint(to);
     }
-    function addLiquidityETH(
+    function addLiquidityETHCollection(
         address collection,
         uint[] memory tokenIds,
         uint amountETHMin,
@@ -84,7 +84,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
     }
 
     // **** REMOVE LIQUIDITY ****
-    function removeLiquidity(
+    function removeLiquidityCollection(
         address tokenA,
         address collectionB,
         uint liquidity,
@@ -107,7 +107,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         TransferHelper.safeTransfer(tokenA, to, amountA);
         IWNFT(wrapperB).burn(to, tokenIdsB);
     }
-    function removeLiquidityETH(
+    function removeLiquidityETHCollection(
         address collection,
         uint liquidity,
         uint[] memory tokenIds,
@@ -132,7 +132,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
     }
 
     // **** SWAP ****
-    function swapExactTokensForTokens(
+    function swapExactTokensForTokensCollection(
         uint[] memory tokenIdsIn,
         uint amountOutMin,
         address[] memory path,
@@ -145,7 +145,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
         _swap(amounts, path, to);
     }
-    function swapTokensForExactTokens(
+    function swapTokensForExactTokensCollection(
         uint[] memory tokenIdsOut,
         uint amountInMax,
         address[] memory path,
@@ -159,7 +159,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         _swap(amounts, path, address(this));
         IWNFT(path[path.length - 1]).burn(to, tokenIdsOut);
     }
-    function swapExactTokensForETH(uint[] memory tokenIdsIn, uint amountOutMin, address[] memory path, address to, uint deadline)
+    function swapExactTokensForETHCollection(uint[] memory tokenIdsIn, uint amountOutMin, address[] memory path, address to, uint deadline)
         external
         override
         ensure(deadline)
@@ -174,7 +174,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         IWETH(WETH).withdraw(amounts[amounts.length - 1]);
         TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
     }
-    function swapETHForExactTokens(uint[] memory tokenIdsOut, address[] memory path, address to, uint deadline)
+    function swapETHForExactTokensCollection(uint[] memory tokenIdsOut, address[] memory path, address to, uint deadline)
         external
         override
         payable
