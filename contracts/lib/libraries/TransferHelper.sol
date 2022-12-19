@@ -47,4 +47,31 @@ library TransferHelper {
         (bool success, ) = to.call{value: value}(new bytes(0));
         require(success, "TransferHelper::safeTransferETH: ETH transfer failed");
     }
+
+    function safeTransferBatch(address token, address[] memory receivers, uint256[] memory amounts) internal {
+        for (uint i = 0; i < receivers.length; i++) {
+            uint amount = amounts[i];
+            if (amount > 0) {
+                safeTransfer(token, receivers[i], amount);
+            }
+        }
+    }
+
+    function safeTransferFromBatch(address token, address from, address[] memory receivers, uint256[] memory amounts) internal {
+        for (uint i = 0; i < receivers.length; i++) {
+            uint amount = amounts[i];
+            if (amount > 0) {
+                safeTransferFrom(token, from, receivers[i], amount);
+            }
+        }
+    }
+
+    function safeTransferETHBatch(address[] memory receivers, uint256[] memory amounts) internal {
+        for (uint i = 0; i < receivers.length; i++) {
+            uint amount = amounts[i];
+            if (amount > 0) {
+                safeTransferETH(receivers[i], amount);
+            }
+        }
+    }
 }
