@@ -1,5 +1,6 @@
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-etherscan";
+import "hardhat-contract-sizer";
 
 function _throw(message: string): never { throw new Error(message); }
 
@@ -38,9 +39,13 @@ export default {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 88888,
+        runs: 8888,
       },
     },
+  },
+  contractSizer: {
+    alphaSort: true,
+    runOnCompile: true,
   },
   networks: {
     livenet: { url, accounts: [privateKey] },

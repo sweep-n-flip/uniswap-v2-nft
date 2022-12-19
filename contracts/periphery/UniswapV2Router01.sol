@@ -136,7 +136,7 @@ contract UniswapV2Router01 is IUniswapV2Router01 {
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
-/*
+
     function removeLiquidityWithPermit(
         address tokenA,
         address tokenB,
@@ -166,7 +166,6 @@ contract UniswapV2Router01 is IUniswapV2Router01 {
         IUniswapV2Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         (amountToken, amountETH) = removeLiquidityETH(token, liquidity, amountTokenMin, amountETHMin, to, deadline);
     }
-*/
 
     // **** SWAP ****
     // requires the initial amount to have already been sent to the first pair

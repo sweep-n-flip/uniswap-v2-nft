@@ -10,9 +10,10 @@ import { TransferHelper } from "../lib/libraries/TransferHelper.sol";
 import { IUniswapV2Router01NFT } from "./interfaces/IUniswapV2Router01NFT.sol";
 import { UniswapV2Router01 } from "./UniswapV2Router01.sol";
 import { UniswapV2Library } from "./libraries/UniswapV2Library.sol";
+import { RoyaltyHelper } from "./libraries/RoyaltyHelper.sol";
 import { IWETH } from "./interfaces/IWETH.sol";
 
-contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
+contract UniswapV2Router01NFTRoyalty is IUniswapV2Router01NFT, UniswapV2Router01 {
     constructor(address _factory, address _WETH) UniswapV2Router01(_factory, _WETH) {
     }
 
@@ -24,8 +25,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         }
     }
 
-    function _mint(address wrapper, address to, uint[] memory tokenIds) internal
-    {
+    function _mint(address wrapper, address to, uint[] memory tokenIds) internal {
         address collection = IWNFT(wrapper).collection();
         for (uint i = 0; i < tokenIds.length; i++) {
             IERC721(collection).transferFrom(msg.sender, address(this), tokenIds[i]);
@@ -139,11 +139,22 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         address to,
         uint deadline
     ) external override ensure(deadline) returns (uint[] memory amounts) {
-        path[0] = _getWrapper(path[0]);
+        address collection = path[0];
+        path[0] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
-        require(amounts[amounts.length - 1] >= amountOutMin, "UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT");
+        uint amountOut = amounts[amounts.length - 1];
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut);
+        uint netAmountOut = amountOut - totalRoyaltyAmount;
+        require(netAmountOut >= amountOutMin, "UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT");
         _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
-        _swap(amounts, path, to);
+        if (totalRoyaltyAmount == 0) {
+            _swap(amounts, path, to);
+        } else {
+            _swap(amounts, path, address(this));
+            address tokenOut = path[path.length - 1];
+            TransferHelper.safeTransfer(tokenOut, to, netAmountOut);
+            TransferHelper.safeTransferBatch(tokenOut, royaltyReceivers, royaltyAmounts);
+        }
     }
     function swapTokensForExactTokensCollection(
         uint[] memory tokenIdsOut,
@@ -152,12 +163,18 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         address to,
         uint deadline
     ) external override ensure(deadline) returns (uint[] memory amounts) {
-        path[path.length - 1] = _getWrapper(path[path.length - 1]);
+        address collection = path[path.length - 1];
+        path[path.length - 1] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
-        require(amounts[0] <= amountInMax, "UniswapV2Router: EXCESSIVE_INPUT_AMOUNT");
-        TransferHelper.safeTransferFrom(path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]);
+        uint amountIn = amounts[0];
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn);
+        require(amountIn + totalRoyaltyAmount <= amountInMax, "UniswapV2Router: EXCESSIVE_INPUT_AMOUNT");
+        TransferHelper.safeTransferFrom(path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn);
         _swap(amounts, path, address(this));
         IWNFT(path[path.length - 1]).burn(to, tokenIdsOut);
+        if (totalRoyaltyAmount > 0) {
+            TransferHelper.safeTransferFromBatch(path[0], msg.sender, royaltyReceivers, royaltyAmounts);
+        }
     }
     function swapExactTokensForETHCollection(uint[] memory tokenIdsIn, uint amountOutMin, address[] memory path, address to, uint deadline)
         external
@@ -166,13 +183,20 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         returns (uint[] memory amounts)
     {
         require(path[path.length - 1] == WETH, "UniswapV2Router: INVALID_PATH");
-        path[0] = _getWrapper(path[0]);
+        address collection = path[0];
+        path[0] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
-        require(amounts[amounts.length - 1] >= amountOutMin, "UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT");
+        uint amountOut = amounts[amounts.length - 1];
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut);
+        uint netAmountOut = amountOut - totalRoyaltyAmount;
+        require(netAmountOut >= amountOutMin, "UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT");
         _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
         _swap(amounts, path, address(this));
-        IWETH(WETH).withdraw(amounts[amounts.length - 1]);
-        TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
+        IWETH(WETH).withdraw(amountOut);
+        TransferHelper.safeTransferETH(to, netAmountOut);
+        if (totalRoyaltyAmount > 0) {
+            TransferHelper.safeTransferETHBatch(royaltyReceivers, royaltyAmounts);
+        }
     }
     function swapETHForExactTokensCollection(uint[] memory tokenIdsOut, address[] memory path, address to, uint deadline)
         external
@@ -182,13 +206,20 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         returns (uint[] memory amounts)
     {
         require(path[0] == WETH, "UniswapV2Router: INVALID_PATH");
-        path[path.length - 1] = _getWrapper(path[path.length - 1]);
+        address collection = path[path.length - 1];
+        path[path.length - 1] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
-        require(amounts[0] <= msg.value, "UniswapV2Router: EXCESSIVE_INPUT_AMOUNT");
-        IWETH(WETH).deposit{value: amounts[0]}();
-        assert(IWETH(WETH).transfer(UniswapV2Library.pairFor(factory, path[0], path[1]), amounts[0]));
+        uint amountIn = amounts[0];
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn);
+        uint grossAmountIn = amountIn + totalRoyaltyAmount;
+        require(grossAmountIn <= msg.value, "UniswapV2Router: EXCESSIVE_INPUT_AMOUNT");
+        IWETH(WETH).deposit{value: amountIn}();
+        assert(IWETH(WETH).transfer(UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn));
         _swap(amounts, path, address(this));
         IWNFT(path[path.length - 1]).burn(to, tokenIdsOut);
-        if (msg.value > amounts[0]) TransferHelper.safeTransferETH(msg.sender, msg.value - amounts[0]); // refund dust eth, if any
+        if (totalRoyaltyAmount > 0) {
+            TransferHelper.safeTransferETHBatch(royaltyReceivers, royaltyAmounts);
+        }
+        if (msg.value > grossAmountIn) TransferHelper.safeTransferETH(msg.sender, msg.value - grossAmountIn); // refund dust eth, if any
     }
 }
