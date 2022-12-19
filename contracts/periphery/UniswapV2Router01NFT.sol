@@ -13,7 +13,7 @@ import { UniswapV2Library } from "./libraries/UniswapV2Library.sol";
 import { RoyaltyHelper } from "./libraries/RoyaltyHelper.sol";
 import { IWETH } from "./interfaces/IWETH.sol";
 
-contract UniswapV2Router01NFTRoyalty is IUniswapV2Router01NFT, UniswapV2Router01 {
+contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
     constructor(address _factory, address _WETH) UniswapV2Router01(_factory, _WETH) {
     }
 
