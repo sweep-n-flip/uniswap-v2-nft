@@ -37,6 +37,27 @@ interface IUniswapV2Router01NFT is IUniswapV2Router01 {
         address to,
         uint deadline
     ) external returns (uint amountToken, uint amountETH);
+/*
+    function removeLiquidityWithPermitCollection(
+        address tokenA,
+        address collectionB,
+        uint liquidity,
+        uint[] memory tokenIdsB,
+        uint amountAMin,
+        address to,
+        uint deadline,
+        bool approveMax, uint8 v, bytes32 r, bytes32 s
+    ) external returns (uint amountA, uint amountB);
+    function removeLiquidityETHWithPermitCollection(
+        address collection,
+        uint liquidity,
+        uint[] memory tokenIds,
+        uint amountETHMin,
+        address to,
+        uint deadline,
+        bool approveMax, uint8 v, bytes32 r, bytes32 s
+    ) external returns (uint amountToken, uint amountETH);
+*/
     function swapExactTokensForTokensCollection(
         uint[] memory tokenIdsIn,
         uint amountOutMin,

@@ -92,7 +92,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         uint amountAMin,
         address to,
         uint deadline
-    ) external override ensure(deadline) returns (uint amountA, uint amountB) {
+    ) public override ensure(deadline) returns (uint amountA, uint amountB) {
         address wrapperB = _getWrapper(collectionB);
         uint amountBMin = tokenIdsB.length * 1e18;
         (amountA, amountB) = removeLiquidity(
@@ -114,7 +114,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         uint amountETHMin,
         address to,
         uint deadline
-    ) external override ensure(deadline) returns (uint amountToken, uint amountETH) {
+    ) public override ensure(deadline) returns (uint amountToken, uint amountETH) {
         address wrapper = _getWrapper(collection);
         uint amountTokenMin = tokenIds.length * 1e18;
         (amountToken, amountETH) = removeLiquidity(
@@ -130,7 +130,39 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
-
+/*
+    function removeLiquidityWithPermitCollection(
+        address tokenA,
+        address collectionB,
+        uint liquidity,
+        uint[] memory tokenIdsB,
+        uint amountAMin,
+        address to,
+        uint deadline,
+        bool approveMax, uint8 v, bytes32 r, bytes32 s
+    ) external override returns (uint amountA, uint amountB) {
+        address wrapperB = _getWrapper(collectionB);
+        address pair = UniswapV2Library.pairFor(factory, tokenA, wrapperB);
+        uint value = approveMax ? type(uint).max : liquidity;
+        IUniswapV2Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
+        (amountA, amountB) = removeLiquidityCollection(tokenA, collectionB, liquidity, tokenIdsB, amountAMin, to, deadline);
+    }
+    function removeLiquidityETHWithPermitCollection(
+        address collection,
+        uint liquidity,
+        uint[] memory tokenIds,
+        uint amountETHMin,
+        address to,
+        uint deadline,
+        bool approveMax, uint8 v, bytes32 r, bytes32 s
+    ) external override returns (uint amountToken, uint amountETH) {
+        address wrapper = _getWrapper(collection);
+        address pair = UniswapV2Library.pairFor(factory, wrapper, WETH);
+        uint value = approveMax ? type(uint).max : liquidity;
+        IUniswapV2Pair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
+        (amountToken, amountETH) = removeLiquidityETHCollection(collection, liquidity, tokenIds, amountETHMin, to, deadline);
+    }
+*/
     // **** SWAP ****
     function swapExactTokensForTokensCollection(
         uint[] memory tokenIdsIn,
