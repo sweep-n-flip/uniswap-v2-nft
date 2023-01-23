@@ -1,0 +1,23 @@
+# This workflow will do a clean install of dependencies, build the source code and run tests
+name: Hardhat CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [14.x]
+        os: [ubuntu-20.04]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: cp keystore.sample.json keystore.json
+    - run: cp etherscan.sample.json etherscan.json
+    - run: npm ci
+    - run: npm run build
