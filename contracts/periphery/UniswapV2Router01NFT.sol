@@ -21,6 +21,8 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         wrapper = IUniswapV2Factory(factory).getWrapper(collection);
         if (wrapper == address(0)) {
             wrapper = IUniswapV2Factory(factory).createWrapper(collection);
+        }
+        if (!IERC721(collection).isApprovedForAll(address(this), wrapper)) {
             IERC721(collection).setApprovalForAll(wrapper, true);
         }
     }
