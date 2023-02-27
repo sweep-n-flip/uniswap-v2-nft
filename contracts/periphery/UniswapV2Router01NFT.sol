@@ -179,7 +179,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         uint amountOut = amounts[amounts.length - 1];
         (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut);
         uint netAmountOut = amountOut - totalRoyaltyAmount;
-        require(netAmountOut >= amountOutMin, "UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT");
+        require(netAmountOut >= amountOutMin, "SweepnFlipRouter: INSUFFICIENT_OUTPUT_AMOUNT");
         _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
         if (totalRoyaltyAmount == 0) {
             _swap(amounts, path, to);
@@ -202,7 +202,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
         uint amountIn = amounts[0];
         (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn);
-        require(amountIn + totalRoyaltyAmount <= amountInMax, "UniswapV2Router: EXCESSIVE_INPUT_AMOUNT");
+        require(amountIn + totalRoyaltyAmount <= amountInMax, "SweepnFlipRouter: EXCESSIVE_INPUT_AMOUNT");
         TransferHelper.safeTransferFrom(path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn);
         _swap(amounts, path, address(this));
         IWNFT(path[path.length - 1]).burn(to, tokenIdsOut);
@@ -216,14 +216,14 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         ensure(deadline)
         returns (uint[] memory amounts)
     {
-        require(path[path.length - 1] == WETH, "UniswapV2Router: INVALID_PATH");
+        require(path[path.length - 1] == WETH, "SweepnFlipRouter: INVALID_PATH");
         address collection = path[0];
         path[0] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
         uint amountOut = amounts[amounts.length - 1];
         (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut);
         uint netAmountOut = amountOut - totalRoyaltyAmount;
-        require(netAmountOut >= amountOutMin, "UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT");
+        require(netAmountOut >= amountOutMin, "SweepnFlipRouter: INSUFFICIENT_OUTPUT_AMOUNT");
         _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
         _swap(amounts, path, address(this));
         IWETH(WETH).withdraw(amountOut);
@@ -239,14 +239,14 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         ensure(deadline)
         returns (uint[] memory amounts)
     {
-        require(path[0] == WETH, "UniswapV2Router: INVALID_PATH");
+        require(path[0] == WETH, "SweepnFlipRouter: INVALID_PATH");
         address collection = path[path.length - 1];
         path[path.length - 1] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
         uint amountIn = amounts[0];
         (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn);
         uint grossAmountIn = amountIn + totalRoyaltyAmount;
-        require(grossAmountIn <= msg.value, "UniswapV2Router: EXCESSIVE_INPUT_AMOUNT");
+        require(grossAmountIn <= msg.value, "SweepnFlipRouter: EXCESSIVE_INPUT_AMOUNT");
         IWETH(WETH).deposit{value: amountIn}();
         assert(IWETH(WETH).transfer(UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn));
         _swap(amounts, path, address(this));

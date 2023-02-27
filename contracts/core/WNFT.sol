@@ -17,7 +17,7 @@ contract WNFT is IWNFT {
 
     uint private unlocked = 1;
     modifier lock() {
-        require(unlocked == 1, "UniswapV2: LOCKED");
+        require(unlocked == 1, "SweepnFlip: LOCKED");
         unlocked = 0;
         _;
         unlocked = 1;
@@ -28,7 +28,7 @@ contract WNFT is IWNFT {
     }
 
     function initialize(address _collection) external {
-        require(msg.sender == factory, "UniswapV2: FORBIDDEN"); // sufficient check
+        require(msg.sender == factory, "SweepnFlip: FORBIDDEN"); // sufficient check
         collection = _collection;
     }
 
@@ -62,7 +62,7 @@ contract WNFT is IWNFT {
     }
 
     function _transfer(address from, address to, uint value) private {
-        require(value % 1e18 == 0, "UniswapV2: PARTIAL_AMOUNT");
+        require(value % 1e18 == 0, "SweepnFlip: PARTIAL_AMOUNT");
         balanceOf[from] -= value;
         balanceOf[to] += value;
         emit Transfer(from, to, value);

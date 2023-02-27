@@ -31,13 +31,13 @@ contract UniswapV2Factory is IUniswapV2Factory {
     }
 
     function createPair(address tokenA, address tokenB) external returns (address pair) {
-        require(tokenA != tokenB, "UniswapV2: IDENTICAL_ADDRESSES");
+        require(tokenA != tokenB, "SweepnFlip: IDENTICAL_ADDRESSES");
         (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
-        require(token0 != address(0), "UniswapV2: ZERO_ADDRESS");
-        require(getPair[token0][token1] == address(0), "UniswapV2: PAIR_EXISTS"); // single check is sufficient
+        require(token0 != address(0), "SweepnFlip: ZERO_ADDRESS");
+        require(getPair[token0][token1] == address(0), "SweepnFlip: PAIR_EXISTS"); // single check is sufficient
         bool discrete0 = getCollection[token0] != address(0);
         bool discrete1 = getCollection[token1] != address(0);
-        require(!(discrete0 && discrete1), "UniswapV2: DISCRETE_CLASH");
+        require(!(discrete0 && discrete1), "SweepnFlip: DISCRETE_CLASH");
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
         pair = address(new UniswapV2Pair{salt: salt}());
         IUniswapV2Pair(pair).initialize(token0, token1, discrete0, discrete1);
@@ -48,8 +48,8 @@ contract UniswapV2Factory is IUniswapV2Factory {
     }
 
     function createWrapper(address collection) external returns (address wrapper) {
-        require(collection != address(0), "UniswapV2: ZERO_ADDRESS");
-        require(getWrapper[collection] == address(0), "UniswapV2: WRAPPER_EXISTS");
+        require(collection != address(0), "SweepnFlip: ZERO_ADDRESS");
+        require(getWrapper[collection] == address(0), "SweepnFlip: WRAPPER_EXISTS");
         bytes32 salt = keccak256(abi.encodePacked(collection));
         wrapper = address(new WNFT{salt: salt}());
         IWNFT(wrapper).initialize(collection);
@@ -60,12 +60,12 @@ contract UniswapV2Factory is IUniswapV2Factory {
     }
 
     function setFeeTo(address _feeTo) external {
-        require(msg.sender == feeToSetter, "UniswapV2: FORBIDDEN");
+        require(msg.sender == feeToSetter, "SweepnFlip: FORBIDDEN");
         feeTo = _feeTo;
     }
 
     function setFeeToSetter(address _feeToSetter) external {
-        require(msg.sender == feeToSetter, "UniswapV2: FORBIDDEN");
+        require(msg.sender == feeToSetter, "SweepnFlip: FORBIDDEN");
         feeToSetter = _feeToSetter;
     }
 
