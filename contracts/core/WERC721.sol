@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity 0.8.9;
 
-import { IWNFT } from "./interfaces/IWNFT.sol";
+import { IWERC721 } from "./interfaces/IWERC721.sol";
 import { IERC721 } from "./interfaces/IERC721.sol";
 
-contract WNFT is IWNFT {
+contract WERC721 is IWERC721 {
     string public constant name = "Wrapped NFT";
     string public constant symbol = "WNFT";
     uint8 public constant decimals = 18;

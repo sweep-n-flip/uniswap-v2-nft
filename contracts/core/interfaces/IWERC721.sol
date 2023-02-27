@@ -3,7 +3,7 @@ pragma solidity 0.8.9;
 
 import { IERC20 } from "./IERC20.sol";
 
-interface IWNFT is IERC20 {
+interface IWERC721 is IERC20 {
     event Mint(address indexed from, address indexed to, uint[] tokenIds);
     event Burn(address indexed from, address indexed to, uint[] tokenIds);
 

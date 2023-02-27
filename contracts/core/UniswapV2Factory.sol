@@ -3,9 +3,9 @@ pragma solidity 0.8.9;
 
 import { IUniswapV2Factory } from "./interfaces/IUniswapV2Factory.sol";
 import { IUniswapV2Pair } from "./interfaces/IUniswapV2Pair.sol";
-import { IWNFT } from "./interfaces/IWNFT.sol";
+import { IWERC721 } from "./interfaces/IWERC721.sol";
 import { UniswapV2Pair } from "./UniswapV2Pair.sol";
-import { WNFT } from "./WNFT.sol";
+import { WERC721 } from "./WERC721.sol";
 
 contract UniswapV2Factory is IUniswapV2Factory {
     address public feeTo;
@@ -51,8 +51,8 @@ contract UniswapV2Factory is IUniswapV2Factory {
         require(collection != address(0), "SweepnFlip: ZERO_ADDRESS");
         require(getWrapper[collection] == address(0), "SweepnFlip: WRAPPER_EXISTS");
         bytes32 salt = keccak256(abi.encodePacked(collection));
-        wrapper = address(new WNFT{salt: salt}());
-        IWNFT(wrapper).initialize(collection);
+        wrapper = address(new WERC721{salt: salt}());
+        IWERC721(wrapper).initialize(collection);
         getCollection[wrapper] = collection;
         getWrapper[collection] = wrapper;
         allWrappers.push(wrapper);

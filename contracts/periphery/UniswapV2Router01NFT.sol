@@ -4,7 +4,7 @@ pragma solidity 0.8.9;
 import { IUniswapV2Factory } from "../core/interfaces/IUniswapV2Factory.sol";
 import { IUniswapV2Pair } from "../core/interfaces/IUniswapV2Pair.sol";
 import { IERC721 } from "../core/interfaces/IERC721.sol";
-import { IWNFT } from "../core/interfaces/IWNFT.sol";
+import { IWERC721 } from "../core/interfaces/IWERC721.sol";
 import { TransferHelper } from "../lib/libraries/TransferHelper.sol";
 
 import { IUniswapV2Router01NFT } from "./interfaces/IUniswapV2Router01NFT.sol";
@@ -28,11 +28,11 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
     }
 
     function _mint(address wrapper, address to, uint[] memory tokenIds) internal {
-        address collection = IWNFT(wrapper).collection();
+        address collection = IWERC721(wrapper).collection();
         for (uint i = 0; i < tokenIds.length; i++) {
             IERC721(collection).transferFrom(msg.sender, address(this), tokenIds[i]);
         }
-        IWNFT(wrapper).mint(to, tokenIds);
+        IWERC721(wrapper).mint(to, tokenIds);
     }
 
     // **** ADD LIQUIDITY ****
@@ -107,7 +107,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
             deadline
         );
         TransferHelper.safeTransfer(tokenA, to, amountA);
-        IWNFT(wrapperB).burn(to, tokenIdsB);
+        IWERC721(wrapperB).burn(to, tokenIdsB);
     }
     function removeLiquidityETHCollection(
         address collection,
@@ -128,7 +128,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
             address(this),
             deadline
         );
-        IWNFT(wrapper).burn(to, tokenIds);
+        IWERC721(wrapper).burn(to, tokenIds);
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
@@ -205,7 +205,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         require(amountIn + totalRoyaltyAmount <= amountInMax, "SweepnFlipRouter: EXCESSIVE_INPUT_AMOUNT");
         TransferHelper.safeTransferFrom(path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn);
         _swap(amounts, path, address(this));
-        IWNFT(path[path.length - 1]).burn(to, tokenIdsOut);
+        IWERC721(path[path.length - 1]).burn(to, tokenIdsOut);
         if (totalRoyaltyAmount > 0) {
             TransferHelper.safeTransferFromBatch(path[0], msg.sender, royaltyReceivers, royaltyAmounts);
         }
@@ -250,7 +250,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         IWETH(WETH).deposit{value: amountIn}();
         assert(IWETH(WETH).transfer(UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn));
         _swap(amounts, path, address(this));
-        IWNFT(path[path.length - 1]).burn(to, tokenIdsOut);
+        IWERC721(path[path.length - 1]).burn(to, tokenIdsOut);
         if (totalRoyaltyAmount > 0) {
             TransferHelper.safeTransferETHBatch(royaltyReceivers, royaltyAmounts);
         }
