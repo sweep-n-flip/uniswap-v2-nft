@@ -40,9 +40,9 @@ library UniswapV2Library {
     function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) internal pure returns (uint amountOut) {
         require(amountIn > 0, "SweepnFlipLibrary: INSUFFICIENT_INPUT_AMOUNT");
         require(reserveIn > 0 && reserveOut > 0, "SweepnFlipLibrary: INSUFFICIENT_LIQUIDITY");
-        uint amountInWithFee = amountIn * 997;
+        uint amountInWithFee = amountIn * 99;
         uint numerator = amountInWithFee * reserveOut;
-        uint denominator = reserveIn * 1000 + amountInWithFee;
+        uint denominator = reserveIn * 100 + amountInWithFee;
         amountOut = numerator / denominator;
     }
 
@@ -50,8 +50,8 @@ library UniswapV2Library {
     function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut) internal pure returns (uint amountIn) {
         require(amountOut > 0, "SweepnFlipLibrary: INSUFFICIENT_OUTPUT_AMOUNT");
         require(reserveIn > 0 && reserveOut > 0, "SweepnFlipLibrary: INSUFFICIENT_LIQUIDITY");
-        uint numerator = reserveIn * amountOut * 1000;
-        uint denominator = (reserveOut - amountOut) * 997;
+        uint numerator = reserveIn * amountOut * 100;
+        uint denominator = (reserveOut - amountOut) * 99;
         amountIn = numerator / denominator + 1;
     }
 

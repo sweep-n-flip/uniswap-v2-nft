@@ -187,9 +187,9 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         uint amount1In = balance1 > _reserve1 - amount1Out ? balance1 - (_reserve1 - amount1Out) : 0;
         require(amount0In > 0 || amount1In > 0, "SweepnFlip: INSUFFICIENT_INPUT_AMOUNT");
         { // scope for reserve{0,1}Adjusted, avoids stack too deep errors
-        uint balance0Adjusted = balance0 * 1000 - amount0In * 3;
-        uint balance1Adjusted = balance1 * 1000 - amount1In * 3;
-        require(balance0Adjusted * balance1Adjusted >= uint(_reserve0) * uint(_reserve1) * 1000**2, "SweepnFlip: K");
+        uint balance0Adjusted = balance0 * 100 - amount0In * 1;
+        uint balance1Adjusted = balance1 * 100 - amount1In * 1;
+        require(balance0Adjusted * balance1Adjusted >= uint(_reserve0) * uint(_reserve1) * 100**2, "SweepnFlip: K");
         }
 
         _update(balance0, balance1, _reserve0, _reserve1);
