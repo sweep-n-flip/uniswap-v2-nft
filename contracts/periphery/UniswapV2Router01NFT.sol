@@ -14,7 +14,14 @@ import { RoyaltyHelper } from "./libraries/RoyaltyHelper.sol";
 import { IWETH } from "./interfaces/IWETH.sol";
 
 contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
-    constructor(address _factory, address _WETH) UniswapV2Router01(_factory, _WETH) {
+    address public immutable override marketplaceWallet;
+    uint public immutable override marketplaceFee;
+    uint public immutable override royaltyFeeCap;
+
+    constructor(address _factory, address _WETH, address _marketplaceWallet, uint _marketplaceFee, uint _royaltyFeeCap) UniswapV2Router01(_factory, _WETH) {
+        marketplaceWallet = _marketplaceWallet;
+        marketplaceFee = _marketplaceFee;
+        royaltyFeeCap = _royaltyFeeCap;
     }
 
     function _getWrapper(address collection) internal returns (address wrapper) {
@@ -177,7 +184,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         path[0] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
         uint amountOut = amounts[amounts.length - 1];
-        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut);
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, royaltyFeeCap);
         uint netAmountOut = amountOut - totalRoyaltyAmount;
         require(netAmountOut >= amountOutMin, "SweepnFlipRouter: INSUFFICIENT_OUTPUT_AMOUNT");
         _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
@@ -201,7 +208,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         path[path.length - 1] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
         uint amountIn = amounts[0];
-        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn);
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, royaltyFeeCap);
         require(amountIn + totalRoyaltyAmount <= amountInMax, "SweepnFlipRouter: EXCESSIVE_INPUT_AMOUNT");
         TransferHelper.safeTransferFrom(path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn);
         _swap(amounts, path, address(this));
@@ -221,7 +228,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         path[0] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
         uint amountOut = amounts[amounts.length - 1];
-        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut);
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, royaltyFeeCap);
         uint netAmountOut = amountOut - totalRoyaltyAmount;
         require(netAmountOut >= amountOutMin, "SweepnFlipRouter: INSUFFICIENT_OUTPUT_AMOUNT");
         _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
@@ -244,7 +251,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         path[path.length - 1] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
         uint amountIn = amounts[0];
-        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn);
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, royaltyFeeCap);
         uint grossAmountIn = amountIn + totalRoyaltyAmount;
         require(grossAmountIn <= msg.value, "SweepnFlipRouter: EXCESSIVE_INPUT_AMOUNT");
         IWETH(WETH).deposit{value: amountIn}();

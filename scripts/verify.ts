@@ -45,6 +45,9 @@ async function main(args: string[]): Promise<void> {
   console.log('FUNDING=' + FUNDING);
   console.log('WETH=' + WETH);
 
+  const ONE_PERCENT = 10n**16n;
+  const HALF_PERCENT = ONE_PERCENT / 2n;
+
   const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
   console.log('BLOCKIES=' + BLOCKIES);
 
@@ -58,7 +61,7 @@ async function main(args: string[]): Promise<void> {
 
   const PAIR = await factory.getPair(WETH, WRAPPER);
 
-  await verifyContract(ROUTER, 'contracts/periphery/UniswapV2Router01NFT.sol:UniswapV2Router01NFT', FACTORY, WETH);
+  await verifyContract(ROUTER, 'contracts/periphery/UniswapV2Router01NFT.sol:UniswapV2Router01NFT', FACTORY, WETH, ADMIN, HALF_PERCENT, ONE_PERCENT);
   await verifyContract(FACTORY, 'contracts/core/UniswapV2Factory.sol:UniswapV2Factory', ADMIN);
   await verifyContract(PAIR, 'contracts/core/UniswapV2Pair.sol:UniswapV2Pair');
   await verifyContract(WRAPPER, 'contracts/core/WERC721.sol:WERC721');

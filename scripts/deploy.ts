@@ -44,6 +44,9 @@ async function main(args: string[]): Promise<void> {
   console.log('FUNDING=' + FUNDING);
   console.log('WETH=' + WETH);
 
+  const ONE_PERCENT = 10n**16n;
+  const HALF_PERCENT = ONE_PERCENT / 2n;
+
   const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
   console.log('BLOCKIES=' + BLOCKIES);
 
@@ -70,7 +73,7 @@ async function main(args: string[]): Promise<void> {
     }
   }
 
-  const ROUTER = await deployContract('UniswapV2Router01NFT', FACTORY, WETH);
+  const ROUTER = await deployContract('UniswapV2Router01NFT', FACTORY, WETH, ADMIN, HALF_PERCENT, ONE_PERCENT);
   console.log('ROUTER=' + ROUTER);
 
   {
