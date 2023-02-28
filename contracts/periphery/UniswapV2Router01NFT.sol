@@ -131,6 +131,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
             address(this),
             deadline
         );
+        require(amountB == amountBMin, "SweepnFlipRouter: EXCESSIVE_B_AMOUNT");
         TransferHelper.safeTransfer(tokenA, to, amountA);
         IWERC721(wrapperB).burn(to, tokenIdsB);
     }
@@ -153,6 +154,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
             address(this),
             deadline
         );
+        require(amountToken == amountTokenMin, "SweepnFlipRouter: EXCESSIVE_A_AMOUNT");
         IWERC721(wrapper).burn(to, tokenIds);
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
