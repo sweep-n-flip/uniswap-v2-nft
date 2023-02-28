@@ -4,6 +4,7 @@ pragma solidity 0.8.9;
 import { IUniswapV2Router01 } from "./IUniswapV2Router01.sol";
 
 interface IUniswapV2Router01NFT is IUniswapV2Router01 {
+    function marketplaceAdmin() external view returns (address _marketplaceAdmin);
     function marketplaceWallet() external view returns (address _marketplaceWallet);
     function marketplaceFee() external view returns (uint _marketplaceFee);
     function royaltyFeeCap() external view returns (uint _royaltyFeeCap);

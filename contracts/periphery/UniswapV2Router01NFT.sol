@@ -14,14 +14,32 @@ import { RoyaltyHelper } from "./libraries/RoyaltyHelper.sol";
 import { IWETH } from "./interfaces/IWETH.sol";
 
 contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
-    address public immutable override marketplaceWallet;
-    uint public immutable override marketplaceFee;
-    uint public immutable override royaltyFeeCap;
+    address public override marketplaceAdmin;
+    address public override marketplaceWallet;
+    uint public override marketplaceFee;
+    uint public override royaltyFeeCap;
 
-    constructor(address _factory, address _WETH, address _marketplaceWallet, uint _marketplaceFee, uint _royaltyFeeCap) UniswapV2Router01(_factory, _WETH) {
+    constructor(address _factory, address _WETH, address _marketplaceAdmin, address _marketplaceWallet, uint _marketplaceFee, uint _royaltyFeeCap) UniswapV2Router01(_factory, _WETH) {
+        marketplaceAdmin = _marketplaceAdmin;
         marketplaceWallet = _marketplaceWallet;
         marketplaceFee = _marketplaceFee;
         royaltyFeeCap = _royaltyFeeCap;
+    }
+
+    function updateAdmin(address _marketplaceAdmin) external
+    {
+        require(msg.sender == marketplaceAdmin, "SweepnFlipRouter: FORBIDDEN");
+        marketplaceAdmin = _marketplaceAdmin;
+        emit UpdateAdmin(_marketplaceAdmin);
+    }
+
+    function updateFeeConfig(address _marketplaceWallet, uint _marketplaceFee, uint _royaltyFeeCap) external
+    {
+        require(msg.sender == marketplaceAdmin, "SweepnFlipRouter: FORBIDDEN");
+        marketplaceWallet = _marketplaceWallet;
+        marketplaceFee = _marketplaceFee;
+        royaltyFeeCap = _royaltyFeeCap;
+        emit UpdateFeeConfig(_marketplaceWallet, _marketplaceFee, _royaltyFeeCap);
     }
 
     function _getWrapper(address collection) internal returns (address wrapper) {
@@ -263,4 +281,7 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         }
         if (msg.value > grossAmountIn) TransferHelper.safeTransferETH(msg.sender, msg.value - grossAmountIn); // refund dust eth, if any
     }
+
+    event UpdateAdmin(address marketplaceAdmin);
+    event UpdateFeeConfig(address marketplaceWallet, uint marketplaceFee, uint royaltyFeeCap);
 }
