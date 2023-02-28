@@ -51,7 +51,7 @@ async function main(args: string[]): Promise<void> {
   const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
   console.log('BLOCKIES=' + BLOCKIES);
 
-  const ROUTER = '0x46f89aD5eB789BF1d9DA4DFdC41fBe21351A4D46';
+  const ROUTER = '0x661977C034Faf56710F58CA0E2657F4420F6B2Df';
   const router = await hardhat.ethers.getContractAt('UniswapV2Router01NFT', ROUTER);
 
   const FACTORY = await router.factory();
