@@ -84,4 +84,7 @@ interface IUniswapV2Router01NFT is IUniswapV2Router01 {
         external
         payable
         returns (uint[] memory amounts);
+
+    function getAmountsOutCollection(uint[] memory tokenIdsIn, address[] memory path) external view returns (uint[] memory amounts);
+    function getAmountsInCollection(uint[] memory tokenIdsOut, address[] memory path) external view returns (uint[] memory amounts);
 }

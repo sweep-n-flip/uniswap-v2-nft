@@ -284,6 +284,28 @@ contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
         if (msg.value > grossAmountIn) TransferHelper.safeTransferETH(msg.sender, msg.value - grossAmountIn); // refund dust eth, if any
     }
 
+    function getAmountsOutCollection(uint[] memory tokenIdsIn, address[] memory path) external view override returns (uint[] memory amounts)
+    {
+        address collection = path[0];
+        path[0] = IUniswapV2Factory(factory).getWrapper(collection);
+        amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
+        uint amountOut = amounts[amounts.length - 1];
+        (,,uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, royaltyFeeCap);
+        amounts[amounts.length - 1] = amountOut - totalRoyaltyAmount;
+        return amounts;
+    }
+
+    function getAmountsInCollection(uint[] memory tokenIdsOut, address[] memory path) external view override returns (uint[] memory amounts)
+    {
+        address collection = path[path.length - 1];
+        path[path.length - 1] = IUniswapV2Factory(factory).getWrapper(collection);
+        amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
+        uint amountIn = amounts[0];
+        (,,uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, royaltyFeeCap);
+        amounts[0] = amountIn + totalRoyaltyAmount;
+        return amounts;
+    }
+
     event UpdateAdmin(address marketplaceAdmin);
     event UpdateFeeConfig(address marketplaceWallet, uint marketplaceFee, uint royaltyFeeCap);
 }
