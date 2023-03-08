@@ -13,7 +13,7 @@ import { UniswapV2Library } from "./libraries/UniswapV2Library.sol";
 import { RoyaltyHelper } from "./libraries/RoyaltyHelper.sol";
 import { IWETH } from "./interfaces/IWETH.sol";
 
-contract UniswapV2Router01NFT is IUniswapV2Router01Collection, UniswapV2Router01 {
+contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2Router01 {
     address public override marketplaceAdmin;
     address public override marketplaceWallet;
     uint public override marketplaceFee;
