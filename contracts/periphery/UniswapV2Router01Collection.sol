@@ -7,13 +7,13 @@ import { IERC721 } from "../core/interfaces/IERC721.sol";
 import { IWERC721 } from "../core/interfaces/IWERC721.sol";
 import { TransferHelper } from "../lib/libraries/TransferHelper.sol";
 
-import { IUniswapV2Router01NFT } from "./interfaces/IUniswapV2Router01NFT.sol";
+import { IUniswapV2Router01Collection } from "./interfaces/IUniswapV2Router01Collection.sol";
 import { UniswapV2Router01 } from "./UniswapV2Router01.sol";
 import { UniswapV2Library } from "./libraries/UniswapV2Library.sol";
 import { RoyaltyHelper } from "./libraries/RoyaltyHelper.sol";
 import { IWETH } from "./interfaces/IWETH.sol";
 
-contract UniswapV2Router01NFT is IUniswapV2Router01NFT, UniswapV2Router01 {
+contract UniswapV2Router01NFT is IUniswapV2Router01Collection, UniswapV2Router01 {
     address public override marketplaceAdmin;
     address public override marketplaceWallet;
     uint public override marketplaceFee;

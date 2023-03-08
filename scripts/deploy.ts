@@ -73,7 +73,7 @@ async function main(args: string[]): Promise<void> {
     }
   }
 
-  const ROUTER = await deployContract('UniswapV2Router01NFT', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT, ONE_PERCENT);
+  const ROUTER = await deployContract('UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT, ONE_PERCENT);
   console.log('ROUTER=' + ROUTER);
 
   {
