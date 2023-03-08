@@ -25,6 +25,9 @@ interface IUniswapV2Pair is IUniswapV2ERC20 {
     function price1CumulativeLast() external view returns (uint);
     function kLast() external view returns (uint);
 
+    function discrete0() external view returns (bool);
+    function discrete1() external view returns (bool);
+
     function mint(address to) external returns (uint liquidity);
     function burn(address to) external returns (uint amount0, uint amount1);
     function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
