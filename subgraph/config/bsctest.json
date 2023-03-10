@@ -1,0 +1,6 @@
+{
+  "NETWORK": "bsctest",
+  "network": "chapel",
+  "factoryAddress": "0x0000000000000000000000000000000000000000",
+  "factoryStartBlock": "0"
+}

@@ -1,0 +1,97 @@
+specVersion: 0.0.2
+description: A decentralized protocol for NFT fractionalization.
+repository: https://github.com/nftfy/uniswap-v2-nft
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Factory
+    network: {{network}}
+    source:
+      abi: IUniswapV2Factory
+      address: '{{factoryAddress}}'
+      startBlock: {{factoryStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswap.ts
+      entities:
+        - Collection
+        - Currency
+        - Pair
+      abis:
+        - name: IUniswapV2Factory
+          file: ./abis/IUniswapV2Factory.json
+        - name: IUniswapV2Pair
+          file: ./abis/IUniswapV2Pair.json
+        - name: IWERC721
+          file: ./abis/IWERC721.json
+        - name: IERC20
+          file: ./abis/IERC20.json
+        - name: IERC721
+          file: ./abis/IERC721.json
+      eventHandlers:
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: handlePairCreated
+        - event: WrapperCreated(indexed address,address,uint256)
+          handler: handleWrapperCreated
+templates:
+  - kind: ethereum/contract
+    name: Pair
+    network: {{network}}
+    source:
+      abi: IUniswapV2Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswap.ts
+      entities:
+        - Collection
+        - Currency
+        - Pair
+      abis:
+        - name: IUniswapV2Factory
+          file: ./abis/IUniswapV2Factory.json
+        - name: IUniswapV2Pair
+          file: ./abis/IUniswapV2Pair.json
+        - name: IWERC721
+          file: ./abis/IWERC721.json
+        - name: IERC20
+          file: ./abis/IERC20.json
+        - name: IERC721
+          file: ./abis/IERC721.json
+      eventHandlers:
+        - event: Sync(uint112,uint112)
+          handler: handleSync
+  - kind: ethereum/contract
+    name: Wrapper
+    network: {{network}}
+    source:
+      abi: IWERC721
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswap.ts
+      entities:
+        - Collection
+        - Currency
+        - Pair
+      abis:
+        - name: IUniswapV2Factory
+          file: ./abis/IUniswapV2Factory.json
+        - name: IUniswapV2Pair
+          file: ./abis/IUniswapV2Pair.json
+        - name: IWERC721
+          file: ./abis/IWERC721.json
+        - name: IERC20
+          file: ./abis/IERC20.json
+        - name: IERC721
+          file: ./abis/IERC721.json
+      eventHandlers:
+        - event: Mint(indexed address,indexed address,uint256[])
+          handler: handleMint
+        - event: Burn(indexed address,indexed address,uint256[])
+          handler: handleBurn

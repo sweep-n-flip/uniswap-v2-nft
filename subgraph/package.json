@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "graph build",
+    "clean": "rm -rf ./build/ ./src/types/ ./subgraph.yaml ./.env",
+    "codegen": "graph codegen --output-dir ./src/types/",
+    "deploy:studio": "export `cat .env | egrep -v '#|^$' | xargs` && graph deploy --deploy-key ${DEPLOY_KEY} -l v1.0.0-uni --studio ${SLUG_STUDIO}-${NETWORK}",
+    "deploy:hosted": "export `cat .env | egrep -v '#|^$' | xargs` && graph deploy --access-token ${ACCESS_TOKEN} --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ${USER_HOSTED}/${SLUG_HOSTED}-${NETWORK}-${ENV_HOSTED}",
+    "set:mainnet": "mustache config/mainnet.json subgraph.template.yaml subgraph.yaml && mustache config/mainnet.json ../.env .env",
+    "set:ropsten": "mustache config/ropsten.json subgraph.template.yaml subgraph.yaml && mustache config/ropsten.json ../.env .env",
+    "set:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml subgraph.yaml && mustache config/rinkeby.json ../.env .env",
+    "set:kovan": "mustache config/kovan.json subgraph.template.yaml subgraph.yaml && mustache config/kovan.json ../.env .env",
+    "set:goerli": "mustache config/goerli.json subgraph.template.yaml subgraph.yaml && mustache config/goerli.json ../.env .env",
+    "set:avaxmain": "mustache config/avaxmain.json subgraph.template.yaml subgraph.yaml && mustache config/avaxmain.json ../.env .env",
+    "set:avaxtest": "mustache config/avaxtest.json subgraph.template.yaml subgraph.yaml && mustache config/avaxtest.json ../.env .env",
+    "set:bscmain": "mustache config/bscmain.json subgraph.template.yaml subgraph.yaml && mustache config/bscmain.json ../.env .env",
+    "set:bsctest": "mustache config/bsctest.json subgraph.template.yaml subgraph.yaml && mustache config/bsctest.json ../.env .env",
+    "set:ftmmain": "mustache config/ftmmain.json subgraph.template.yaml subgraph.yaml && mustache config/ftmmain.json ../.env .env",
+    "set:ftmtest": "mustache config/ftmtest.json subgraph.template.yaml subgraph.yaml && mustache config/ftmtest.json ../.env .env",
+    "set:maticmain": "mustache config/maticmain.json subgraph.template.yaml subgraph.yaml && mustache config/maticmain.json ../.env .env",
+    "set:matictest": "mustache config/matictest.json subgraph.template.yaml subgraph.yaml && mustache config/matictest.json ../.env .env"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.21.1",
+    "@graphprotocol/graph-ts": "^0.20.1",
+    "mustache": "^4.2.0"
+  }
+}

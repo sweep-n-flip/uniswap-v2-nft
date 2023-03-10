@@ -1,0 +1,27 @@
+type Collection @entity {
+  id: ID!
+  name: String
+  symbol: String
+  wrapper: Currency!
+}
+
+type Currency @entity {
+  id: ID!
+  name: String
+  symbol: String
+  decimals: Int!
+  wrapping: Boolean!
+  collection: Collection
+  tokenIds: [BigInt!]
+}
+
+type Pair @entity {
+  id: ID!
+  discrete0: Boolean!
+  discrete1: Boolean!
+  token0: Currency!
+  token1: Currency!
+  reserve0: BigDecimal!
+  reserve1: BigDecimal!
+  totalSupply: BigDecimal!
+}
