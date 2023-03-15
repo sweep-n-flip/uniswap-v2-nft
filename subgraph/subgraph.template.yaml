@@ -20,6 +20,7 @@ dataSources:
         - Collection
         - Currency
         - Pair
+        - PairDay
       abis:
         - name: IUniswapV2Factory
           file: ./abis/IUniswapV2Factory.json
@@ -51,6 +52,7 @@ templates:
         - Collection
         - Currency
         - Pair
+        - PairDay
       abis:
         - name: IUniswapV2Factory
           file: ./abis/IUniswapV2Factory.json
@@ -63,6 +65,8 @@ templates:
         - name: IERC721
           file: ./abis/IERC721.json
       eventHandlers:
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap
         - event: Sync(uint112,uint112)
           handler: handleSync
   - kind: ethereum/contract
@@ -79,6 +83,7 @@ templates:
         - Collection
         - Currency
         - Pair
+        - PairDay
       abis:
         - name: IUniswapV2Factory
           file: ./abis/IUniswapV2Factory.json

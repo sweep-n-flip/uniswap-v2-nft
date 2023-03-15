@@ -1,9 +1,9 @@
 import { Address, BigInt, BigDecimal } from '@graphprotocol/graph-ts';
 
-import { Collection, Currency, Pair } from '../types/schema';
+import { Collection, Currency, Pair, PairDay } from '../types/schema';
 import { Pair as PairTemplate, Wrapper as WrapperTemplate } from '../types/templates';
 import { PairCreated as PairCreatedEvent, WrapperCreated as WrapperCreatedEvent } from '../types/Factory/IUniswapV2Factory';
-import { Sync as SyncEvent } from '../types/templates/Pair/IUniswapV2Pair';
+import { Swap as SwapEvent, Sync as SyncEvent } from '../types/templates/Pair/IUniswapV2Pair';
 import { Mint as MintEvent, Burn as BurnEvent } from '../types/templates/Wrapper/IWERC721';
 import { IERC20 } from '../types/Factory/IERC20';
 import { IERC721 } from '../types/Factory/IERC721';
@@ -84,6 +84,26 @@ function updateCurrencyAsWrapper(wrapper: Currency, collection: Collection): voi
   wrapper.save();
 }
 
+function updateDailyVolume(address: Address, timestamp: BigInt, volume0: BigInt, volume1: BigInt): void {
+  let pairId = address.toHexString();
+  let pair = Pair.load(pairId);
+  let token0 = Currency.load(pair.token0);
+  let token1 = Currency.load(pair.token1);
+  let DAY = 24 * 60 * 60;
+  let day = (timestamp.toI32() / DAY) * DAY;
+  let pairDayId = pairId.concat(':').concat(day.toString());
+  let pairDay = PairDay.load(pairDayId);
+  if (pairDay == null) {
+    pairDay.pair = pairId;
+    pairDay.day = day;
+    pairDay.volume0 = ZERO_BIGDECIMAL;
+    pairDay.volume1 = ZERO_BIGDECIMAL;
+  }
+  pairDay.volume0 = pairDay.volume0 + coins(volume0, token0.decimals);
+  pairDay.volume1 = pairDay.volume1 + coins(volume1, token1.decimals);
+  pairDay.save();
+}
+
 function updatePairState(address: Address, reserve0: BigInt, reserve1: BigInt): void {
   let contract = IERC20.bind(address);
   let totalSupply = contract.try_totalSupply();
@@ -139,6 +159,12 @@ export function handleWrapperCreated(event: WrapperCreatedEvent): void {
   let collection = registerCollection(event.params.collection, wrapper);
   updateCurrencyAsWrapper(wrapper, collection);
   WrapperTemplate.create(event.params.wrapper);
+}
+
+export function handleSwap(event: SwapEvent): void {
+  let volume0 = event.params.amount0In > event.params.amount0Out ? event.params.amount0In - event.params.amount0Out : event.params.amount0Out - event.params.amount0In;
+  let volume1 = event.params.amount1In > event.params.amount1Out ? event.params.amount1In - event.params.amount1Out : event.params.amount1Out - event.params.amount1In;
+  updateDailyVolume(event.address, event.block.timestamp, volume0, volume1);
 }
 
 export function handleSync(event: SyncEvent): void {

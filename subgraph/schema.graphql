@@ -25,3 +25,11 @@ type Pair @entity {
   reserve1: BigDecimal!
   totalSupply: BigDecimal!
 }
+
+type PairDay @entity {
+  id: ID!
+  pair: Pair!
+  day: Int!
+  volume0: BigDecimal!
+  volume1: BigDecimal!
+}
