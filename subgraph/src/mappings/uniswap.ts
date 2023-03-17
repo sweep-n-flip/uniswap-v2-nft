@@ -94,6 +94,7 @@ function updateDailyVolume(address: Address, timestamp: BigInt, volume0: BigInt,
   let pairDayId = pairId.concat(':').concat(day.toString());
   let pairDay = PairDay.load(pairDayId);
   if (pairDay == null) {
+    pairDay = new PairDay(pairDayId);
     pairDay.pair = pairId;
     pairDay.day = day;
     pairDay.volume0 = ZERO_BIGDECIMAL;
