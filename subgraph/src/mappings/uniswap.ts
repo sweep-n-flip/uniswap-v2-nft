@@ -1,6 +1,6 @@
 import { Address, BigInt, BigDecimal } from '@graphprotocol/graph-ts';
 
-import { Collection, Currency, Pair, PairDay } from '../types/schema';
+import { Collection, Currency, Pair, PairDay, PairMonth } from '../types/schema';
 import { Pair as PairTemplate, Wrapper as WrapperTemplate } from '../types/templates';
 import { PairCreated as PairCreatedEvent, WrapperCreated as WrapperCreatedEvent } from '../types/Factory/IUniswapV2Factory';
 import { Swap as SwapEvent, Sync as SyncEvent } from '../types/templates/Pair/IUniswapV2Pair';
@@ -105,6 +105,27 @@ function updateDailyVolume(address: Address, timestamp: BigInt, volume0: BigInt,
   pairDay.save();
 }
 
+function updateMonthlyVolume(address: Address, timestamp: BigInt, volume0: BigInt, volume1: BigInt): void {
+  let pairId = address.toHexString();
+  let pair = Pair.load(pairId);
+  let token0 = Currency.load(pair.token0);
+  let token1 = Currency.load(pair.token1);
+  let MONTH = 730 * 60 * 60;
+  let month = (timestamp.toI32() / MONTH) * MONTH;
+  let pairMonthId = pairId.concat(':').concat(month.toString());
+  let pairMonth = PairMonth.load(pairMonthId);
+  if (pairMonth == null) {
+    pairMonth = new PairMonth(pairMonthId);
+    pairMonth.pair = pairId;
+    pairMonth.month = month;
+    pairMonth.volume0 = ZERO_BIGDECIMAL;
+    pairMonth.volume1 = ZERO_BIGDECIMAL;
+  }
+  pairMonth.volume0 = pairMonth.volume0 + coins(volume0, token0.decimals);
+  pairMonth.volume1 = pairMonth.volume1 + coins(volume1, token1.decimals);
+  pairMonth.save();
+}
+
 function updatePairState(address: Address, reserve0: BigInt, reserve1: BigInt): void {
   let contract = IERC20.bind(address);
   let totalSupply = contract.try_totalSupply();
@@ -166,6 +187,7 @@ export function handleSwap(event: SwapEvent): void {
   let volume0 = event.params.amount0In > event.params.amount0Out ? event.params.amount0In - event.params.amount0Out : event.params.amount0Out - event.params.amount0In;
   let volume1 = event.params.amount1In > event.params.amount1Out ? event.params.amount1In - event.params.amount1Out : event.params.amount1Out - event.params.amount1In;
   updateDailyVolume(event.address, event.block.timestamp, volume0, volume1);
+  updateMonthlyVolume(event.address, event.block.timestamp, volume0, volume1);
 }
 
 export function handleSync(event: SyncEvent): void {

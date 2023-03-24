@@ -33,3 +33,11 @@ type PairDay @entity {
   volume0: BigDecimal!
   volume1: BigDecimal!
 }
+
+type PairMonth @entity {
+  id: ID!
+  pair: Pair!
+  month: Int!
+  volume0: BigDecimal!
+  volume1: BigDecimal!
+}

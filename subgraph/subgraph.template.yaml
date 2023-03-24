@@ -21,6 +21,7 @@ dataSources:
         - Currency
         - Pair
         - PairDay
+        - PairMonth
       abis:
         - name: IUniswapV2Factory
           file: ./abis/IUniswapV2Factory.json
@@ -53,6 +54,7 @@ templates:
         - Currency
         - Pair
         - PairDay
+        - PairMonth
       abis:
         - name: IUniswapV2Factory
           file: ./abis/IUniswapV2Factory.json
@@ -84,6 +86,7 @@ templates:
         - Currency
         - Pair
         - PairDay
+        - PairMonth
       abis:
         - name: IUniswapV2Factory
           file: ./abis/IUniswapV2Factory.json
