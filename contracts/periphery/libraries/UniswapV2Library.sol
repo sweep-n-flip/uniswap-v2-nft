@@ -2,6 +2,8 @@
 pragma solidity 0.8.9;
 
 import { IUniswapV2Pair } from "../../core/interfaces/IUniswapV2Pair.sol";
+import { IUniswapV2Factory } from "../../core/interfaces/IUniswapV2Factory.sol";
+import { DELEGATE_FACTORY, DELEGATE_INIT_CODE_HASH, DELEGATE_NET_FEE } from "../../core/Delegation.sol";
 
 library UniswapV2Library {
     // returns sorted token addresses, used to handle return values from pairs sorted in this order
@@ -12,20 +14,38 @@ library UniswapV2Library {
     }
 
     // calculates the CREATE2 address for a pair without making any external calls
-    function pairFor(address factory, address tokenA, address tokenB) internal pure returns (address pair) {
+    function pairFor(address factory, address tokenA, address tokenB) internal view returns (address pair) {
+        (pair,) = pairForWithDelegates(factory, tokenA, tokenB);
+    }
+    function pairForWithDelegates(address factory, address tokenA, address tokenB) internal view returns (address pair, bool delegates) {
         (address token0, address token1) = sortTokens(tokenA, tokenB);
-        pair = address(uint160(uint(keccak256(abi.encodePacked(
-                hex"ff",
-                factory,
-                keccak256(abi.encodePacked(token0, token1)),
-                hex"078b9cd258eb85c8adf2e2e844abae75cad974e32d646e4ff400b5d95188f968" // init code hash
-            )))));
+        delegates = IUniswapV2Factory(factory).delegates(token0, token1);
+        if (delegates) {
+            pair = address(uint160(uint(keccak256(abi.encodePacked(
+                    hex"ff",
+                    DELEGATE_FACTORY,
+                    keccak256(abi.encodePacked(token0, token1)),
+                    DELEGATE_INIT_CODE_HASH
+                )))));
+        } else {
+            pair = address(uint160(uint(keccak256(abi.encodePacked(
+                    hex"ff",
+                    factory,
+                    keccak256(abi.encodePacked(token0, token1)),
+                    hex"b85412b2be79318964695a23f77fc5af7b4e50bd7df8f21fb8fef9724a92a042" // init code hash
+                )))));
+        }
     }
 
     // fetches and sorts the reserves for a pair
     function getReserves(address factory, address tokenA, address tokenB) internal view returns (uint reserveA, uint reserveB) {
+        (reserveA, reserveB,) = getReservesWithDelegates(factory, tokenA, tokenB);
+    }
+    function getReservesWithDelegates(address factory, address tokenA, address tokenB) internal view returns (uint reserveA, uint reserveB, bool delegates) {
         (address token0,) = sortTokens(tokenA, tokenB);
-        (uint reserve0, uint reserve1,) = IUniswapV2Pair(pairFor(factory, tokenA, tokenB)).getReserves();
+        address pair;
+        (pair, delegates) = pairForWithDelegates(factory, tokenA, tokenB);
+        (uint reserve0, uint reserve1,) = IUniswapV2Pair(pair).getReserves();
         (reserveA, reserveB) = tokenA == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
     }
 
@@ -38,20 +58,26 @@ library UniswapV2Library {
 
     // given an input amount of an asset and pair reserves, returns the maximum output amount of the other asset
     function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) internal pure returns (uint amountOut) {
+        return getAmountOut(amountIn, reserveIn, reserveOut, DELEGATE_NET_FEE);
+    }
+    function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut, uint netFee) internal pure returns (uint amountOut) {
         require(amountIn > 0, "SweepnFlipLibrary: INSUFFICIENT_INPUT_AMOUNT");
         require(reserveIn > 0 && reserveOut > 0, "SweepnFlipLibrary: INSUFFICIENT_LIQUIDITY");
-        uint amountInWithFee = amountIn * 99;
+        uint amountInWithFee = amountIn * netFee;
         uint numerator = amountInWithFee * reserveOut;
-        uint denominator = reserveIn * 100 + amountInWithFee;
+        uint denominator = reserveIn * 10000 + amountInWithFee;
         amountOut = numerator / denominator;
     }
 
     // given an output amount of an asset and pair reserves, returns a required input amount of the other asset
     function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut) internal pure returns (uint amountIn) {
+        return getAmountIn(amountOut, reserveIn, reserveOut, DELEGATE_NET_FEE);
+    }
+    function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut, uint netFee) internal pure returns (uint amountIn) {
         require(amountOut > 0, "SweepnFlipLibrary: INSUFFICIENT_OUTPUT_AMOUNT");
         require(reserveIn > 0 && reserveOut > 0, "SweepnFlipLibrary: INSUFFICIENT_LIQUIDITY");
-        uint numerator = reserveIn * amountOut * 100;
-        uint denominator = (reserveOut - amountOut) * 99;
+        uint numerator = reserveIn * amountOut * 10000;
+        uint denominator = (reserveOut - amountOut) * netFee;
         amountIn = numerator / denominator + 1;
     }
 
@@ -61,8 +87,8 @@ library UniswapV2Library {
         amounts = new uint[](path.length);
         amounts[0] = amountIn;
         for (uint i; i < path.length - 1; i++) {
-            (uint reserveIn, uint reserveOut) = getReserves(factory, path[i], path[i + 1]);
-            amounts[i + 1] = getAmountOut(amounts[i], reserveIn, reserveOut);
+            (uint reserveIn, uint reserveOut, bool delegates) = getReservesWithDelegates(factory, path[i], path[i + 1]);
+            amounts[i + 1] = getAmountOut(amounts[i], reserveIn, reserveOut, delegates ? DELEGATE_NET_FEE : 9900);
         }
     }
 
@@ -72,8 +98,8 @@ library UniswapV2Library {
         amounts = new uint[](path.length);
         amounts[amounts.length - 1] = amountOut;
         for (uint i = path.length - 1; i > 0; i--) {
-            (uint reserveIn, uint reserveOut) = getReserves(factory, path[i - 1], path[i]);
-            amounts[i - 1] = getAmountIn(amounts[i], reserveIn, reserveOut);
+            (uint reserveIn, uint reserveOut, bool delegates) = getReservesWithDelegates(factory, path[i - 1], path[i]);
+            amounts[i - 1] = getAmountIn(amounts[i], reserveIn, reserveOut, delegates ? DELEGATE_NET_FEE : 9900);
         }
     }
 }

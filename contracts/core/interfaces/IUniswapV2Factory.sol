@@ -17,6 +17,8 @@ interface IUniswapV2Factory {
     function allWrappers(uint) external view returns (address wrapper);
     function allWrappersLength() external view returns (uint);
 
+    function delegates(address token0, address token1) external view returns (bool);
+
     function createPair(address tokenA, address tokenB) external returns (address pair);
 
     function createWrapper(address collection) external returns (address wrapper);
