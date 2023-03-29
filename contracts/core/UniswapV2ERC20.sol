@@ -4,8 +4,8 @@ pragma solidity 0.8.9;
 import { IUniswapV2ERC20 } from "./interfaces/IUniswapV2ERC20.sol";
 
 contract UniswapV2ERC20 is IUniswapV2ERC20 {
-    string public constant name = "SweepnFlip";
-    string public constant symbol = "SNF";
+    string public constant name = "SweepnFlip LPs";
+    string public constant symbol = "SNF-LP";
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;
