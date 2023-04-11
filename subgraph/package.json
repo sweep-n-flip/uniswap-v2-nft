@@ -4,7 +4,7 @@
     "build": "graph build",
     "clean": "rm -rf ./build/ ./src/types/ ./subgraph.yaml ./.env",
     "codegen": "graph codegen --output-dir ./src/types/",
-    "deploy:studio": "export `cat .env | egrep -v '#|^$' | xargs` && graph deploy --deploy-key ${DEPLOY_KEY} -l v1.0.5-uni --studio ${SLUG_STUDIO}-${NETWORK}",
+    "deploy:studio": "export `cat .env | egrep -v '#|^$' | xargs` && graph deploy --deploy-key ${DEPLOY_KEY} -l v1.0.6-uni --studio ${SLUG_STUDIO}-${NETWORK}",
     "deploy:hosted": "export `cat .env | egrep -v '#|^$' | xargs` && graph deploy --access-token ${ACCESS_TOKEN} --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ${USER_HOSTED}/${SLUG_HOSTED}-${NETWORK}-${ENV_HOSTED}",
     "set:mainnet": "mustache config/mainnet.json subgraph.template.yaml subgraph.yaml && mustache config/mainnet.json ../.env .env",
     "set:ropsten": "mustache config/ropsten.json subgraph.template.yaml subgraph.yaml && mustache config/ropsten.json ../.env .env",
