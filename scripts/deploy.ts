@@ -69,6 +69,9 @@ async function main(args: string[]): Promise<void> {
   const FACTORY = await deployContract('UniswapV2Factory', ADMIN);
   console.log('FACTORY=' + FACTORY);
 
+  const ROUTER = await deployContract('UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT, ONE_PERCENT);
+  console.log('ROUTER=' + ROUTER);
+
   {
     const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
     const initCodeHash = await factory._initCodeHash();
@@ -95,9 +98,6 @@ async function main(args: string[]): Promise<void> {
       if (!contents.includes(initCodeHash.substring(2))) throw new Error('Invalid initCodeHash');
     }
   }
-
-  const ROUTER = await deployContract('UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT, ONE_PERCENT);
-  console.log('ROUTER=' + ROUTER);
 
   {
     console.log('Transferring change...');
