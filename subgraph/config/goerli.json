@@ -1,6 +1,6 @@
 {
   "NETWORK": "goerli",
   "network": "goerli",
-  "factoryAddress": "0x05661efCbEd77f764caCbad9AAdC7250EB34c3C2",
-  "factoryStartBlock": "8739756"
+  "factoryAddress": "0xB8900621B03892c2D030e05Cb9E01F6474814f6a",
+  "factoryStartBlock": "8845586"
 }

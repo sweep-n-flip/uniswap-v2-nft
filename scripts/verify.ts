@@ -59,15 +59,19 @@ async function main(args: string[]): Promise<void> {
   const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
   console.log('BLOCKIES=' + BLOCKIES);
 
-  const ROUTER = '0x54a41025fa2628713E70FF07d5CCf9Dc56C7CE12';
+  const ROUTER = '0xB333AF3B159AC218DF43C9b85Cb24A724b72fb45';
+  console.log('ROUTER=' + ROUTER);
   const router = await hardhat.ethers.getContractAt('UniswapV2Router01Collection', ROUTER);
 
   const FACTORY = await router.factory();
+  console.log('FACTORY=' + FACTORY);
   const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
 
   const WRAPPER = await factory.getWrapper(BLOCKIES);
+  console.log('WRAPPER=' + WRAPPER);
 
   const PAIR = await factory.getPair(WETH, WRAPPER);
+  console.log('PAIR=' + PAIR);
 
   await verifyContract(ROUTER, 'contracts/periphery/UniswapV2Router01Collection.sol:UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT, ONE_PERCENT);
   await verifyContract(FACTORY, 'contracts/core/UniswapV2Factory.sol:UniswapV2Factory', ADMIN);
