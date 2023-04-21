@@ -1,5 +1,6 @@
 import fs from 'fs';
 import hardhat from 'hardhat';
+import { EOL } from 'os';
 
 function _throw(message: string): never { throw new Error(message); }
 
@@ -56,7 +57,7 @@ async function main(args: string[]): Promise<void> {
   {
     // sanity check
     const filename = __dirname + '/../contracts/core/Delegation.sol';
-    const contents = fs.readFileSync(filename);
+    const contents = fs.readFileSync(filename).toString().split(EOL).filter((line) => !line.match(/^\s*\/\//)).join(EOL);
     if (!contents.includes(DELEGATE_FACTORY)) throw new Error('Invalid delegation');
   }
 
@@ -94,7 +95,7 @@ async function main(args: string[]): Promise<void> {
     {
       // sanity check
       const filename = __dirname + '/../contracts/periphery/libraries/UniswapV2Library.sol';
-      const contents = fs.readFileSync(filename);
+      const contents = fs.readFileSync(filename).toString().split(EOL).filter((line) => !line.match(/^\s*\/\//)).join(EOL);
       if (!contents.includes(initCodeHash.substring(2))) throw new Error('Invalid initCodeHash');
     }
   }
