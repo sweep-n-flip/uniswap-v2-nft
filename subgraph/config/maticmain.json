@@ -1,6 +1,6 @@
 {
   "NETWORK": "maticmain",
   "network": "matic",
-  "factoryAddress": "0x0000000000000000000000000000000000000000",
-  "factoryStartBlock": "0"
+  "factoryAddress": "0xB8900621B03892c2D030e05Cb9E01F6474814f6a",
+  "factoryStartBlock": "41787040"
 }
