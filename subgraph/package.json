@@ -18,7 +18,8 @@
     "set:ftmmain": "mustache config/ftmmain.json subgraph.template.yaml subgraph.yaml && mustache config/ftmmain.json ../.env .env",
     "set:ftmtest": "mustache config/ftmtest.json subgraph.template.yaml subgraph.yaml && mustache config/ftmtest.json ../.env .env",
     "set:maticmain": "mustache config/maticmain.json subgraph.template.yaml subgraph.yaml && mustache config/maticmain.json ../.env .env",
-    "set:matictest": "mustache config/matictest.json subgraph.template.yaml subgraph.yaml && mustache config/matictest.json ../.env .env"
+    "set:matictest": "mustache config/matictest.json subgraph.template.yaml subgraph.yaml && mustache config/matictest.json ../.env .env",
+    "set:arbmain": "mustache config/arbmain.json subgraph.template.yaml subgraph.yaml && mustache config/arbmain.json ../.env .env"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.21.1",

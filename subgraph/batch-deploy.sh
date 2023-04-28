@@ -12,3 +12,4 @@ npm run clean && npm run set:ftmmain && npm run codegen && npm run build && npm 
 #npm run clean && npm run set:ftmtest && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:maticmain && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:matictest && npm run codegen && npm run build && npm run deploy:studio
+npm run clean && npm run set:arbmain && npm run codegen && npm run build && npm run deploy:studio

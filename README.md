@@ -33,3 +33,14 @@ Polygon Matic:
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Hosted | maticmain (137)   | [`QmRgdodPnNTFSSHL1z6XEubniLCfCq62vAvdRDw47Tzj5v`](https://api.thegraph.com/subgraphs/id/QmRgdodPnNTFSSHL1z6XEubniLCfCq62vAvdRDw47Tzj5v) |
 | [ALL](/subgraph/schema.graphql) | Hosted | matictest (80001) | [`QmbqPnwMbwJzUWgXDciSwgANjFmyP8PAvQQ7ACgw73S2uM`](https://api.thegraph.com/subgraphs/id/QmbqPnwMbwJzUWgXDciSwgANjFmyP8PAvQQ7ACgw73S2uM) |
+
+Arbitrum One:
+
+| Contract     | Network (ID)      | Address                                                                                                                         |
+| ------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| ROUTER       | arbmain (42161)   | [0xB333AF3B159AC218DF43C9b85Cb24A724b72fb45](https://arbiscan.io/address/0xB333AF3B159AC218DF43C9b85Cb24A724b72fb45)            |
+| FACTORY      | arbmain (42161)   | [0xB8900621B03892c2D030e05Cb9E01F6474814f6a](https://arbiscan.io/address/0xB8900621B03892c2D030e05Cb9E01F6474814f6a)            |
+
+| Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
+| ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [ALL](/subgraph/schema.graphql) | Hosted | arbmain (42161)   | [`QmR5P1aaTswtGLKVARuPuDmW7zMsapDh5DWgFwi5yVRGUM`](https://api.thegraph.com/subgraphs/id/QmR5P1aaTswtGLKVARuPuDmW7zMsapDh5DWgFwi5yVRGUM) |

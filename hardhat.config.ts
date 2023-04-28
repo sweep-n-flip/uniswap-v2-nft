@@ -20,6 +20,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   'bscmain': [56, 'https://bsc-dataseed.binance.org'], // bnb smart chain
   'ftmmain': [250, 'https://rpc.ftm.tools'], // fantom
   'maticmain': [137, 'https://polygon-rpc.com'], // polygon
+  'arbmain': [42161, 'https://arb1.arbitrum.io/rpc'], // arbitrum one
   // testnets
   'ropsten': [3, 'https://ropsten.infura.io/v3/' + infuraProjectId], // ropsten
   'rinkeby': [4, 'https://rinkeby.infura.io/v3/' + infuraProjectId], // rinkeby
@@ -59,6 +60,7 @@ export default {
       bsc: etherscan['bscmain'], // bnb smart chain
       opera: etherscan['ftmmain'], // fantom
       polygon: etherscan['maticmain'], // polygon
+      arbitrumOne: etherscan['arbmain'], // arbitrum one
       // testnets
       ropsten: etherscan['mainnet'], // ropsten
       rinkeby: etherscan['mainnet'], // rinkeby
