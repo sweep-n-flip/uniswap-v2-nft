@@ -43,4 +43,4 @@ Arbitrum One:
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Hosted | arbmain (42161)   | [`QmR5P1aaTswtGLKVARuPuDmW7zMsapDh5DWgFwi5yVRGUM`](https://api.thegraph.com/subgraphs/id/QmR5P1aaTswtGLKVARuPuDmW7zMsapDh5DWgFwi5yVRGUM) |
+| [ALL](/subgraph/schema.graphql) | Studio | arbmain (42161)   | [`QmR5P1aaTswtGLKVARuPuDmW7zMsapDh5DWgFwi5yVRGUM`](https://api.thegraph.com/subgraphs/id/QmR5P1aaTswtGLKVARuPuDmW7zMsapDh5DWgFwi5yVRGUM) |
