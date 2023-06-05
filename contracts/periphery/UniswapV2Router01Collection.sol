@@ -17,13 +17,12 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
     address public override marketplaceAdmin;
     address public override marketplaceWallet;
     uint public override marketplaceFee;
-    uint public override royaltyFeeCap;
+    mapping(address => uint) public override royaltyFeeCap;
 
-    constructor(address _factory, address _WETH, address _marketplaceAdmin, address _marketplaceWallet, uint _marketplaceFee, uint _royaltyFeeCap) UniswapV2Router01(_factory, _WETH) {
+    constructor(address _factory, address _WETH, address _marketplaceAdmin, address _marketplaceWallet, uint _marketplaceFee) UniswapV2Router01(_factory, _WETH) {
         marketplaceAdmin = _marketplaceAdmin;
         marketplaceWallet = _marketplaceWallet;
         marketplaceFee = _marketplaceFee;
-        royaltyFeeCap = _royaltyFeeCap;
     }
 
     function updateAdmin(address _marketplaceAdmin) external
@@ -33,13 +32,21 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
         emit UpdateAdmin(_marketplaceAdmin);
     }
 
-    function updateFeeConfig(address _marketplaceWallet, uint _marketplaceFee, uint _royaltyFeeCap) external
+    function updateFeeConfig(address _marketplaceWallet, uint _marketplaceFee) external
     {
         require(msg.sender == marketplaceAdmin, "SweepnFlipRouter: FORBIDDEN");
+        require(_marketplaceFee <= 100e16, "SweepnFlipRouter: INVALID_FEE");
         marketplaceWallet = _marketplaceWallet;
         marketplaceFee = _marketplaceFee;
-        royaltyFeeCap = _royaltyFeeCap;
-        emit UpdateFeeConfig(_marketplaceWallet, _marketplaceFee, _royaltyFeeCap);
+        emit UpdateFeeConfig(_marketplaceWallet, _marketplaceFee);
+    }
+
+    function updateRoyaltyFeeCap(address collection, uint _royaltyFeeCap) external
+    {
+        require(msg.sender == marketplaceAdmin || msg.sender == collection, "SweepnFlipRouter: FORBIDDEN");
+        require(_royaltyFeeCap <= 100e16, "SweepnFlipRouter: INVALID_FEE");
+        royaltyFeeCap[collection] = _royaltyFeeCap;
+        emit UpdateRoyaltyFeeCap(collection, _royaltyFeeCap);
     }
 
     function _getWrapper(address collection) internal returns (address wrapper) {
@@ -197,6 +204,7 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
         uint[] memory tokenIdsIn,
         uint amountOutMin,
         address[] memory path,
+        bool capRoyaltyFee,
         address to,
         uint deadline
     ) external override ensure(deadline) returns (uint[] memory amounts) {
@@ -204,10 +212,10 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
         path[0] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
         uint amountOut = amounts[amounts.length - 1];
-        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, royaltyFeeCap);
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, capRoyaltyFee ? royaltyFeeCap[collection] : 100e16);
+        _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
         uint netAmountOut = amountOut - totalRoyaltyAmount;
         require(netAmountOut >= amountOutMin, "SweepnFlipRouter: INSUFFICIENT_OUTPUT_AMOUNT");
-        _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
         if (totalRoyaltyAmount == 0) {
             _swap(amounts, path, to);
         } else {
@@ -221,6 +229,7 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
         uint[] memory tokenIdsOut,
         uint amountInMax,
         address[] memory path,
+        bool capRoyaltyFee,
         address to,
         uint deadline
     ) external override ensure(deadline) returns (uint[] memory amounts) {
@@ -228,16 +237,19 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
         path[path.length - 1] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
         uint amountIn = amounts[0];
-        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, royaltyFeeCap);
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, capRoyaltyFee ? royaltyFeeCap[collection] : 100e16);
         require(amountIn + totalRoyaltyAmount <= amountInMax, "SweepnFlipRouter: EXCESSIVE_INPUT_AMOUNT");
-        TransferHelper.safeTransferFrom(path[0], msg.sender, UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn);
+        {
+        address pair = UniswapV2Library.pairFor(factory, path[0], path[1]);
+        TransferHelper.safeTransferFrom(path[0], msg.sender, pair, amountIn);
+        }
         _swap(amounts, path, address(this));
         IWERC721(path[path.length - 1]).burn(to, tokenIdsOut);
         if (totalRoyaltyAmount > 0) {
             TransferHelper.safeTransferFromBatch(path[0], msg.sender, royaltyReceivers, royaltyAmounts);
         }
     }
-    function swapExactTokensForETHCollection(uint[] memory tokenIdsIn, uint amountOutMin, address[] memory path, address to, uint deadline)
+    function swapExactTokensForETHCollection(uint[] memory tokenIdsIn, uint amountOutMin, address[] memory path, bool capRoyaltyFee, address to, uint deadline)
         external
         override
         ensure(deadline)
@@ -248,10 +260,10 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
         path[0] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
         uint amountOut = amounts[amounts.length - 1];
-        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, royaltyFeeCap);
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, capRoyaltyFee ? royaltyFeeCap[collection] : 100e16);
+        _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
         uint netAmountOut = amountOut - totalRoyaltyAmount;
         require(netAmountOut >= amountOutMin, "SweepnFlipRouter: INSUFFICIENT_OUTPUT_AMOUNT");
-        _mint(path[0], UniswapV2Library.pairFor(factory, path[0], path[1]), tokenIdsIn);
         _swap(amounts, path, address(this));
         IWETH(WETH).withdraw(amountOut);
         TransferHelper.safeTransferETH(to, netAmountOut);
@@ -259,7 +271,7 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
             TransferHelper.safeTransferETHBatch(royaltyReceivers, royaltyAmounts);
         }
     }
-    function swapETHForExactTokensCollection(uint[] memory tokenIdsOut, address[] memory path, address to, uint deadline)
+    function swapETHForExactTokensCollection(uint[] memory tokenIdsOut, address[] memory path, bool capRoyaltyFee, address to, uint deadline)
         external
         override
         payable
@@ -271,11 +283,14 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
         path[path.length - 1] = _getWrapper(collection);
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
         uint amountIn = amounts[0];
-        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, royaltyFeeCap);
+        (address[] memory royaltyReceivers, uint[] memory royaltyAmounts, uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, capRoyaltyFee ? royaltyFeeCap[collection] : 100e16);
         uint grossAmountIn = amountIn + totalRoyaltyAmount;
         require(grossAmountIn <= msg.value, "SweepnFlipRouter: EXCESSIVE_INPUT_AMOUNT");
         IWETH(WETH).deposit{value: amountIn}();
-        assert(IWETH(WETH).transfer(UniswapV2Library.pairFor(factory, path[0], path[1]), amountIn));
+        {
+        address pair = UniswapV2Library.pairFor(factory, path[0], path[1]);
+        assert(IWETH(WETH).transfer(pair, amountIn));
+        }
         _swap(amounts, path, address(this));
         IWERC721(path[path.length - 1]).burn(to, tokenIdsOut);
         if (totalRoyaltyAmount > 0) {
@@ -284,28 +299,29 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
         if (msg.value > grossAmountIn) TransferHelper.safeTransferETH(msg.sender, msg.value - grossAmountIn); // refund dust eth, if any
     }
 
-    function getAmountsOutCollection(uint[] memory tokenIdsIn, address[] memory path) external view override returns (uint[] memory amounts)
+    function getAmountsOutCollection(uint[] memory tokenIdsIn, address[] memory path, bool capRoyaltyFee) external view override returns (uint[] memory amounts)
     {
         address collection = path[0];
         path[0] = IUniswapV2Factory(factory).getWrapper(collection);
         amounts = UniswapV2Library.getAmountsOut(factory, tokenIdsIn.length * 1e18, path);
         uint amountOut = amounts[amounts.length - 1];
-        (,,uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, royaltyFeeCap);
+        (,,uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsIn, amountOut, marketplaceWallet, marketplaceFee, capRoyaltyFee ? royaltyFeeCap[collection] : 100e16);
         amounts[amounts.length - 1] = amountOut - totalRoyaltyAmount;
         return amounts;
     }
 
-    function getAmountsInCollection(uint[] memory tokenIdsOut, address[] memory path) external view override returns (uint[] memory amounts)
+    function getAmountsInCollection(uint[] memory tokenIdsOut, address[] memory path, bool capRoyaltyFee) external view override returns (uint[] memory amounts)
     {
         address collection = path[path.length - 1];
         path[path.length - 1] = IUniswapV2Factory(factory).getWrapper(collection);
         amounts = UniswapV2Library.getAmountsIn(factory, tokenIdsOut.length * 1e18, path);
         uint amountIn = amounts[0];
-        (,,uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, royaltyFeeCap);
+        (,,uint totalRoyaltyAmount) = RoyaltyHelper.getRoyaltyInfo(collection, tokenIdsOut, amountIn, marketplaceWallet, marketplaceFee, capRoyaltyFee ? royaltyFeeCap[collection] : 100e16);
         amounts[0] = amountIn + totalRoyaltyAmount;
         return amounts;
     }
 
     event UpdateAdmin(address marketplaceAdmin);
-    event UpdateFeeConfig(address marketplaceWallet, uint marketplaceFee, uint royaltyFeeCap);
+    event UpdateFeeConfig(address marketplaceWallet, uint marketplaceFee);
+    event UpdateRoyaltyFeeCap(address indexed collection, uint royaltyFeeCap);
 }

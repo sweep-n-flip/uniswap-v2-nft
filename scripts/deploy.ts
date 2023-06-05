@@ -71,7 +71,7 @@ async function main(args: string[]): Promise<void> {
   const FACTORY = await deployContract('UniswapV2Factory', ADMIN);
   console.log('FACTORY=' + FACTORY);
 
-  const ROUTER = await deployContract('UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT, ONE_PERCENT);
+  const ROUTER = await deployContract('UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT);
   console.log('ROUTER=' + ROUTER);
 
   {

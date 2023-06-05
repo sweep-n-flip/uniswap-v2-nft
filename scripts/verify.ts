@@ -74,7 +74,7 @@ async function main(args: string[]): Promise<void> {
   const PAIR = await factory.getPair(WETH, WRAPPER);
   console.log('PAIR=' + PAIR);
 
-  await verifyContract(ROUTER, 'contracts/periphery/UniswapV2Router01Collection.sol:UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT, ONE_PERCENT);
+  await verifyContract(ROUTER, 'contracts/periphery/UniswapV2Router01Collection.sol:UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT);
   await verifyContract(FACTORY, 'contracts/core/UniswapV2Factory.sol:UniswapV2Factory', ADMIN);
   await verifyContract(PAIR, 'contracts/core/UniswapV2Pair.sol:UniswapV2Pair');
   await verifyContract(WRAPPER, 'contracts/core/WERC721.sol:WERC721');

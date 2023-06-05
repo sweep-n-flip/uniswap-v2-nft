@@ -7,7 +7,7 @@ interface IUniswapV2Router01Collection is IUniswapV2Router01 {
     function marketplaceAdmin() external view returns (address _marketplaceAdmin);
     function marketplaceWallet() external view returns (address _marketplaceWallet);
     function marketplaceFee() external view returns (uint _marketplaceFee);
-    function royaltyFeeCap() external view returns (uint _royaltyFeeCap);
+    function royaltyFeeCap(address collection) external view returns (uint _royaltyFeeCap);
 
     function addLiquidityCollection(
         address tokenA,
@@ -67,6 +67,7 @@ interface IUniswapV2Router01Collection is IUniswapV2Router01 {
         uint[] memory tokenIdsIn,
         uint amountOutMin,
         address[] calldata path,
+        bool capRoyaltyFee,
         address to,
         uint deadline
     ) external returns (uint[] memory amounts);
@@ -74,17 +75,18 @@ interface IUniswapV2Router01Collection is IUniswapV2Router01 {
         uint[] memory tokenIdsOut,
         uint amountInMax,
         address[] memory path,
+        bool capRoyaltyFee,
         address to,
         uint deadline
     ) external returns (uint[] memory amounts);
-    function swapExactTokensForETHCollection(uint[] memory tokenIdsIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
+    function swapExactTokensForETHCollection(uint[] memory tokenIdsIn, uint amountOutMin, address[] calldata path, bool capRoyaltyFee, address to, uint deadline)
         external
         returns (uint[] memory amounts);
-    function swapETHForExactTokensCollection(uint[] memory tokenIdsOut, address[] memory path, address to, uint deadline)
+    function swapETHForExactTokensCollection(uint[] memory tokenIdsOut, address[] memory path, bool capRoyaltyFee, address to, uint deadline)
         external
         payable
         returns (uint[] memory amounts);
 
-    function getAmountsOutCollection(uint[] memory tokenIdsIn, address[] memory path) external view returns (uint[] memory amounts);
-    function getAmountsInCollection(uint[] memory tokenIdsOut, address[] memory path) external view returns (uint[] memory amounts);
+    function getAmountsOutCollection(uint[] memory tokenIdsIn, address[] memory path, bool capRoyaltyFee) external view returns (uint[] memory amounts);
+    function getAmountsInCollection(uint[] memory tokenIdsOut, address[] memory path, bool capRoyaltyFee) external view returns (uint[] memory amounts);
 }
