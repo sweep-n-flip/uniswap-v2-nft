@@ -60,7 +60,8 @@ async function main(args: string[]): Promise<void> {
   const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
   console.log('BLOCKIES=' + BLOCKIES);
 
-  const ROUTER = '0xB333AF3B159AC218DF43C9b85Cb24A724b72fb45';
+  // const ROUTER = '0xB333AF3B159AC218DF43C9b85Cb24A724b72fb45'; // legacy
+  const ROUTER = '0xeBc778972fe281494A3d1742DB936DC4C5d0dD84';
   console.log('ROUTER=' + ROUTER);
   const router = await hardhat.ethers.getContractAt('UniswapV2Router01Collection', ROUTER);
 
