@@ -19,10 +19,16 @@ interface IUniswapV2Factory {
 
     function delegates(address token0, address token1) external view returns (bool);
 
+    function router(address router) external view returns (bool);
+    function routerSetter() external view returns (address);
+
     function createPair(address tokenA, address tokenB) external returns (address pair);
 
     function createWrapper(address collection) external returns (address wrapper);
 
     function setFeeTo(address) external;
     function setFeeToSetter(address) external;
+
+    function setRouter(address, bool) external;
+    function setRouterSetter(address) external;
 }

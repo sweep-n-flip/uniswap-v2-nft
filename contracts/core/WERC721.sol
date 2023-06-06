@@ -3,6 +3,7 @@ pragma solidity 0.8.9;
 
 import { IWERC721 } from "./interfaces/IWERC721.sol";
 import { IERC721 } from "./interfaces/IERC721.sol";
+import { IUniswapV2Factory } from "./interfaces/IUniswapV2Factory.sol";
 
 contract WERC721 is IWERC721 {
     string public constant name = "Wrapped NFT";
@@ -21,6 +22,11 @@ contract WERC721 is IWERC721 {
         unlocked = 0;
         _;
         unlocked = 1;
+    }
+
+    modifier onlyRouter() {
+        require(IUniswapV2Factory(factory).router(msg.sender), "SweepnFlip: FORBIDDEN");
+        _;
     }
 
     constructor() {
@@ -73,11 +79,11 @@ contract WERC721 is IWERC721 {
         return true;
     }
 
-    function mint(address to, uint[] memory tokenIds) external lock {
+    function mint(address to, uint[] memory tokenIds) external onlyRouter lock {
         _mint(msg.sender, to, tokenIds);
     }
 
-    function burn(address to, uint[] memory tokenIds) external lock {
+    function burn(address to, uint[] memory tokenIds) external onlyRouter lock {
         _burn(msg.sender, to, tokenIds);
     }
 

@@ -60,8 +60,9 @@ async function main(args: string[]): Promise<void> {
   const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
   console.log('BLOCKIES=' + BLOCKIES);
 
-  // const ROUTER = '0xB333AF3B159AC218DF43C9b85Cb24A724b72fb45'; // legacy
-  const ROUTER = '0xeBc778972fe281494A3d1742DB936DC4C5d0dD84';
+  // const ROUTER = '0xB333AF3B159AC218DF43C9b85Cb24A724b72fb45'; // old fee cap
+  // const ROUTER = '0xeBc778972fe281494A3d1742DB936DC4C5d0dD84'; // new fee cap
+  const ROUTER = '0x0000000000000000000000000000000000000000';
   console.log('ROUTER=' + ROUTER);
   const router = await hardhat.ethers.getContractAt('UniswapV2Router01Collection', ROUTER);
 
@@ -76,7 +77,7 @@ async function main(args: string[]): Promise<void> {
   console.log('PAIR=' + PAIR);
 
   await verifyContract(ROUTER, 'contracts/periphery/UniswapV2Router01Collection.sol:UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT);
-  await verifyContract(FACTORY, 'contracts/core/UniswapV2Factory.sol:UniswapV2Factory', ADMIN);
+  await verifyContract(FACTORY, 'contracts/core/UniswapV2Factory.sol:UniswapV2Factory', ADMIN, FROM);
   await verifyContract(PAIR, 'contracts/core/UniswapV2Pair.sol:UniswapV2Pair');
   await verifyContract(WRAPPER, 'contracts/core/WERC721.sol:WERC721');
 

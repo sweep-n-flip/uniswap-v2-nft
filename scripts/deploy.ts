@@ -68,11 +68,23 @@ async function main(args: string[]): Promise<void> {
   const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
   console.log('BLOCKIES=' + BLOCKIES);
 
-  const FACTORY = await deployContract('UniswapV2Factory', ADMIN);
+  const FACTORY = await deployContract('UniswapV2Factory', ADMIN, FROM);
   console.log('FACTORY=' + FACTORY);
 
   const ROUTER = await deployContract('UniswapV2Router01Collection', FACTORY, WETH, ADMIN, ADMIN, HALF_PERCENT);
   console.log('ROUTER=' + ROUTER);
+
+  {
+    const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
+    {
+      const tx = await factory.setRouter(ROUTER, true);
+      await tx.wait();
+    }
+    {
+      const tx = await factory.setRouterSetter(ADMIN);
+      await tx.wait();
+    }
+  }
 
   {
     const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);

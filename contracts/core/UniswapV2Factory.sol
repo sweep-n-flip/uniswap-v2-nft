@@ -21,8 +21,12 @@ contract UniswapV2Factory is IUniswapV2Factory {
 
     mapping(address => mapping(address => bool)) public delegates;
 
-    constructor(address _feeToSetter) {
+    mapping(address => bool) public router;
+    address public routerSetter;
+
+    constructor(address _feeToSetter, address _routerSetter) {
         feeToSetter = _feeToSetter;
+        routerSetter = _routerSetter;
     }
 
     function allPairsLength() external view returns (uint) {
@@ -78,6 +82,16 @@ contract UniswapV2Factory is IUniswapV2Factory {
     function setFeeToSetter(address _feeToSetter) external {
         require(msg.sender == feeToSetter, "SweepnFlip: FORBIDDEN");
         feeToSetter = _feeToSetter;
+    }
+
+    function setRouter(address _router, bool _enabled) external {
+        require(msg.sender == routerSetter, "SweepnFlip: FORBIDDEN");
+        router[_router] = _enabled;
+    }
+
+    function setRouterSetter(address _routerSetter) external {
+        require(msg.sender == routerSetter, "SweepnFlip: FORBIDDEN");
+        routerSetter = _routerSetter;
     }
 
     function _initCodeHash() external pure returns (bytes32) {
