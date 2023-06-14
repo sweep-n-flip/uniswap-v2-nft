@@ -77,10 +77,12 @@ async function main(args: string[]): Promise<void> {
   {
     const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
     {
+      console.log('Setting factory router...');
       const tx = await factory.setRouter(ROUTER, true);
       await tx.wait();
     }
     {
+      console.log('Setting factory router setter...');
       const tx = await factory.setRouterSetter(ADMIN);
       await tx.wait();
     }
@@ -94,6 +96,7 @@ async function main(args: string[]): Promise<void> {
     const WRAPPER = await factory.callStatic.createWrapper(BLOCKIES);
     console.log('WRAPPER=' + WRAPPER);
     {
+      console.log('Creating wrapper...');
       const tx = await factory.createWrapper(BLOCKIES);
       await tx.wait();
     }
@@ -101,6 +104,7 @@ async function main(args: string[]): Promise<void> {
     const PAIR = await factory.callStatic.createPair(WETH, WRAPPER);
     console.log('PAIR=' + PAIR);
     {
+      console.log('Creating pair...');
       const tx = await factory.createPair(WETH, WRAPPER);
       await tx.wait();
     }
