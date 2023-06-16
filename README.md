@@ -10,14 +10,14 @@ Ethereum:
 
 | Contract     | Network (ID)      | Address                                                                                                                         |
 | ------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| ROUTER       | mainnet (1)       | [0x0000000000000000000000000000000000000000](https://etherscan.io/address/0x0000000000000000000000000000000000000000)           |
-| FACTORY      | mainnet (1)       | [0x0000000000000000000000000000000000000000](https://etherscan.io/address/0x0000000000000000000000000000000000000000)           |
+| ROUTER       | mainnet (1)       | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://etherscan.io/address/0x151522484121f4e28eA24c8b5d827132775a93FE)           |
+| FACTORY      | mainnet (1)       | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://etherscan.io/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1)           |
 | ROUTER       | goerli (5)        | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://goerli.etherscan.io/address/0x151522484121f4e28eA24c8b5d827132775a93FE)    |
 | FACTORY      | goerli (5)        | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://goerli.etherscan.io/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1)    |
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Studio | mainnet (1)       | [`Qmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm`](https://api.thegraph.com/subgraphs/id/Qmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm) |
+| [ALL](/subgraph/schema.graphql) | Studio | mainnet (1)       | [`QmXSFSFo7zMdAYMTj4PXLaREdskoZHjRPrcd1f3AkqPL7m`](https://api.thegraph.com/subgraphs/id/QmXSFSFo7zMdAYMTj4PXLaREdskoZHjRPrcd1f3AkqPL7m) |
 | [ALL](/subgraph/schema.graphql) | Studio | goerli (5)        | [`QmVZEn4UASxUWsW8BkEaoy7bGRE7fziy2oCS31eLmLP2hw`](https://api.thegraph.com/subgraphs/id/QmPgzxAuAMYpKbiRrf72uQ1Sz7HAsajNc3ch4b173D7268) |
 
 Polygon Matic:
