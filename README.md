@@ -26,13 +26,13 @@ Polygon Matic:
 | ------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | ROUTER       | maticmain (137)   | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://polygonscan.com/address/0x151522484121f4e28eA24c8b5d827132775a93FE)        |
 | FACTORY      | maticmain (137)   | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://polygonscan.com/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1)        |
-| ROUTER       | matictest (80001) | [0x0000000000000000000000000000000000000000](https://mumbai.polygonscan.com/address/0x0000000000000000000000000000000000000000) |
-| FACTORY      | matictest (80001) | [0x0000000000000000000000000000000000000000](https://mumbai.polygonscan.com/address/0x0000000000000000000000000000000000000000) |
+| ROUTER       | matictest (80001) | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://mumbai.polygonscan.com/address/0x151522484121f4e28eA24c8b5d827132775a93FE) |
+| FACTORY      | matictest (80001) | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://mumbai.polygonscan.com/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1) |
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Hosted | maticmain (137)   | [`QmXSdbcnTz6ji57RrwoVPHCQtRwP5X8uNFPbakLCQWonKv`](https://api.thegraph.com/subgraphs/id/QmXSdbcnTz6ji57RrwoVPHCQtRwP5X8uNFPbakLCQWonKv) |
-| [ALL](/subgraph/schema.graphql) | Hosted | matictest (80001) | [`Qmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm`](https://api.thegraph.com/subgraphs/id/Qmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm) |
+| [ALL](/subgraph/schema.graphql) | Hosted | matictest (80001) | [`QmPfo2nodEXEWHiowGamgnbshym5HsCnF4e31xfsg41GhH`](https://api.thegraph.com/subgraphs/id/QmPfo2nodEXEWHiowGamgnbshym5HsCnF4e31xfsg41GhH) |
 
 Arbitrum One:
 
