@@ -1,6 +1,6 @@
 {
   "NETWORK": "arbmain",
   "network": "arbitrum-one",
-  "factoryAddress": "0x0000000000000000000000000000000000000000",
-  "factoryStartBlock": "0"
+  "factoryAddress": "0x16eD649675e6Ed9F1480091123409B4b8D228dC1",
+  "factoryStartBlock": "101851523"
 }

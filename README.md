@@ -38,9 +38,9 @@ Arbitrum One:
 
 | Contract     | Network (ID)      | Address                                                                                                                         |
 | ------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| ROUTER       | arbmain (42161)   | [0x0000000000000000000000000000000000000000](https://arbiscan.io/address/0x0000000000000000000000000000000000000000)            |
-| FACTORY      | arbmain (42161)   | [0x0000000000000000000000000000000000000000](https://arbiscan.io/address/0x0000000000000000000000000000000000000000)            |
+| ROUTER       | arbmain (42161)   | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://arbiscan.io/address/0x151522484121f4e28eA24c8b5d827132775a93FE)            |
+| FACTORY      | arbmain (42161)   | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://arbiscan.io/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1)            |
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Studio | arbmain (42161)   | [`Qmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm`](https://api.thegraph.com/subgraphs/id/Qmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm) |
+| [ALL](/subgraph/schema.graphql) | Studio | arbmain (42161)   | [`QmYwV8zSpU9neqCtXXcey9y7beNZTxCABFtwKEvsgZ1TiA`](https://api.thegraph.com/subgraphs/id/QmYwV8zSpU9neqCtXXcey9y7beNZTxCABFtwKEvsgZ1TiA) |
