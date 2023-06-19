@@ -1,6 +1,6 @@
-import { Address, BigInt, BigDecimal } from '@graphprotocol/graph-ts';
+import { Address, BigInt, BigDecimal, Bytes } from '@graphprotocol/graph-ts';
 
-import { Collection, Currency, Pair, PairDay, PairMonth } from '../types/schema';
+import { Collection, Currency, Pair, PairDay, PairMonth, Swap, Counter } from '../types/schema';
 import { Pair as PairTemplate, Wrapper as WrapperTemplate } from '../types/templates';
 import { PairCreated as PairCreatedEvent, WrapperCreated as WrapperCreatedEvent } from '../types/Factory/IUniswapV2Factory';
 import { Swap as SwapEvent, Sync as SyncEvent } from '../types/templates/Pair/IUniswapV2Pair';
@@ -169,6 +169,35 @@ function removeWrapperItems(address: Address, items: BigInt[]): void {
   currency.save();
 }
 
+function nextSwapId(): BigInt {
+  let counter = Counter.load('SwapCount');
+  if (counter == null) {
+    counter = new Counter('SwapCount');
+    counter.value = ZERO_BIGINT;
+  }
+  let swapId = counter.value + BigInt.fromI32(1);
+  counter.value = swapId;
+  counter.save();
+  return swapId;
+}
+
+function registerSwap(_swapId: BigInt, txId: Bytes, origin: Address, address: Address, type: String, volume0: BigInt, volume1: BigInt, timestamp: BigInt): void {
+  let pairId = address.toHexString();
+  let pair = Pair.load(pairId);
+  let token0 = Currency.load(pair.token0);
+  let token1 = Currency.load(pair.token1);
+  let swapId = _swapId.toString();
+  let swap = new Swap(swapId);
+  swap.txId = txId;
+  swap.origin = origin;
+  swap.pair = pair.id;
+  swap.type = type;
+  swap.volume0 = coins(volume0, token0.decimals);
+  swap.volume1 = coins(volume1, token1.decimals);
+  swap.timestamp = timestamp.toI32();
+  swap.save();
+}
+
 export function handlePairCreated(event: PairCreatedEvent): void {
   let token0 = registerCurrency(event.params.token0);
   let token1 = registerCurrency(event.params.token1);
@@ -184,10 +213,15 @@ export function handleWrapperCreated(event: WrapperCreatedEvent): void {
 }
 
 export function handleSwap(event: SwapEvent): void {
-  let volume0 = event.params.amount0In > event.params.amount0Out ? event.params.amount0In - event.params.amount0Out : event.params.amount0Out - event.params.amount0In;
-  let volume1 = event.params.amount1In > event.params.amount1Out ? event.params.amount1In - event.params.amount1Out : event.params.amount1Out - event.params.amount1In;
+  let sell0 = event.params.amount0In > event.params.amount0Out;
+  let sell1 = event.params.amount1In > event.params.amount1Out;
+  let volume0 = sell0 ? event.params.amount0In - event.params.amount0Out : event.params.amount0Out - event.params.amount0In;
+  let volume1 = sell1 ? event.params.amount1In - event.params.amount1Out : event.params.amount1Out - event.params.amount1In;
   updateDailyVolume(event.address, event.block.timestamp, volume0, volume1);
   updateMonthlyVolume(event.address, event.block.timestamp, volume0, volume1);
+  let swapId = nextSwapId();
+  let type = !sell0 && sell1 ? 'BUY0_SELL1' : sell0 && !sell1 ? 'SELL0_BUY1' : 'OTHER';
+  registerSwap(swapId, event.transaction.hash, event.transaction.from, event.address, type, volume0, volume1, event.block.timestamp);
 }
 
 export function handleSync(event: SyncEvent): void {

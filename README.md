@@ -17,8 +17,8 @@ Ethereum:
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Studio | mainnet (1)       | [`QmXSFSFo7zMdAYMTj4PXLaREdskoZHjRPrcd1f3AkqPL7m`](https://api.thegraph.com/subgraphs/id/QmXSFSFo7zMdAYMTj4PXLaREdskoZHjRPrcd1f3AkqPL7m) |
-| [ALL](/subgraph/schema.graphql) | Studio | goerli (5)        | [`QmVZEn4UASxUWsW8BkEaoy7bGRE7fziy2oCS31eLmLP2hw`](https://api.thegraph.com/subgraphs/id/QmPgzxAuAMYpKbiRrf72uQ1Sz7HAsajNc3ch4b173D7268) |
+| [ALL](/subgraph/schema.graphql) | Studio | mainnet (1)       | [`QmWYa45xwABhYXCCzX45m49wz63Bxod3CaAwSShDSavhPM`](https://api.thegraph.com/subgraphs/id/QmWYa45xwABhYXCCzX45m49wz63Bxod3CaAwSShDSavhPM) |
+| [ALL](/subgraph/schema.graphql) | Studio | goerli (5)        | [`QmPqZiRnE1XGHFDM9VxRDX8KrgJDgCRoi6NVspzriQGzB2`](https://api.thegraph.com/subgraphs/id/QmPqZiRnE1XGHFDM9VxRDX8KrgJDgCRoi6NVspzriQGzB2) |
 
 Polygon Matic:
 
@@ -31,8 +31,8 @@ Polygon Matic:
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Hosted | maticmain (137)   | [`QmXSdbcnTz6ji57RrwoVPHCQtRwP5X8uNFPbakLCQWonKv`](https://api.thegraph.com/subgraphs/id/QmXSdbcnTz6ji57RrwoVPHCQtRwP5X8uNFPbakLCQWonKv) |
-| [ALL](/subgraph/schema.graphql) | Hosted | matictest (80001) | [`QmPfo2nodEXEWHiowGamgnbshym5HsCnF4e31xfsg41GhH`](https://api.thegraph.com/subgraphs/id/QmPfo2nodEXEWHiowGamgnbshym5HsCnF4e31xfsg41GhH) |
+| [ALL](/subgraph/schema.graphql) | Hosted | maticmain (137)   | [`QmS22vxaZRRsCubnpDH13LqmKipjnUyUxUz1DoGKSxSMk7`](https://api.thegraph.com/subgraphs/id/QmS22vxaZRRsCubnpDH13LqmKipjnUyUxUz1DoGKSxSMk7) |
+| [ALL](/subgraph/schema.graphql) | Hosted | matictest (80001) | [`QmYjWzBnY5TJAq3HXwauRyjLQPRmoznDaUtGe3LfD98pvt`](https://api.thegraph.com/subgraphs/id/QmYjWzBnY5TJAq3HXwauRyjLQPRmoznDaUtGe3LfD98pvt) |
 
 Arbitrum One:
 
@@ -43,4 +43,4 @@ Arbitrum One:
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Studio | arbmain (42161)   | [`QmYwV8zSpU9neqCtXXcey9y7beNZTxCABFtwKEvsgZ1TiA`](https://api.thegraph.com/subgraphs/id/QmYwV8zSpU9neqCtXXcey9y7beNZTxCABFtwKEvsgZ1TiA) |
+| [ALL](/subgraph/schema.graphql) | Studio | arbmain (42161)   | [`QmbYY2jNF5Xs4MewYZofaGZfXh6P9VzgcUR37aiFTJDUcD`](https://api.thegraph.com/subgraphs/id/QmbYY2jNF5Xs4MewYZofaGZfXh6P9VzgcUR37aiFTJDUcD) |

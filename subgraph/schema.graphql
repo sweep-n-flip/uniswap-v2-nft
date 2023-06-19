@@ -41,3 +41,19 @@ type PairMonth @entity {
   volume0: BigDecimal!
   volume1: BigDecimal!
 }
+
+type Swap @entity {
+  id: ID!
+  txId: Bytes!
+  origin: Bytes!
+  pair: Pair!
+  type: String!
+  volume0: BigDecimal!
+  volume1: BigDecimal!
+  timestamp: Int!
+}
+
+type Counter @entity {
+  id: ID!
+  value: BigInt!
+}
