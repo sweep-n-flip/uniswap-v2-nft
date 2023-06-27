@@ -32,6 +32,9 @@ type PairDay @entity {
   day: Int!
   volume0: BigDecimal!
   volume1: BigDecimal!
+  reserve0: BigDecimal!
+  reserve1: BigDecimal!
+  totalSupply: BigDecimal!
 }
 
 type PairMonth @entity {
@@ -40,6 +43,9 @@ type PairMonth @entity {
   month: Int!
   volume0: BigDecimal!
   volume1: BigDecimal!
+  reserve0: BigDecimal!
+  reserve1: BigDecimal!
+  totalSupply: BigDecimal!
 }
 
 type Swap @entity {

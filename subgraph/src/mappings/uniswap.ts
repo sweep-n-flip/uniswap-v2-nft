@@ -99,6 +99,9 @@ function updateDailyVolume(address: Address, timestamp: BigInt, volume0: BigInt,
     pairDay.day = day;
     pairDay.volume0 = ZERO_BIGDECIMAL;
     pairDay.volume1 = ZERO_BIGDECIMAL;
+    pairDay.reserve0 = pair.reserve0;
+    pairDay.reserve1 = pair.reserve1;
+    pairDay.totalSupply = pair.totalSupply;
   }
   pairDay.volume0 = pairDay.volume0 + coins(volume0, token0.decimals);
   pairDay.volume1 = pairDay.volume1 + coins(volume1, token1.decimals);
@@ -120,6 +123,9 @@ function updateMonthlyVolume(address: Address, timestamp: BigInt, volume0: BigIn
     pairMonth.month = month;
     pairMonth.volume0 = ZERO_BIGDECIMAL;
     pairMonth.volume1 = ZERO_BIGDECIMAL;
+    pairMonth.reserve0 = pair.reserve0;
+    pairMonth.reserve1 = pair.reserve1;
+    pairMonth.totalSupply = pair.totalSupply;
   }
   pairMonth.volume0 = pairMonth.volume0 + coins(volume0, token0.decimals);
   pairMonth.volume1 = pairMonth.volume1 + coins(volume1, token1.decimals);
