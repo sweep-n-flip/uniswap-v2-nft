@@ -139,19 +139,31 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         amount0 = liquidity * balance0 / _totalSupply; // using balances ensures pro-rata distribution
         amount1 = liquidity * balance1 / _totalSupply; // using balances ensures pro-rata distribution
         if (discrete0) {
-                uint residual0 = amount0 % 1e18;
-                if (residual0 > 0) {
-                        amount0 -= residual0;
-                        amount1 += residual0 * (balance1 - amount1) / (balance0 - amount0);
+            uint residual0 = amount0 % 1e18;
+            if (residual0 > 0) {
+                if (residual0 + 1e10 >= 1e18) { // attempts to fix rounding error
+                    amount0 += 1e18 - residual0;
                 }
+                else
+                {
+                    amount0 -= residual0;
+                    amount1 += residual0 * (balance1 - amount1) / (balance0 - amount0);
+                }
+            }
         }
         else
         if (discrete1) {
-                uint residual1 = amount1 % 1e18;
-                if (residual1 > 0) {
-                        amount1 -= residual1;
-                        amount0 += residual1 * (balance0 - amount0) / (balance1 - amount1);
+            uint residual1 = amount1 % 1e18;
+            if (residual1 > 0) {
+                if (residual1 + 1e10 >= 1e18) { // attempts to fix rounding error
+                    amount1 += 1e18 - residual1;
                 }
+                else
+                {
+                    amount1 -= residual1;
+                    amount0 += residual1 * (balance0 - amount0) / (balance1 - amount1);
+                }
+            }
         }
         require(amount0 > 0 && amount1 > 0, "SweepnFlip: INSUFFICIENT_LIQUIDITY_BURNED");
         _burn(address(this), liquidity);
