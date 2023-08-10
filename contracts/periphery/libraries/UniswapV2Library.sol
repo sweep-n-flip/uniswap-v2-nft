@@ -32,7 +32,7 @@ library UniswapV2Library {
                     hex"ff",
                     factory,
                     keccak256(abi.encodePacked(token0, token1)),
-                    hex"40fe3646dbd1de3a7a1432bfc8c3130e20f8835674c82fe36ce7af22d3a70490" // init code hash
+                    hex"dd0506adb54a84086802463653ed84443d50ad3ddca6e0294b8591b4714f28f3" // init code hash
                 )))));
         }
     }
@@ -88,7 +88,7 @@ library UniswapV2Library {
         amounts[0] = amountIn;
         for (uint i; i < path.length - 1; i++) {
             (uint reserveIn, uint reserveOut, bool delegates) = getReservesWithDelegates(factory, path[i], path[i + 1]);
-            amounts[i + 1] = getAmountOut(amounts[i], reserveIn, reserveOut, delegates ? DELEGATE_NET_FEE : 9900);
+            amounts[i + 1] = getAmountOut(amounts[i], reserveIn, reserveOut, delegates ? DELEGATE_NET_FEE : 9800);
         }
     }
 
@@ -99,7 +99,7 @@ library UniswapV2Library {
         amounts[amounts.length - 1] = amountOut;
         for (uint i = path.length - 1; i > 0; i--) {
             (uint reserveIn, uint reserveOut, bool delegates) = getReservesWithDelegates(factory, path[i - 1], path[i]);
-            amounts[i - 1] = getAmountIn(amounts[i], reserveIn, reserveOut, delegates ? DELEGATE_NET_FEE : 9900);
+            amounts[i - 1] = getAmountIn(amounts[i], reserveIn, reserveOut, delegates ? DELEGATE_NET_FEE : 9800);
         }
     }
 }
