@@ -141,7 +141,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         if (discrete0) {
             uint residual0 = amount0 % 1e18;
             if (residual0 > 0) {
-                if (residual0 + 1e10 >= 1e18) { // attempts to fix rounding error
+                if (residual0 + 1e10 >= 1e18 && amount0 + 1e18 < balance0) { // attempts to fix rounding error
                     amount0 += 1e18 - residual0;
                 }
                 else
@@ -155,7 +155,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         if (discrete1) {
             uint residual1 = amount1 % 1e18;
             if (residual1 > 0) {
-                if (residual1 + 1e10 >= 1e18) { // attempts to fix rounding error
+                if (residual1 + 1e10 >= 1e18 && amount1 + 1e18 < balance1) { // attempts to fix rounding error
                     amount1 += 1e18 - residual1;
                 }
                 else
