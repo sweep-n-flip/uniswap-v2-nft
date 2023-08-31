@@ -49,12 +49,12 @@ Avalanche:
 
 | Contract     | Network (ID)      | Address                                                                                                                       |
 | ------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| ROUTER       | avaxmain (43114)  | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://snowtrace.io/address/0x151522484121f4e28eA24c8b5d827132775a93FE)         |
-| FACTORY      | avaxmain (43114)  | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://snowtrace.io/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1)         |
+| ROUTER       | avaxmain (43114)  | [0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc](https://snowtrace.io/address/0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc)         |
+| FACTORY      | avaxmain (43114)  | [0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A](https://snowtrace.io/address/0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A)         |
 | ROUTER       | avaxtest (43113)  | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://testnet.snowtrace.io/address/0x151522484121f4e28eA24c8b5d827132775a93FE) |
 | FACTORY      | avaxtest (43113)  | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://testnet.snowtrace.io/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1) |
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Studio | avaxmain (43114)  | [`QmQUQtfKvicPG8ScAXMe3DpkcWF6SbZuWp5yfL1JVrmuRV`](https://api.thegraph.com/subgraphs/id/QmQUQtfKvicPG8ScAXMe3DpkcWF6SbZuWp5yfL1JVrmuRV) |
+| [ALL](/subgraph/schema.graphql) | Studio | avaxmain (43114)  | [`QmUx9N8xcXmWkaxSrXN7Kf4EDVuWuPM3ZQx9HDfFR2d8xv`](https://api.thegraph.com/subgraphs/id/QmUx9N8xcXmWkaxSrXN7Kf4EDVuWuPM3ZQx9HDfFR2d8xv) |
 | [ALL](/subgraph/schema.graphql) | Studio | avaxtest (43113)  | [`QmPvxBrugKkus8syHyNrjSD9zY7qG82SFFe2wWLcA5HZAg`](https://api.thegraph.com/subgraphs/id/QmPvxBrugKkus8syHyNrjSD9zY7qG82SFFe2wWLcA5HZAg) |
