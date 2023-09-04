@@ -1,6 +1,6 @@
 {
   "NETWORK": "bscmain",
   "network": "bsc",
-  "factoryAddress": "0x0000000000000000000000000000000000000000",
-  "factoryStartBlock": "0"
+  "factoryAddress": "0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A",
+  "factoryStartBlock": "31449927"
 }

@@ -58,3 +58,14 @@ Avalanche:
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Studio | avaxmain (43114)  | [`QmUx9N8xcXmWkaxSrXN7Kf4EDVuWuPM3ZQx9HDfFR2d8xv`](https://api.thegraph.com/subgraphs/id/QmUx9N8xcXmWkaxSrXN7Kf4EDVuWuPM3ZQx9HDfFR2d8xv) |
 | [ALL](/subgraph/schema.graphql) | Studio | avaxtest (43113)  | [`QmPvxBrugKkus8syHyNrjSD9zY7qG82SFFe2wWLcA5HZAg`](https://api.thegraph.com/subgraphs/id/QmPvxBrugKkus8syHyNrjSD9zY7qG82SFFe2wWLcA5HZAg) |
+
+BNB Smart Chain:
+
+| Contract     | Network (ID)      | Address                                                                                                                       |
+| ------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| ROUTER       | bscmain (56)      | [0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc](https://bscscan.com/address/0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc)          |
+| FACTORY      | bscmain (56)      | [0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A](https://bscscan.com/address/0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A)          |
+
+| Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
+| ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [ALL](/subgraph/schema.graphql) | Studio | bscmain (56)      | [`QmSVceRG33Sy1kBp6uZQGsTE5t1yuatYqzNEotXK8Wxao9`](https://api.thegraph.com/subgraphs/id/QmSVceRG33Sy1kBp6uZQGsTE5t1yuatYqzNEotXK8Wxao9) |
