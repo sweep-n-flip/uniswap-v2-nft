@@ -13,6 +13,8 @@
     "set:goerli": "mustache config/goerli.json subgraph.template.yaml subgraph.yaml && mustache config/goerli.json ../.env .env",
     "set:avaxmain": "mustache config/avaxmain.json subgraph.template.yaml subgraph.yaml && mustache config/avaxmain.json ../.env .env",
     "set:avaxtest": "mustache config/avaxtest.json subgraph.template.yaml subgraph.yaml && mustache config/avaxtest.json ../.env .env",
+    "set:basemain": "mustache config/basemain.json subgraph.template.yaml subgraph.yaml && mustache config/basemain.json ../.env .env",
+    "set:basetest": "mustache config/basetest.json subgraph.template.yaml subgraph.yaml && mustache config/basetest.json ../.env .env",
     "set:bscmain": "mustache config/bscmain.json subgraph.template.yaml subgraph.yaml && mustache config/bscmain.json ../.env .env",
     "set:bsctest": "mustache config/bsctest.json subgraph.template.yaml subgraph.yaml && mustache config/bsctest.json ../.env .env",
     "set:ftmmain": "mustache config/ftmmain.json subgraph.template.yaml subgraph.yaml && mustache config/ftmmain.json ../.env .env",

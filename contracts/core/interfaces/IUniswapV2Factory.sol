@@ -32,3 +32,7 @@ interface IUniswapV2Factory {
     function setRouter(address, bool) external;
     function setRouterSetter(address) external;
 }
+
+interface IUniswapV2FactoryExt is IUniswapV2Factory { // sushiswap extension
+    function pairCodeHash() external view returns (bytes32 _pairCodeHash);
+}

@@ -17,6 +17,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   // mainnets
   'mainnet': [1, 'https://mainnet.infura.io/v3/' + infuraProjectId], // ethereum
   'avaxmain': [43114, 'https://api.avax.network/ext/bc/C/rpc'], // avalanche
+  'basemain': [8453, 'https://mainnet.base.org'], // base
   'bscmain': [56, 'https://bsc-dataseed.binance.org'], // bnb smart chain
   'ftmmain': [250, 'https://rpc.ftm.tools'], // fantom
   'maticmain': [137, 'https://polygon-rpc.com'], // polygon
@@ -27,6 +28,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   'kovan': [42, 'https://kovan.infura.io/v3/' + infuraProjectId], // kovan
   'goerli': [5, 'https://goerli.infura.io/v3/' + infuraProjectId], // goerli
   'avaxtest': [43113, 'https://api.avax-test.network/ext/bc/C/rpc'], // fuji
+  'basetest': [84531, 'https://goerli.base.org'], // base goerli
   'bsctest': [97, 'https://data-seed-prebsc-1-s1.binance.org:8545'], // chapel
   'ftmtest': [4002, 'https://rpc.testnet.fantom.network'], // fantom testnet
   'matictest': [80001, 'https://matic-mumbai.chainstacklabs.com'], // mumbai
@@ -57,6 +59,7 @@ export default {
       // mainnets
       mainnet: etherscan['mainnet'], // ethereum
       avalanche: etherscan['avaxmain'], // avalanche
+      basemain: etherscan['basemain'], // base (custom)
       bsc: etherscan['bscmain'], // bnb smart chain
       opera: etherscan['ftmmain'], // fantom
       polygon: etherscan['maticmain'], // polygon
@@ -67,9 +70,28 @@ export default {
       kovan: etherscan['mainnet'], // kovan
       goerli: etherscan['mainnet'], // goerli
       avalancheFujiTestnet: etherscan['avaxmain'], // fuji
+      basetest: etherscan['basemain'], // base goerli (custom)
       bscTestnet: etherscan['bscmain'], // chapel
       ftmTestnet: etherscan['ftmmain'], // fantom testnet
       polygonMumbai: etherscan['maticmain'], // mumbai
     },
+    customChains: [
+      {
+        network: 'basemain',
+        chainId: 8453,
+        urls: {
+          apiURL: 'https://api.basescan.org/api',
+          browserURL: 'https://basescan.org',
+        },
+      },
+      {
+        network: 'basetest',
+        chainId: 84531,
+        urls: {
+          apiURL: 'https://api-goerli.basescan.org/api',
+          browserURL: '	https://goerli.basescan.org',
+        },
+      },
+    ],
   },
 };

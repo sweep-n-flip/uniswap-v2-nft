@@ -6,6 +6,8 @@ npm run clean && npm run set:kovan && npm run codegen && npm run build && npm ru
 npm run clean && npm run set:goerli && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:avaxmain && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:avaxtest && npm run codegen && npm run build && npm run deploy:studio
+npm run clean && npm run set:basemain && npm run codegen && npm run build && npm run deploy:studio
+npm run clean && npm run set:basetest && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:bscmain && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:bsctest && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:ftmmain && npm run codegen && npm run build && npm run deploy:studio
