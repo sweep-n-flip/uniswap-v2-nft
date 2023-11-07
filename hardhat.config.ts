@@ -20,6 +20,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   'basemain': [8453, 'https://mainnet.base.org'], // base
   'bscmain': [56, 'https://bsc-dataseed.binance.org'], // bnb smart chain
   'ftmmain': [250, 'https://rpc.ftm.tools'], // fantom
+  'lineamain': [59144, 'https://rpc.linea.build'], // linea
   'maticmain': [137, 'https://polygon-rpc.com'], // polygon
   'arbmain': [42161, 'https://arb1.arbitrum.io/rpc'], // arbitrum one
   // testnets
@@ -31,6 +32,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   'basetest': [84531, 'https://goerli.base.org'], // base goerli
   'bsctest': [97, 'https://data-seed-prebsc-1-s1.binance.org:8545'], // chapel
   'ftmtest': [4002, 'https://rpc.testnet.fantom.network'], // fantom testnet
+  'lineatest': [59140, 'https://goerli.lineascan.build'], // linea goerli
   'matictest': [80001, 'https://matic-mumbai.chainstacklabs.com'], // mumbai
 };
 
@@ -62,6 +64,7 @@ export default {
       basemain: etherscan['basemain'], // base (custom)
       bsc: etherscan['bscmain'], // bnb smart chain
       opera: etherscan['ftmmain'], // fantom
+      lineamain: etherscan['lineamain'], // linea (custom)
       polygon: etherscan['maticmain'], // polygon
       arbitrumOne: etherscan['arbmain'], // arbitrum one
       // testnets
@@ -73,6 +76,7 @@ export default {
       basetest: etherscan['basemain'], // base goerli (custom)
       bscTestnet: etherscan['bscmain'], // chapel
       ftmTestnet: etherscan['ftmmain'], // fantom testnet
+      lineatest: etherscan['lineamain'], // linea goerli (custom)
       polygonMumbai: etherscan['maticmain'], // mumbai
     },
     customChains: [
@@ -89,7 +93,23 @@ export default {
         chainId: 84531,
         urls: {
           apiURL: 'https://api-goerli.basescan.org/api',
-          browserURL: '	https://goerli.basescan.org',
+          browserURL: 'https://goerli.basescan.org',
+        },
+      },
+      {
+        network: 'lineamain',
+        chainId: 59144,
+        urls: {
+          apiURL: 'https://api.lineascan.build/api',
+          browserURL: 'https://lineascan.build',
+        },
+      },
+      {
+        network: 'lineatest',
+        chainId: 59140,
+        urls: {
+          apiURL: 'https://api-testnet.lineascan.build/api',
+          browserURL: 'https://goerli.lineascan.build',
         },
       },
     ],
