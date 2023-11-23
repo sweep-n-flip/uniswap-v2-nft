@@ -3,7 +3,7 @@ pragma solidity 0.8.9;
 
 import { IUniswapV2Pair } from "../../core/interfaces/IUniswapV2Pair.sol";
 import { IUniswapV2Factory } from "../../core/interfaces/IUniswapV2Factory.sol";
-import { DELEGATE_FACTORY, DELEGATE_INIT_CODE_HASH, DELEGATE_NET_FEE } from "../../core/Delegation.sol";
+import { DELEGATE_FACTORY, DELEGATE_INIT_CODE_HASH, DELEGATE_NET_FEE, DELEGATE_CREATE2_ZKSYNC } from "../../core/Delegation.sol";
 
 library UniswapV2Library {
     // returns sorted token addresses, used to handle return values from pairs sorted in this order
@@ -21,12 +21,22 @@ library UniswapV2Library {
         (address token0, address token1) = sortTokens(tokenA, tokenB);
         delegates = IUniswapV2Factory(factory).delegates(token0, token1);
         if (delegates) {
-            pair = address(uint160(uint(keccak256(abi.encodePacked(
-                    hex"ff",
-                    DELEGATE_FACTORY,
-                    keccak256(abi.encodePacked(token0, token1)),
-                    DELEGATE_INIT_CODE_HASH
+            if (DELEGATE_CREATE2_ZKSYNC) {
+                pair = address(uint160(uint(keccak256(abi.encodePacked(
+                        keccak256("zksyncCreate2"),
+                        bytes32(uint256(uint160(DELEGATE_FACTORY))),
+                        keccak256(abi.encodePacked(token0, token1)),
+                        DELEGATE_INIT_CODE_HASH,
+                        keccak256("")
                 )))));
+            } else {
+                pair = address(uint160(uint(keccak256(abi.encodePacked(
+                        hex"ff",
+                        DELEGATE_FACTORY,
+                        keccak256(abi.encodePacked(token0, token1)),
+                        DELEGATE_INIT_CODE_HASH
+                    )))));
+            }
         } else {
             pair = address(uint160(uint(keccak256(abi.encodePacked(
                     hex"ff",

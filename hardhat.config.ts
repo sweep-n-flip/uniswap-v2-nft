@@ -22,6 +22,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   'ftmmain': [250, 'https://rpc.ftm.tools'], // fantom
   'lineamain': [59144, 'https://rpc.linea.build'], // linea
   'maticmain': [137, 'https://polygon-rpc.com'], // polygon
+  'zksyncmain': [324, 'https://mainnet.era.zksync.io'], // zksync era
   'arbmain': [42161, 'https://arb1.arbitrum.io/rpc'], // arbitrum one
   // testnets
   'ropsten': [3, 'https://ropsten.infura.io/v3/' + infuraProjectId], // ropsten
@@ -34,6 +35,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   'ftmtest': [4002, 'https://rpc.testnet.fantom.network'], // fantom testnet
   'lineatest': [59140, 'https://goerli.lineascan.build'], // linea goerli
   'matictest': [80001, 'https://matic-mumbai.chainstacklabs.com'], // mumbai
+  'zksynctest': [280, 'https://testnet.era.zksync.dev'], // zksync goerli
 };
 
 const [chainId, url] = NETWORK_CONFIG[network] || _throw('Unknown network: ' + network);

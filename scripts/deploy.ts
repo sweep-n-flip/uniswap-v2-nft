@@ -18,7 +18,9 @@ const NETWORK_CONFIG: { [chainId: number]: [string, string] } = {
   8453: ['0xc00d62Ce5C1543D939EEbb9d6dB213EF873300E3', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x6BDED42c6DA8FBf0d2bA55B2fa120C5e0c8D7891'], // base
   56: ['0x4e9cA8ca6A113FC3Db72677aa04C8DE028618377', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // bnb smart chain
   250: ['0x8CBA65A8780e9887a51E77258b701db1e7aBAC05', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // fantom
+  59144: ['0xE1E35972f34F00196B52D5c4C0D80c2b7bC7Ad36', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', ''], // linea
   137: ['0xB41bbAEAd46042a229C6870207eB072aBb4FC18a', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // polygon
+  324: ['0x7902C49D54649D6cE98513423f9c65857f7813f4', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x5aEaF2883FBf30f3D62471154eDa3C0c1b05942d'], // zksync era
   42161: ['0x2703CD5357fa184bAAD92b834127362bf95b0858', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // arbitrum one
   // testnets
   3: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // ropsten
@@ -29,7 +31,9 @@ const NETWORK_CONFIG: { [chainId: number]: [string, string] } = {
   84531: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x0000000000000000000000000000000000000000'], // base goerli
   97: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // chapel
   4002: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x0000000000000000000000000000000000000000'], // fantom testnet
+  59140: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', ''], // linea goerli
   80001: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // mumbai
+  280: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', ''], // zksync goerli
 };
 
 async function main(args: string[]): Promise<void> {
@@ -55,7 +59,8 @@ async function main(args: string[]): Promise<void> {
   console.log('DELEGATE_FACTORY=' + DELEGATE_FACTORY);
 
   const delegateFactory = await hardhat.ethers.getContractAt('IUniswapV2FactoryExt', DELEGATE_FACTORY);
-  const delegateInitCodeHash = await delegateFactory.pairCodeHash();
+  let delegateInitCodeHash: string;
+  try { delegateInitCodeHash = await delegateFactory.pairCodeHash(); } catch { delegateInitCodeHash = ''; };
   console.log('delegateInitCodeHash=' + delegateInitCodeHash);
 
   const WETH = await delegateRouter.WETH();
@@ -68,7 +73,7 @@ async function main(args: string[]): Promise<void> {
     if (!contents.includes(DELEGATE_FACTORY)) throw new Error('Invalid delegation');
   }
 
-  {
+  if (delegateInitCodeHash !== '') {
     // sanity check
     const filename = __dirname + '/../contracts/core/Delegation.sol';
     const contents = fs.readFileSync(filename).toString().split(EOL).filter((line) => !line.match(/^\s*\/\//)).join(EOL);
