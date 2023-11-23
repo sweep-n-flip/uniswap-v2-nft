@@ -80,3 +80,10 @@ BNB Smart Chain:
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Studio | bscmain (56)      | [`QmSVceRG33Sy1kBp6uZQGsTE5t1yuatYqzNEotXK8Wxao9`](https://api.thegraph.com/subgraphs/id/QmSVceRG33Sy1kBp6uZQGsTE5t1yuatYqzNEotXK8Wxao9) |
+
+Linea:
+
+| Contract     | Network (ID)      | Address                                                                                                                       |
+| ------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| ROUTER       | lineamain (59144) | [0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc](https://lineascan.build/address/0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc)      |
+| FACTORY      | lineamain (59144) | [0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A](https://lineascan.build/address/0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A)      |
