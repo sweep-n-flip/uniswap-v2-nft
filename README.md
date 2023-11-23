@@ -87,3 +87,7 @@ Linea:
 | ------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | ROUTER       | lineamain (59144) | [0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc](https://lineascan.build/address/0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc)      |
 | FACTORY      | lineamain (59144) | [0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A](https://lineascan.build/address/0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A)      |
+
+| Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                        |
+| ------------------------------- | ------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| [ALL](/subgraph/schema.graphql) | Studio | lineamain (59144) | [`QmW1GcAFPsBD8vjjtgbTs5xvtq76oa5XvyTFAFNegBv6cy`](https://graph-query.linea.build/subgraphs/id/QmW1GcAFPsBD8vjjtgbTs5xvtq76oa5XvyTFAFNegBv6cy) |
