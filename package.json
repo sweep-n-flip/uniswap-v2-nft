@@ -10,7 +10,7 @@
     "typescript": "^4.8.3"
   },
   "scripts": {
-    "build": "hardhat compile",
+    "build": "hardhat compile && tsc",
     "clean": "hardhat clean"
   }
 }

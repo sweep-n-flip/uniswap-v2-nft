@@ -1,15 +1,8 @@
 import fs from 'fs';
-import hardhat from 'hardhat';
 import { EOL } from 'os';
+import { initialize, getGasPrice, getBalance, getContractAt, deployContract } from './library';
 
 function _throw(message: string): never { throw new Error(message); }
-
-async function deployContract(name: string, ...args: unknown[]): Promise<string> {
-  const Contract = await hardhat.ethers.getContractFactory(name);
-  const contract = await Contract.deploy(...args);
-  await contract.deployed();
-  return contract.address;
-}
 
 const NETWORK_CONFIG: { [chainId: number]: [string, string, string] } = {
   // mainnets
@@ -38,14 +31,8 @@ const NETWORK_CONFIG: { [chainId: number]: [string, string, string] } = {
 
 async function main(args: string[]): Promise<void> {
 
-  const { chainId } = await hardhat.ethers.provider.getNetwork();
+  const { chainId, FROM, signer } = await initialize();
   console.log('chainId ' + chainId);
-
-  const signers = await hardhat.ethers.getSigners();
-  if (signers.length !== 1) throw new Error('panic');
-  const [signer] = signers;
-  if (signer === undefined) throw new Error('panic');
-  const FROM = await signer.getAddress();
   console.log('FROM=' + FROM);
 
   const [ADMIN, FUNDING, DELEGATE_ROUTER] = NETWORK_CONFIG[chainId] || _throw('Unknown chainId: ' + chainId);
@@ -53,12 +40,12 @@ async function main(args: string[]): Promise<void> {
   console.log('FUNDING=' + FUNDING);
   console.log('DELEGATE_ROUTER=' + DELEGATE_ROUTER);
 
-  const delegateRouter = await hardhat.ethers.getContractAt('IUniswapV2Router01', DELEGATE_ROUTER);
+  const delegateRouter = await getContractAt('IUniswapV2Router01', DELEGATE_ROUTER);
 
   const DELEGATE_FACTORY = await delegateRouter.factory();
   console.log('DELEGATE_FACTORY=' + DELEGATE_FACTORY);
 
-  const delegateFactory = await hardhat.ethers.getContractAt('IUniswapV2FactoryExt', DELEGATE_FACTORY);
+  const delegateFactory = await getContractAt('IUniswapV2FactoryExt', DELEGATE_FACTORY);
   let delegateInitCodeHash = '';
   if (delegateInitCodeHash === '') try { delegateInitCodeHash = await delegateFactory.pairCodeHash(); } catch {};
   if (delegateInitCodeHash === '') try { delegateInitCodeHash = await delegateFactory.INIT_CODE_PAIR_HASH(); } catch {};
@@ -94,7 +81,7 @@ async function main(args: string[]): Promise<void> {
   console.log('ROUTER=' + ROUTER);
 
   {
-    const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
+    const factory = await getContractAt('UniswapV2Factory', FACTORY);
     {
       console.log('Setting factory router...');
       const tx = await factory.setRouter(ROUTER, true);
@@ -108,7 +95,7 @@ async function main(args: string[]): Promise<void> {
   }
 
   {
-    const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
+    const factory = await getContractAt('UniswapV2Factory', FACTORY);
     const initCodeHash = await factory._initCodeHash();
     console.log('initCodeHash=' + initCodeHash);
 
@@ -138,8 +125,8 @@ async function main(args: string[]): Promise<void> {
 
   {
     console.log('Transferring change...');
-    const balance = BigInt(String(await hardhat.ethers.provider.getBalance(FROM)));
-    const gasPrice = BigInt(String(await hardhat.ethers.provider.getGasPrice()));
+    const balance = await getBalance(FROM);
+    const gasPrice = await getGasPrice();
     const gasLimit = 21000n;
     const fee = gasPrice * gasLimit;
     const value = balance - fee;

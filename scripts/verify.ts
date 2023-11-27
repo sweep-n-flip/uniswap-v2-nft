@@ -1,14 +1,6 @@
-import hardhat from 'hardhat';
+import { initialize, getContractAt, verifyContract } from './library';
 
-async function verifyContract(address: string, contract: string, ...constructorArguments: unknown[]): Promise<boolean> {
-  try {
-    await hardhat.run('verify:verify', { address, contract, constructorArguments });
-  } catch (e) {
-    if (String(e).toLowerCase().indexOf('already verified') >= 0) return false;
-    throw e;
-  }
-  return true;
-}
+function _throw(message: string): never { throw new Error(message); }
 
 const NETWORK_CONFIG: { [chainId: number]: [string, string, string] } = {
   // mainnets
@@ -37,14 +29,8 @@ const NETWORK_CONFIG: { [chainId: number]: [string, string, string] } = {
 
 async function main(args: string[]): Promise<void> {
 
-  const { chainId } = await hardhat.ethers.provider.getNetwork();
+  const { chainId, FROM } = await initialize();
   console.log('chainId ' + chainId);
-
-  const signers = await hardhat.ethers.getSigners();
-  if (signers.length !== 1) throw new Error('panic');
-  const [signer] = signers;
-  if (signer === undefined) throw new Error('panic');
-  const FROM = await signer.getAddress();
   console.log('FROM=' + FROM);
 
   const [ADMIN, FUNDING, DELEGATE_ROUTER] = NETWORK_CONFIG[chainId] || _throw('Unknown chainId: ' + chainId);
@@ -52,7 +38,7 @@ async function main(args: string[]): Promise<void> {
   console.log('FUNDING=' + FUNDING);
   console.log('DELEGATE_ROUTER=' + DELEGATE_ROUTER);
 
-  const delegateRouter = await hardhat.ethers.getContractAt('IUniswapV2Router01', DELEGATE_ROUTER);
+  const delegateRouter = await getContractAt('IUniswapV2Router01', DELEGATE_ROUTER);
 
   const DELEGATE_FACTORY = await delegateRouter.factory();
   console.log('DELEGATE_FACTORY=' + DELEGATE_FACTORY);
@@ -68,11 +54,11 @@ async function main(args: string[]): Promise<void> {
 
   const ROUTER = '0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc';
   console.log('ROUTER=' + ROUTER);
-  const router = await hardhat.ethers.getContractAt('UniswapV2Router01Collection', ROUTER);
+  const router = await getContractAt('UniswapV2Router01Collection', ROUTER);
 
   const FACTORY = await router.factory();
   console.log('FACTORY=' + FACTORY);
-  const factory = await hardhat.ethers.getContractAt('UniswapV2Factory', FACTORY);
+  const factory = await getContractAt('UniswapV2Factory', FACTORY);
 
   const WRAPPER = await factory.getWrapper(BLOCKIES);
   console.log('WRAPPER=' + WRAPPER);
