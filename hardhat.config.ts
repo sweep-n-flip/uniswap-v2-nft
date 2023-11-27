@@ -1,6 +1,12 @@
+// Comment these imports for zkSync mainnet/testnet
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-etherscan";
 import "hardhat-contract-sizer";
+// Uncomment these imports for zkSync mainnet/testnet
+//import "@matterlabs/hardhat-zksync-deploy";
+//import "@matterlabs/hardhat-zksync-node";
+//import "@matterlabs/hardhat-zksync-solc";
+//import "@matterlabs/hardhat-zksync-verify";
 
 function _throw(message: string): never { throw new Error(message); }
 
@@ -13,7 +19,7 @@ const network: string = process.env['NETWORK'] || 'mainnet';
 const balance: string = process.env['BALANCE'] || '1000000000000000000000';
 const infuraProjectId: string = process.env['INFURA_PROJECT_ID'] || '';
 
-const NETWORK_CONFIG: { [name: string]: [number, string] } = {
+const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, string, string] } = {
   // mainnets
   'mainnet': [1, 'https://mainnet.infura.io/v3/' + infuraProjectId], // ethereum
   'avaxmain': [43114, 'https://api.avax.network/ext/bc/C/rpc'], // avalanche
@@ -22,7 +28,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   'ftmmain': [250, 'https://rpc.ftm.tools'], // fantom
   'lineamain': [59144, 'https://rpc.linea.build'], // linea
   'maticmain': [137, 'https://polygon-rpc.com'], // polygon
-  'zksyncmain': [324, 'https://mainnet.era.zksync.io'], // zksync era
+  'zksyncmain': [324, 'https://mainnet.era.zksync.io', 'mainnet', 'https://zksync2-mainnet-explorer.zksync.io/contract_verification'], // zksync era
   'arbmain': [42161, 'https://arb1.arbitrum.io/rpc'], // arbitrum one
   // testnets
   'ropsten': [3, 'https://ropsten.infura.io/v3/' + infuraProjectId], // ropsten
@@ -35,10 +41,12 @@ const NETWORK_CONFIG: { [name: string]: [number, string] } = {
   'ftmtest': [4002, 'https://rpc.testnet.fantom.network'], // fantom testnet
   'lineatest': [59140, 'https://goerli.lineascan.build'], // linea goerli
   'matictest': [80001, 'https://matic-mumbai.chainstacklabs.com'], // mumbai
-  'zksynctest': [280, 'https://testnet.era.zksync.dev'], // zksync goerli
+  'zksynctest': [280, 'https://testnet.era.zksync.dev', 'goerli', 'https://zksync2-testnet-explorer.zksync.dev/contract_verification'], // zksync goerli
 };
 
-const [chainId, url] = NETWORK_CONFIG[network] || _throw('Unknown network: ' + network);
+const networkConfig = NETWORK_CONFIG[network] || _throw('Unknown network: ' + network);
+const zksync = networkConfig.length === 4;
+const [chainId, url, ethNetwork, verifyURL] = networkConfig;
 
 export default {
   solidity: {
@@ -50,12 +58,15 @@ export default {
       },
     },
   },
+  zksolc: {
+    version: '1.3.16',
+  },
   contractSizer: {
     alphaSort: true,
     runOnCompile: true,
   },
   networks: {
-    livenet: { url, accounts: [privateKey] },
+    livenet: { url, accounts: [privateKey], zksync, ethNetwork, verifyURL },
     hardhat: { chainId, forking: { url }, accounts: [{ privateKey, balance }] },
   },
   etherscan: {

@@ -1,5 +1,7 @@
 /artifacts/
+/artifacts-zk/
 /cache/
+/cache-zk/
 /node_modules/
 /etherscan.json
 /keystore.json
