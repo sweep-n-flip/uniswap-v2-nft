@@ -102,3 +102,14 @@ Blast:
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Studio | blastmain (81457) | [`Qmc6eQvp3yFnfLxQdLEYj6mLmGEBaBvMFHYi99xBfBieEx`](https://api.thegraph.com/subgraphs/id/Qmc6eQvp3yFnfLxQdLEYj6mLmGEBaBvMFHYi99xBfBieEx) |
+
+Optimism:
+
+| Contract     | Network (ID) | Address                                                                                                                          |
+| ------------ | ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| ROUTER       | optmain (10) | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://optimistic.etherscan.io/address/0x151522484121f4e28eA24c8b5d827132775a93FE) |
+| FACTORY      | optmain (10) | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://optimistic.etherscan.io/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1) |
+
+| Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
+| ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [ALL](/subgraph/schema.graphql) | Studio | blastmain (81457) | [`QmSuPqtzfJBB85isY3TQbdGcuubb3VFW5Nw3cQXrSLr6Y3`](https://api.thegraph.com/subgraphs/id/QmSuPqtzfJBB85isY3TQbdGcuubb3VFW5Nw3cQXrSLr6Y3) |

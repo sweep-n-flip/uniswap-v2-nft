@@ -31,6 +31,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
   'zksyncmain': [324, 'https://mainnet.era.zksync.io', 'mainnet', 'https://zksync2-mainnet-explorer.zksync.io/contract_verification'], // zksync era
   'arbmain': [42161, 'https://arb1.arbitrum.io/rpc'], // arbitrum one
   'blastmain': [81457, 'https://rpc.blast.io/'], // blast
+  'optmain': [10, 'https://mainnet.optimism.io'], // optimism
   // testnets
   'ropsten': [3, 'https://ropsten.infura.io/v3/' + infuraProjectId], // ropsten
   'rinkeby': [4, 'https://rinkeby.infura.io/v3/' + infuraProjectId], // rinkeby
@@ -82,6 +83,7 @@ export default {
       polygon: etherscan['maticmain'], // polygon
       arbitrumOne: etherscan['arbmain'], // arbitrum one
       blastmain: etherscan['blastmain'], // blast
+      optimisticEthereum: etherscan['optmain'], // optimism
       // testnets
       ropsten: etherscan['mainnet'], // ropsten
       rinkeby: etherscan['mainnet'], // rinkeby

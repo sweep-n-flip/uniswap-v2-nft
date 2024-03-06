@@ -16,6 +16,7 @@ const NETWORK_CONFIG: { [chainId: number]: [string, string, string] } = {
   324: ['0x7902C49D54649D6cE98513423f9c65857f7813f4', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x5aEaF2883FBf30f3D62471154eDa3C0c1b05942d'], // zksync era
   42161: ['0x2703CD5357fa184bAAD92b834127362bf95b0858', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // arbitrum one
   81457: ['0xD76b9AF3620B1cE397A915948f42a24356Ea7b95', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xc972FaE6b524E8A6e0af21875675bF58a3133e60'], // blast
+  10: ['0x6EA629Db85e9F7aeC219BB625C585DA0dB84fc1D', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x9c12939390052919aF3155f41Bf4160Fd3666A6f'], // optimism
   // testnets
   3: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // ropsten
   4: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // rinkeby
@@ -41,7 +42,7 @@ async function main(args: string[]): Promise<void> {
   console.log('FUNDING=' + FUNDING);
   console.log('DELEGATE_ROUTER=' + DELEGATE_ROUTER);
 
-  const delegateRouter = await getContractAt('IUniswapV2Router01', DELEGATE_ROUTER);
+  const delegateRouter = await getContractAt('IUniswapV2Router01Ext', DELEGATE_ROUTER);
 
   const DELEGATE_FACTORY = await delegateRouter.factory();
   console.log('DELEGATE_FACTORY=' + DELEGATE_FACTORY);
@@ -52,7 +53,9 @@ async function main(args: string[]): Promise<void> {
   if (delegateInitCodeHash === '') try { delegateInitCodeHash = await delegateFactory.INIT_CODE_PAIR_HASH(); } catch {};
   console.log('delegateInitCodeHash=' + delegateInitCodeHash);
 
-  const WETH = await delegateRouter.WETH();
+  let WETH = '';
+  if (WETH === '') try { WETH = await delegateRouter.WETH(); } catch {};
+  if (WETH === '') try { WETH = await delegateRouter.weth(); } catch {};
   console.log('WETH=' + WETH);
 
   {
