@@ -91,3 +91,14 @@ Linea:
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                        |
 | ------------------------------- | ------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Studio | lineamain (59144) | [`QmW1GcAFPsBD8vjjtgbTs5xvtq76oa5XvyTFAFNegBv6cy`](https://graph-query.linea.build/subgraphs/id/QmW1GcAFPsBD8vjjtgbTs5xvtq76oa5XvyTFAFNegBv6cy) |
+
+Blast:
+
+| Contract     | Network (ID)      | Address                                                                                                                    |
+| ------------ | ----------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| ROUTER       | blastmain (81457) | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://blastscan.io/address/0x151522484121f4e28eA24c8b5d827132775a93FE)      |
+| FACTORY      | blastmain (81457) | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://blastscan.io/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1)      |
+
+| Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
+| ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [ALL](/subgraph/schema.graphql) | Studio | blastmain (81457) | [`Qmc6eQvp3yFnfLxQdLEYj6mLmGEBaBvMFHYi99xBfBieEx`](https://api.thegraph.com/subgraphs/id/Qmc6eQvp3yFnfLxQdLEYj6mLmGEBaBvMFHYi99xBfBieEx) |

@@ -30,6 +30,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
   'maticmain': [137, 'https://polygon-rpc.com'], // polygon
   'zksyncmain': [324, 'https://mainnet.era.zksync.io', 'mainnet', 'https://zksync2-mainnet-explorer.zksync.io/contract_verification'], // zksync era
   'arbmain': [42161, 'https://arb1.arbitrum.io/rpc'], // arbitrum one
+  'blastmain': [81457, 'https://rpc.blast.io/'], // blast
   // testnets
   'ropsten': [3, 'https://ropsten.infura.io/v3/' + infuraProjectId], // ropsten
   'rinkeby': [4, 'https://rinkeby.infura.io/v3/' + infuraProjectId], // rinkeby
@@ -80,6 +81,7 @@ export default {
       lineamain: etherscan['lineamain'], // linea (custom)
       polygon: etherscan['maticmain'], // polygon
       arbitrumOne: etherscan['arbmain'], // arbitrum one
+      blastmain: etherscan['blastmain'], // blast
       // testnets
       ropsten: etherscan['mainnet'], // ropsten
       rinkeby: etherscan['mainnet'], // rinkeby
@@ -123,6 +125,14 @@ export default {
         urls: {
           apiURL: 'https://api-testnet.lineascan.build/api',
           browserURL: 'https://goerli.lineascan.build',
+        },
+      },
+      {
+        network: 'blastmain',
+        chainId: 81457,
+        urls: {
+          apiURL: 'https://api.blastscan.io/api',
+          browserURL: 'https://blastscan.io',
         },
       },
     ],

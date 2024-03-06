@@ -25,7 +25,8 @@
     "set:zksyncmain": "mustache config/zksyncmain.json subgraph.template.yaml subgraph.yaml && mustache config/zksyncmain.json ../.env .env",
     "set:zksynctest": "mustache config/zksynctest.json subgraph.template.yaml subgraph.yaml && mustache config/zksynctest.json ../.env .env",
     "set:lineamain": "mustache config/lineamain.json subgraph.template.yaml subgraph.yaml && mustache config/lineamain.json ../.env .env",
-    "set:lineatest": "mustache config/lineatest.json subgraph.template.yaml subgraph.yaml && mustache config/lineatest.json ../.env .env"
+    "set:lineatest": "mustache config/lineatest.json subgraph.template.yaml subgraph.yaml && mustache config/lineatest.json ../.env .env",
+    "set:blastmain": "mustache config/blastmain.json subgraph.template.yaml subgraph.yaml && mustache config/blastmain.json ../.env .env"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.21.1",
