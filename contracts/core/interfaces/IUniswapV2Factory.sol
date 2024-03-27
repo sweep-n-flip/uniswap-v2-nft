@@ -36,4 +36,6 @@ interface IUniswapV2Factory {
 interface IUniswapV2FactoryExt is IUniswapV2Factory {
     function pairCodeHash() external view returns (bytes32 _pairCodeHash); // sushiswap extension
     function INIT_CODE_PAIR_HASH() external view returns (bytes32 _INIT_CODE_PAIR_HASH); // pancakeswap extension
+    function getPair(address tokenA, address tokenB, bool stable) external view returns (address pair); // velodrome extension
+    function createPair(address tokenA, address tokenB, bool stable) external returns (address pair); // velodrome extension
 }

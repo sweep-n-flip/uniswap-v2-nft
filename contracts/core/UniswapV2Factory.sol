@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity 0.8.9;
 
-import { IUniswapV2Factory } from "./interfaces/IUniswapV2Factory.sol";
+import { IUniswapV2Factory, IUniswapV2FactoryExt } from "./interfaces/IUniswapV2Factory.sol";
 import { IUniswapV2Pair } from "./interfaces/IUniswapV2Pair.sol";
 import { IWERC721 } from "./interfaces/IWERC721.sol";
 import { UniswapV2Pair } from "./UniswapV2Pair.sol";
 import { WERC721 } from "./WERC721.sol";
-import { DELEGATE_FACTORY } from "./Delegation.sol";
+import { DELEGATE_FACTORY, DELEGATE_VELODROME } from "./Delegation.sol";
 
 contract UniswapV2Factory is IUniswapV2Factory {
     address public feeTo;
@@ -50,9 +50,16 @@ contract UniswapV2Factory is IUniswapV2Factory {
             pair = address(new UniswapV2Pair{salt: salt}());
             IUniswapV2Pair(pair).initialize(token0, token1, discrete0, discrete1);
         } else {
-            pair = IUniswapV2Factory(DELEGATE_FACTORY).getPair(tokenA, tokenB);
-            if (pair == address(0)) {
-                IUniswapV2Factory(DELEGATE_FACTORY).createPair(tokenA, tokenB);
+            if (DELEGATE_VELODROME) {
+                pair = IUniswapV2FactoryExt(DELEGATE_FACTORY).getPair(tokenA, tokenB, false);
+                if (pair == address(0)) {
+                    pair = IUniswapV2FactoryExt(DELEGATE_FACTORY).createPair(tokenA, tokenB, false);
+                }
+            } else {
+                pair = IUniswapV2Factory(DELEGATE_FACTORY).getPair(tokenA, tokenB);
+                if (pair == address(0)) {
+                    pair = IUniswapV2Factory(DELEGATE_FACTORY).createPair(tokenA, tokenB);
+                }
             }
             delegates[token0][token1] = true;
         }

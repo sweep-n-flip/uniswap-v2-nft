@@ -22,3 +22,6 @@ uint256 constant DELEGATE_NET_FEE = 9970; // SushiSwap
 
 bool constant DELEGATE_CREATE2_ZKSYNC = false;
 //bool constant DELEGATE_CREATE2_ZKSYNC = true;
+
+bool constant DELEGATE_VELODROME = false;
+//bool constant DELEGATE_VELODROME = true;

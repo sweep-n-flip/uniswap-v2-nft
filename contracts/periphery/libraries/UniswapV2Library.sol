@@ -3,7 +3,7 @@ pragma solidity 0.8.9;
 
 import { IUniswapV2Pair } from "../../core/interfaces/IUniswapV2Pair.sol";
 import { IUniswapV2Factory } from "../../core/interfaces/IUniswapV2Factory.sol";
-import { DELEGATE_FACTORY, DELEGATE_INIT_CODE_HASH, DELEGATE_NET_FEE, DELEGATE_CREATE2_ZKSYNC } from "../../core/Delegation.sol";
+import { DELEGATE_FACTORY, DELEGATE_INIT_CODE_HASH, DELEGATE_NET_FEE, DELEGATE_CREATE2_ZKSYNC, DELEGATE_VELODROME } from "../../core/Delegation.sol";
 
 library UniswapV2Library {
     // returns sorted token addresses, used to handle return values from pairs sorted in this order
@@ -29,6 +29,13 @@ library UniswapV2Library {
                         DELEGATE_INIT_CODE_HASH,
                         keccak256("")
                 )))));
+            } else if (DELEGATE_VELODROME) {
+                pair = address(uint160(uint(keccak256(abi.encodePacked(
+                        hex"ff",
+                        DELEGATE_FACTORY,
+                        keccak256(abi.encodePacked(token0, token1, false)),
+                        DELEGATE_INIT_CODE_HASH
+                    )))));
             } else {
                 pair = address(uint160(uint(keccak256(abi.encodePacked(
                         hex"ff",
