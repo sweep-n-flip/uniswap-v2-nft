@@ -107,9 +107,9 @@ Optimism:
 
 | Contract     | Network (ID) | Address                                                                                                                          |
 | ------------ | ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| ROUTER       | optmain (10) | [0x151522484121f4e28eA24c8b5d827132775a93FE](https://optimistic.etherscan.io/address/0x151522484121f4e28eA24c8b5d827132775a93FE) |
-| FACTORY      | optmain (10) | [0x16eD649675e6Ed9F1480091123409B4b8D228dC1](https://optimistic.etherscan.io/address/0x16eD649675e6Ed9F1480091123409B4b8D228dC1) |
+| ROUTER       | optmain (10) | [0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb](https://optimistic.etherscan.io/address/0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb) |
+| FACTORY      | optmain (10) | [0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB](https://optimistic.etherscan.io/address/0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB) |
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Studio | blastmain (81457) | [`QmSuPqtzfJBB85isY3TQbdGcuubb3VFW5Nw3cQXrSLr6Y3`](https://api.thegraph.com/subgraphs/id/QmSuPqtzfJBB85isY3TQbdGcuubb3VFW5Nw3cQXrSLr6Y3) |
+| [ALL](/subgraph/schema.graphql) | Studio | optmain (10)      | [`QmeNdCFKzNTac7FSFGMxbTvkevZwLanwMcGGeidoWqySCp`](https://api.thegraph.com/subgraphs/id/QmeNdCFKzNTac7FSFGMxbTvkevZwLanwMcGGeidoWqySCp) |
