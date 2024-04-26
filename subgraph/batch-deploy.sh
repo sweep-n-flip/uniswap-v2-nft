@@ -17,3 +17,4 @@ npm run clean && npm run set:matictest && npm run codegen && npm run build && np
 npm run clean && npm run set:arbmain && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:blastmain && npm run codegen && npm run build && npm run deploy:studio
 npm run clean && npm run set:optmain && npm run codegen && npm run build && npm run deploy:studio
+npm run clean && npm run set:modemain && npm run codegen && npm run build && npm run deploy:studio

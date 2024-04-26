@@ -113,3 +113,14 @@ Optimism:
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Studio | optmain (10)      | [`QmeNdCFKzNTac7FSFGMxbTvkevZwLanwMcGGeidoWqySCp`](https://api.thegraph.com/subgraphs/id/QmeNdCFKzNTac7FSFGMxbTvkevZwLanwMcGGeidoWqySCp) |
+
+Mode:
+
+| Contract     | Network (ID)     | Address                                                                                                                        |
+| ------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| ROUTER       | modemain (34443) | [0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb](https://explorer.mode.network/address/0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb) |
+| FACTORY      | modemain (34443) | [0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB](https://explorer.mode.network/address/0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB) |
+
+| Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
+| ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [ALL](/subgraph/schema.graphql) | Studio | modemain (34443)  | [`QmR8XG3qeJeSAau5rLc2CpomhTRCN28MQXxHFnTdNr9LbX`](https://api.thegraph.com/subgraphs/id/QmR8XG3qeJeSAau5rLc2CpomhTRCN28MQXxHFnTdNr9LbX) |

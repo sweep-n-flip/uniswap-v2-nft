@@ -32,6 +32,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
   'arbmain': [42161, 'https://arb1.arbitrum.io/rpc'], // arbitrum one
   'blastmain': [81457, 'https://rpc.blast.io/'], // blast
   'optmain': [10, 'https://mainnet.optimism.io'], // optimism
+  'modemain': [34443, 'https://mainnet.mode.network'], // mode
   // testnets
   'ropsten': [3, 'https://ropsten.infura.io/v3/' + infuraProjectId], // ropsten
   'rinkeby': [4, 'https://rinkeby.infura.io/v3/' + infuraProjectId], // rinkeby
@@ -49,6 +50,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
 const networkConfig = NETWORK_CONFIG[network] || _throw('Unknown network: ' + network);
 const zksync = networkConfig.length === 4;
 const [chainId, url, ethNetwork, verifyURL] = networkConfig;
+const randomApiKey = Math.random().toString(10).substring(2)
 
 export default {
   solidity: {
@@ -84,6 +86,7 @@ export default {
       arbitrumOne: etherscan['arbmain'], // arbitrum one
       blastmain: etherscan['blastmain'], // blast
       optimisticEthereum: etherscan['optmain'], // optimism
+      modemain: randomApiKey,
       // testnets
       ropsten: etherscan['mainnet'], // ropsten
       rinkeby: etherscan['mainnet'], // rinkeby
@@ -135,6 +138,14 @@ export default {
         urls: {
           apiURL: 'https://api.blastscan.io/api',
           browserURL: 'https://blastscan.io',
+        },
+      },
+      {
+        network: 'modemain',
+        chainId: 34443,
+        urls: {
+          apiURL: 'https://explorer.mode.network/api',
+          browserURL: 'https://explorer.mode.network',
         },
       },
     ],
