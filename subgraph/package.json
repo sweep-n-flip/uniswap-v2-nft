@@ -28,7 +28,8 @@
     "set:lineatest": "mustache config/lineatest.json subgraph.template.yaml subgraph.yaml && mustache config/lineatest.json ../.env .env",
     "set:blastmain": "mustache config/blastmain.json subgraph.template.yaml subgraph.yaml && mustache config/blastmain.json ../.env .env",
     "set:optmain": "mustache config/optmain.json subgraph.template.yaml subgraph.yaml && mustache config/optmain.json ../.env .env",
-    "set:modemain": "mustache config/modemain.json subgraph.template.yaml subgraph.yaml && mustache config/modemain.json ../.env .env"
+    "set:modemain": "mustache config/modemain.json subgraph.template.yaml subgraph.yaml && mustache config/modemain.json ../.env .env",
+    "set:moonbeammain": "mustache config/moonbeammain.json subgraph.template.yaml subgraph.yaml && mustache config/moonbeammain.json ../.env .env"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.21.1",

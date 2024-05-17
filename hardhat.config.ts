@@ -33,6 +33,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
   'blastmain': [81457, 'https://rpc.blast.io/'], // blast
   'optmain': [10, 'https://mainnet.optimism.io'], // optimism
   'modemain': [34443, 'https://mainnet.mode.network'], // mode
+  'moonbeammain': [1284, 'https://rpc.api.moonbeam.network/'], // moonbeam
   // testnets
   'ropsten': [3, 'https://ropsten.infura.io/v3/' + infuraProjectId], // ropsten
   'rinkeby': [4, 'https://rinkeby.infura.io/v3/' + infuraProjectId], // rinkeby
@@ -86,6 +87,7 @@ export default {
       arbitrumOne: etherscan['arbmain'], // arbitrum one
       blastmain: etherscan['blastmain'], // blast
       optimisticEthereum: etherscan['optmain'], // optimism
+      moonbeam: etherscan['moonbeammain'], // moonbeam
       modemain: randomApiKey,
       // testnets
       ropsten: etherscan['mainnet'], // ropsten

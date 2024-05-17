@@ -1,0 +1,6 @@
+{
+  "NETWORK": "moonbeammain",
+  "network": "moonbeam",
+  "factoryAddress": "0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB",
+  "factoryStartBlock": "6175111"
+}

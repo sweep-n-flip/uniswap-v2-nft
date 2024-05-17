@@ -124,3 +124,14 @@ Mode:
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Studio | modemain (34443)  | [`QmR8XG3qeJeSAau5rLc2CpomhTRCN28MQXxHFnTdNr9LbX`](https://api.thegraph.com/subgraphs/id/QmR8XG3qeJeSAau5rLc2CpomhTRCN28MQXxHFnTdNr9LbX) |
+
+Moombeam:
+
+| Contract     | Network (ID)        | Address                                                                                                              |
+| ------------ | ------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| ROUTER       | moonbeammain (1284) | [0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb](https://moonscan.io/address/0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb) |
+| FACTORY      | moonbeammain (1284) | [0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB](https://moonscan.io/address/0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB) |
+
+| Subgraph                        | Target | Network (ID)        | Endpoint                                                                                                                                 |
+| ------------------------------- | ------ | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [ALL](/subgraph/schema.graphql) | Studio | moonbeammain (1284) | [`Qmdcz8JZwkuQcMqG2CJgAE1Y4njKxpfUFzk6CWXmUquHFR`](https://api.thegraph.com/subgraphs/id/Qmdcz8JZwkuQcMqG2CJgAE1Y4njKxpfUFzk6CWXmUquHFR) |
