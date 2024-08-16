@@ -6,8 +6,6 @@ import { IERC721 } from "./interfaces/IERC721.sol";
 import { IUniswapV2Factory } from "./interfaces/IUniswapV2Factory.sol";
 
 contract WERC721 is IWERC721 {
-    string public constant name = "Wrapped NFT";
-    string public constant symbol = "WNFT";
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;
@@ -15,6 +13,14 @@ contract WERC721 is IWERC721 {
 
     address public factory;
     address public collection;
+
+    function name() public view returns (string memory) {
+        return string(abi.encodePacked("Wrapped ", IERC721(collection).name()));
+    }
+
+    function symbol() public view returns (string memory) {
+        return string(abi.encodePacked("W", IERC721(collection).symbol()));
+    }
 
     uint private unlocked = 1;
     modifier lock() {
