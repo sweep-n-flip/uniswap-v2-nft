@@ -138,6 +138,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         uint _totalSupply = totalSupply; // gas savings, must be defined here since totalSupply can update in _mintFee
         amount0 = liquidity * balance0 / _totalSupply; // using balances ensures pro-rata distribution
         amount1 = liquidity * balance1 / _totalSupply; // using balances ensures pro-rata distribution
+        /*
         if (discrete0) {
             uint residual0 = amount0 % 1e18;
             if (residual0 > 0) {
@@ -165,6 +166,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
                 }
             }
         }
+        */
         require(amount0 > 0 && amount1 > 0, "SweepnFlip: INSUFFICIENT_LIQUIDITY_BURNED");
         _burn(address(this), liquidity);
         _safeTransfer(_token0, to, amount0);

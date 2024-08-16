@@ -74,7 +74,9 @@ contract WERC721 is IWERC721 {
     }
 
     function _transfer(address from, address to, uint value) private {
+        /*
         require(value % 1e18 == 0, "SweepnFlip: PARTIAL_AMOUNT");
+        */
         balanceOf[from] -= value;
         balanceOf[to] += value;
         emit Transfer(from, to, value);

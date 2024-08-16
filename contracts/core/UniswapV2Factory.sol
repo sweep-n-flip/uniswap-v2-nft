@@ -44,7 +44,9 @@ contract UniswapV2Factory is IUniswapV2Factory {
         require(getPair[token0][token1] == address(0), "SweepnFlip: PAIR_EXISTS"); // single check is sufficient
         bool discrete0 = getCollection[token0] != address(0);
         bool discrete1 = getCollection[token1] != address(0);
+        /*
         require(!(discrete0 && discrete1), "SweepnFlip: DISCRETE_CLASH");
+        */
         if (discrete0 || discrete1) {
             bytes32 salt = keccak256(abi.encodePacked(token0, token1));
             pair = address(new UniswapV2Pair{salt: salt}());
