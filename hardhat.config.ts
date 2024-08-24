@@ -46,6 +46,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
   'lineatest': [59140, 'https://goerli.lineascan.build'], // linea goerli
   'matictest': [80001, 'https://matic-mumbai.chainstacklabs.com'], // mumbai
   'zksynctest': [280, 'https://testnet.era.zksync.dev', 'goerli', 'https://zksync2-testnet-explorer.zksync.dev/contract_verification'], // zksync goerli
+  'beratest': [80084, 'https://bartio.rpc.berachain.com'], // berachain bartio
 };
 
 const networkConfig = NETWORK_CONFIG[network] || _throw('Unknown network: ' + network);
@@ -100,6 +101,7 @@ export default {
       ftmTestnet: etherscan['ftmmain'], // fantom testnet
       lineatest: etherscan['lineamain'], // linea goerli (custom)
       polygonMumbai: etherscan['maticmain'], // mumbai
+      beratest: randomApiKey,
     },
     customChains: [
       {
@@ -148,6 +150,14 @@ export default {
         urls: {
           apiURL: 'https://explorer.mode.network/api',
           browserURL: 'https://explorer.mode.network',
+        },
+      },
+      {
+        network: 'beratest',
+        chainId: 80084,
+        urls: {
+          apiURL: 'https://api.routescan.io/v2/network/testnet/evm/80084/etherscan',
+          browserURL: 'https://bartio.beratrail.io',
         },
       },
     ],
