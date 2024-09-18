@@ -138,8 +138,9 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
             address(this),
             deadline
         );
-        require(amountB == amountBMin, "SweepnFlipRouter: EXCESSIVE_B_AMOUNT");
+        require(amountB < amountBMin + 1e18, "SweepnFlipRouter: EXCESSIVE_B_AMOUNT");
         TransferHelper.safeTransfer(tokenA, to, amountA);
+        TransferHelper.safeTransfer(wrapperB, to, amountB - amountBMin);
         IWERC721(wrapperB).burn(to, tokenIdsB);
     }
     function removeLiquidityETHCollection(
@@ -161,7 +162,8 @@ contract UniswapV2Router01Collection is IUniswapV2Router01Collection, UniswapV2R
             address(this),
             deadline
         );
-        require(amountToken == amountTokenMin, "SweepnFlipRouter: EXCESSIVE_A_AMOUNT");
+        require(amountToken < amountTokenMin + 1e18, "SweepnFlipRouter: EXCESSIVE_A_AMOUNT");
+        TransferHelper.safeTransfer(wrapper, to, amountToken - amountTokenMin);
         IWERC721(wrapper).burn(to, tokenIds);
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
