@@ -140,9 +140,9 @@ Berachain:
 
 | Contract     | Network (ID)     | Address                                                                                                                      |
 | ------------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| ROUTER       | beratest (80084) | [0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb](https://bartio.beratrail.io/address/0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb) |
-| FACTORY      | beratest (80084) | [0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB](https://bartio.beratrail.io/address/0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB) |
+| ROUTER       | beratest (80084) | [0x2C4F3f0EEB169BaE301151FbFa99B4c82438F4FD](https://bartio.beratrail.io/address/0x2C4F3f0EEB169BaE301151FbFa99B4c82438F4FD) |
+| FACTORY      | beratest (80084) | [0x65624436e377c8A4A6918B69927e56982331b590](https://bartio.beratrail.io/address/0x65624436e377c8A4A6918B69927e56982331b590) |
 
 | Subgraph                        | Target | Network (ID)     | Endpoint                                                                                                                                                         |
 | ------------------------------- | ------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Studio | beratest (80084) | [`QmU3Rjq9tUCkX6gs4xSqTXE1miaWEEV8QBAqdpjwVpx8AJ`](https://api.goldsky.com/api/public/project_cm08eswaacp6901wwdaxnfyjq/subgraphs/nftfy-beratest/v1.0.12-uni/gn) |
+| [ALL](/subgraph/schema.graphql) | Studio | beratest (80084) | [`QmViHi5iXpXuLeKNZmz8M8YnxQJ4pvLAME4Ef5pLv9xesK`](https://api.goldsky.com/api/public/project_cm08eswaacp6901wwdaxnfyjq/subgraphs/nftfy-beratest/v1.0.13-uni/gn) |

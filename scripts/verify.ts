@@ -59,7 +59,7 @@ async function main(args: string[]): Promise<void> {
   const BLOCKIES = '0x46bEF163D6C470a4774f9585F3500Ae3b642e751';
   console.log('BLOCKIES=' + BLOCKIES);
 
-  const ROUTER = '0xB18e06D9eBC9dBa28D56C112D44c6AC9b343E2Cb';
+  const ROUTER = '0x2C4F3f0EEB169BaE301151FbFa99B4c82438F4FD';
   console.log('ROUTER=' + ROUTER);
   const router = await getContractAt('UniswapV2Router01Collection', ROUTER);
 

@@ -1,6 +1,6 @@
 {
   "NETWORK": "beratest",
   "network": "berachain-bartio",
-  "factoryAddress": "0x7962223D940E1b099AbAe8F54caBFB8a3a0887AB",
-  "factoryStartBlock": "3378458"
+  "factoryAddress": "0x65624436e377c8A4A6918B69927e56982331b590",
+  "factoryStartBlock": "4471338"
 }
