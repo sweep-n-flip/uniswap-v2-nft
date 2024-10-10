@@ -104,7 +104,8 @@ export default {
       lineatest: etherscan['lineamain'], // linea goerli (custom)
       polygonMumbai: etherscan['maticmain'], // mumbai
       beratest: randomApiKey,
-      stratovm: randomApiKey
+      stratovm: randomApiKey,
+      bitfinity: randomApiKey
     },
     customChains: [
       {
