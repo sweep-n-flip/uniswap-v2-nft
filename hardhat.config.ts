@@ -171,6 +171,14 @@ export default {
           apiURL: 'https://explorer.stratovm.io/api/v2',
           browserURL: 'https://explorer.stratovm.io',
         },
+      },
+      {
+        network: 'bitfinity',
+        chainId: 355113,
+        urls: {
+          apiURL: 'https://explorer.testnet.bitfinity.network/api/v2',
+          browserURL: 'https://explorer.testnet.bitfinity.network',
+        },
       }
     ],
   },
