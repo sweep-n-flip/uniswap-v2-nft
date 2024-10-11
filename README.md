@@ -149,11 +149,22 @@ Berachain:
 
 Strato VM:
 
-| Contract     | Network (ID)     | Address                                                                                                                      |
-| ------------ |------------------| ---------------------------------------------------------------------------------------------------------------------------- |
-| ROUTER       | stratovm (93747) | [0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94](https://explorer.stratovm.io/address/0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94) |
-| FACTORY      | stratovm (93747) | [0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA](https://explorer.stratovm.io/address/0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA) |
+| Contract     | Network (ID)     | Address                                                                                                                        |
+| ------------ |------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| ROUTER       | stratovm (93747) | [0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94](https://explorer.stratovm.io/address/0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94)  |
+| FACTORY      | stratovm (93747) | [0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA](https://explorer.stratovm.io/address/0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA)  |
 
-| Subgraph                        | Target | Network (ID)     | Endpoint                                                                                                              |
-| ------------------------------- | ------ | ---------------- |-----------------------------------------------------------------------------------------------------------------------|
-| [ALL](/subgraph/schema.graphql) | Studio | stratovm (93747) | [`N/A`](https://api.goldsky.com/api/public/project_cm08eswaacp6901wwdaxnfyjq/subgraphs/nftfy-beratest/v1.0.13-uni/gn) |
+| Subgraph                        | Target | Network (ID)     | Endpoint |
+| ------------------------------- | ------ | ---------------- |----------|
+| [ALL](/subgraph/schema.graphql) | Studio | stratovm (93747) | N/A      |
+
+Bitfinity:
+
+| Contract     | Network (ID)         | Address                                                                                                                                     |
+| ------------ |----------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| ROUTER       | bitfinity (355113)   | [0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94](https://explorer.testnet.bitfinity.network/address/0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94) |
+| FACTORY      | bitfinity (355113)   | [0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA](https://explorer.testnet.bitfinity.network/address/0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA) |
+
+| Subgraph                        | Target | Network (ID)        | Endpoint |
+| ------------------------------- | ------ |---------------------|----------|
+| [ALL](/subgraph/schema.graphql) | Studio | bitfinity (355113)  | N/A      |
