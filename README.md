@@ -146,3 +146,14 @@ Berachain:
 | Subgraph                        | Target | Network (ID)     | Endpoint                                                                                                                                                         |
 | ------------------------------- | ------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [ALL](/subgraph/schema.graphql) | Studio | beratest (80084) | [`QmViHi5iXpXuLeKNZmz8M8YnxQJ4pvLAME4Ef5pLv9xesK`](https://api.goldsky.com/api/public/project_cm08eswaacp6901wwdaxnfyjq/subgraphs/nftfy-beratest/v1.0.13-uni/gn) |
+
+Strato VM:
+
+| Contract     | Network (ID)     | Address                                                                                                                      |
+| ------------ |------------------| ---------------------------------------------------------------------------------------------------------------------------- |
+| ROUTER       | stratovm (93747) | [0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94](https://explorer.stratovm.io/address/0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94) |
+| FACTORY      | stratovm (93747) | [0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA](https://explorer.stratovm.io/address/0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA) |
+
+| Subgraph                        | Target | Network (ID)     | Endpoint                                                                                                              |
+| ------------------------------- | ------ | ---------------- |-----------------------------------------------------------------------------------------------------------------------|
+| [ALL](/subgraph/schema.graphql) | Studio | stratovm (93747) | [`N/A`](https://api.goldsky.com/api/public/project_cm08eswaacp6901wwdaxnfyjq/subgraphs/nftfy-beratest/v1.0.13-uni/gn) |
