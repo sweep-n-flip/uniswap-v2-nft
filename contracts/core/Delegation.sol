@@ -12,8 +12,9 @@ address constant DELEGATE_FACTORY = 0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac; 
 //address constant DELEGATE_FACTORY = 0x68A384D826D3678f78BB9FB1533c7E9577dACc0E; // StellaSwap (Moombeam mainnet)
 //address constant DELEGATE_FACTORY = 0xb08Bfed214ba87d5d5D07B7DA573010016C44488; // Kodiak (Berachain testnet)
 //address constant DELEGATE_FACTORY = 0xE578184bC88EB48485Bba23a37B5509578d2aE38; // IceSwap (StratoVM testnet)
+//address constant DELEGATE_FACTORY = 0x9945f4a1eC4C4FC74a70276CCf60b8b1B2DE1F4A; // - (Bitfinity testnet)
 
-//bytes constant DELEGATE_INIT_CODE_HASH = hex"e18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303"; // SushiSwap (all)
+bytes constant DELEGATE_INIT_CODE_HASH = hex"e18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303"; // SushiSwap (all)
 //bytes constant DELEGATE_INIT_CODE_HASH = hex"57224589c67f3f30a6b0d7a1b54cf3153ab84563bc609ef41dfb34f8b2974d2d"; // PancakeSwap (Linea mainnet)
 //bytes constant DELEGATE_INIT_CODE_HASH = hex"0100045707a42494392b3558029b9869f865ff9df8f375dc1bf20b0555093f43"; // PancakeSwap (zkSync mainnet)
 //bytes constant DELEGATE_INIT_CODE_HASH = hex"9895581041f0c2ea658b6c2e615187fa4eaa05e55ab576ce8164a1090d8e6575"; // Blasterswap (Blast mainnet)
@@ -22,8 +23,9 @@ address constant DELEGATE_FACTORY = 0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac; 
 //bytes constant DELEGATE_INIT_CODE_HASH = hex"48a6ca3d52d0d0a6c53a83cc3c8688dd46ea4cb786b169ee959b95ad30f61643"; // StellaSwap (Moombeam mainnet)
 //bytes constant DELEGATE_INIT_CODE_HASH = hex"0489c85ed300c1a9636d09ada5e1bea0e331f778464d45f24cb365c92cafbcb5"; // Kodiak (Berachain testnet)
 //bytes constant DELEGATE_INIT_CODE_HASH = hex"0437378fc27e93c612c5c385779bf540ca2064b54705e48c313aa216da380100"; // IceSwap (StratoVM testnet)
+//bytes constant DELEGATE_INIT_CODE_HASH = hex""; // - (Bitfinity testnet)
 
-//uint256 constant DELEGATE_NET_FEE = 9970; // SushiSwap
+uint256 constant DELEGATE_NET_FEE = 9970; // SushiSwap
 //uint256 constant DELEGATE_NET_FEE = 9975; // PancakeSwap
 //uint256 constant DELEGATE_NET_FEE = 9970; // Blasterswap
 //uint256 constant DELEGATE_NET_FEE = 9998; // Velodrome

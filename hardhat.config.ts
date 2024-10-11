@@ -48,13 +48,14 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
   'zksynctest': [280, 'https://testnet.era.zksync.dev', 'goerli', 'https://zksync2-testnet-explorer.zksync.dev/contract_verification'], // zksync goerli
   'beratest': [80084, 'https://bartio.rpc.berachain.com'], // berachain bartio,
   'stratovm': [93747, 'https://rpc.stratovm.io'], // strato vm,
-  'bitfinity': [355110, 'https://testnet.bitfinity.network'], // bitfinity
+  'bitfinity': [355113, 'https://testnet.bitfinity.network'], // bitfinity
 };
 
 const networkConfig = NETWORK_CONFIG[network] || _throw('Unknown network: ' + network);
 const zksync = networkConfig.length === 4;
 const [chainId, url, ethNetwork, verifyURL] = networkConfig;
 const randomApiKey = Math.random().toString(10).substring(2)
+console.log({ chainId, forking: { url }, accounts: [{ privateKey, balance }] })
 
 export default {
   solidity: {
@@ -176,8 +177,8 @@ export default {
         network: 'bitfinity',
         chainId: 355113,
         urls: {
-          apiURL: 'https://explorer.testnet.bitfinity.network/api/v2',
-          browserURL: 'https://explorer.testnet.bitfinity.network',
+          apiURL: 'https://explorer.testnet.bitfinity.network/api',
+          browserURL: 'https://explorer.testnet.bitfinity.network:443',
         },
       }
     ],
