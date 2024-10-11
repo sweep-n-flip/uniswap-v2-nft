@@ -55,7 +55,6 @@ const networkConfig = NETWORK_CONFIG[network] || _throw('Unknown network: ' + ne
 const zksync = networkConfig.length === 4;
 const [chainId, url, ethNetwork, verifyURL] = networkConfig;
 const randomApiKey = Math.random().toString(10).substring(2)
-console.log({ chainId, forking: { url }, accounts: [{ privateKey, balance }] })
 
 export default {
   solidity: {
@@ -177,8 +176,8 @@ export default {
         network: 'bitfinity',
         chainId: 355113,
         urls: {
-          apiURL: 'https://explorer.testnet.bitfinity.network/api',
-          browserURL: 'https://explorer.testnet.bitfinity.network:443',
+          apiURL: 'https://explorer.testnet.bitfinity.network/api/v2',
+          browserURL: 'https://explorer.testnet.bitfinity.network',
         },
       }
     ],
