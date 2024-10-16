@@ -1,0 +1,51 @@
+module.exports = class Data1729080699175 {
+    name = 'Data1729080699175'
+
+    async up(db) {
+        await db.query(`CREATE TABLE "currency" ("id" character varying NOT NULL, "name" text, "symbol" text, "decimals" integer NOT NULL, "wrapping" boolean NOT NULL, "token_ids" integer array, "collection_id" character varying, CONSTRAINT "PK_3cda65c731a6264f0e444cc9b91" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_579c2badef582d6aafc865bb2f" ON "currency" ("collection_id") `)
+        await db.query(`CREATE TABLE "collection" ("id" character varying NOT NULL, "name" text, "symbol" text, "wrapper_id" character varying, CONSTRAINT "PK_ad3f485bbc99d875491f44d7c85" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_629215b745f32d800d0b5568f3" ON "collection" ("wrapper_id") `)
+        await db.query(`CREATE TABLE "pair" ("id" character varying NOT NULL, "discrete0" boolean NOT NULL, "discrete1" boolean NOT NULL, "reserve0" numeric NOT NULL, "reserve1" numeric NOT NULL, "total_supply" numeric NOT NULL, "token0_id" character varying, "token1_id" character varying, CONSTRAINT "PK_3eaf216329c5c50aedb94fa797e" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_f74dc53460944a424b56b8f7da" ON "pair" ("token0_id") `)
+        await db.query(`CREATE INDEX "IDX_4419691fc411b8af754dfa65ce" ON "pair" ("token1_id") `)
+        await db.query(`CREATE TABLE "pair_day" ("id" character varying NOT NULL, "day" integer NOT NULL, "volume0" numeric NOT NULL, "volume1" numeric NOT NULL, "reserve0" numeric NOT NULL, "reserve1" numeric NOT NULL, "total_supply" numeric NOT NULL, "pair_id" character varying, CONSTRAINT "PK_7d58c386ac1c2f9d744978c6e37" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_855bddd36c3668117151ed389c" ON "pair_day" ("pair_id") `)
+        await db.query(`CREATE TABLE "pair_month" ("id" character varying NOT NULL, "month" integer NOT NULL, "volume0" numeric NOT NULL, "volume1" numeric NOT NULL, "reserve0" numeric NOT NULL, "reserve1" numeric NOT NULL, "total_supply" numeric NOT NULL, "pair_id" character varying, CONSTRAINT "PK_9284132264a9a812fc08922f5cb" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_435e8ad87b8ba75c0b8e3b6d5c" ON "pair_month" ("pair_id") `)
+        await db.query(`CREATE TABLE "swap" ("id" character varying NOT NULL, "tx_id" bytea NOT NULL, "origin" bytea NOT NULL, "type" text NOT NULL, "volume0" numeric NOT NULL, "volume1" numeric NOT NULL, "timestamp" integer NOT NULL, "pair_id" character varying, CONSTRAINT "PK_4a10d0f359339acef77e7f986d9" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_3571ab1dad7640a6b93c705b8f" ON "swap" ("pair_id") `)
+        await db.query(`CREATE TABLE "counter" ("id" character varying NOT NULL, "value" numeric NOT NULL, CONSTRAINT "PK_012f437b30fcf5a172841392ef3" PRIMARY KEY ("id"))`)
+        await db.query(`ALTER TABLE "currency" ADD CONSTRAINT "FK_579c2badef582d6aafc865bb2f2" FOREIGN KEY ("collection_id") REFERENCES "collection"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "collection" ADD CONSTRAINT "FK_629215b745f32d800d0b5568f3f" FOREIGN KEY ("wrapper_id") REFERENCES "currency"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "pair" ADD CONSTRAINT "FK_f74dc53460944a424b56b8f7da5" FOREIGN KEY ("token0_id") REFERENCES "currency"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "pair" ADD CONSTRAINT "FK_4419691fc411b8af754dfa65ce4" FOREIGN KEY ("token1_id") REFERENCES "currency"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "pair_day" ADD CONSTRAINT "FK_855bddd36c3668117151ed389c3" FOREIGN KEY ("pair_id") REFERENCES "pair"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "pair_month" ADD CONSTRAINT "FK_435e8ad87b8ba75c0b8e3b6d5cc" FOREIGN KEY ("pair_id") REFERENCES "pair"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+        await db.query(`ALTER TABLE "swap" ADD CONSTRAINT "FK_3571ab1dad7640a6b93c705b8f7" FOREIGN KEY ("pair_id") REFERENCES "pair"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
+    }
+
+    async down(db) {
+        await db.query(`DROP TABLE "currency"`)
+        await db.query(`DROP INDEX "public"."IDX_579c2badef582d6aafc865bb2f"`)
+        await db.query(`DROP TABLE "collection"`)
+        await db.query(`DROP INDEX "public"."IDX_629215b745f32d800d0b5568f3"`)
+        await db.query(`DROP TABLE "pair"`)
+        await db.query(`DROP INDEX "public"."IDX_f74dc53460944a424b56b8f7da"`)
+        await db.query(`DROP INDEX "public"."IDX_4419691fc411b8af754dfa65ce"`)
+        await db.query(`DROP TABLE "pair_day"`)
+        await db.query(`DROP INDEX "public"."IDX_855bddd36c3668117151ed389c"`)
+        await db.query(`DROP TABLE "pair_month"`)
+        await db.query(`DROP INDEX "public"."IDX_435e8ad87b8ba75c0b8e3b6d5c"`)
+        await db.query(`DROP TABLE "swap"`)
+        await db.query(`DROP INDEX "public"."IDX_3571ab1dad7640a6b93c705b8f"`)
+        await db.query(`DROP TABLE "counter"`)
+        await db.query(`ALTER TABLE "currency" DROP CONSTRAINT "FK_579c2badef582d6aafc865bb2f2"`)
+        await db.query(`ALTER TABLE "collection" DROP CONSTRAINT "FK_629215b745f32d800d0b5568f3f"`)
+        await db.query(`ALTER TABLE "pair" DROP CONSTRAINT "FK_f74dc53460944a424b56b8f7da5"`)
+        await db.query(`ALTER TABLE "pair" DROP CONSTRAINT "FK_4419691fc411b8af754dfa65ce4"`)
+        await db.query(`ALTER TABLE "pair_day" DROP CONSTRAINT "FK_855bddd36c3668117151ed389c3"`)
+        await db.query(`ALTER TABLE "pair_month" DROP CONSTRAINT "FK_435e8ad87b8ba75c0b8e3b6d5cc"`)
+        await db.query(`ALTER TABLE "swap" DROP CONSTRAINT "FK_3571ab1dad7640a6b93c705b8f7"`)
+    }
+}

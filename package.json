@@ -17,5 +17,8 @@
   "scripts": {
     "build": "hardhat compile && tsc",
     "clean": "hardhat clean"
+  },
+  "dependencies": {
+    "@subsquid/cli": "^2.13.0"
   }
 }
