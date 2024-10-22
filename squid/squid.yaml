@@ -4,11 +4,15 @@ version: 1
 description: 'A decentralized protocol for NFT fractionalization.'
 build: 
 deploy:
+  init:
+    cmd: ['sqd', 'migration:apply']
   addons:
     postgres: 
     rpc:
       - eth.http
   processor:
+    env:
+      NETWORK: ${{ secrets.NETWORK }}
     cmd:
       - sqd
       - process:prod
