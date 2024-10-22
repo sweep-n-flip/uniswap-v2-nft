@@ -30,6 +30,7 @@ export class Swap {
     @BigDecimalColumn_({nullable: false})
     volume1!: BigDecimal
 
+    @Index_()
     @IntColumn_({nullable: false})
     timestamp!: number
 }

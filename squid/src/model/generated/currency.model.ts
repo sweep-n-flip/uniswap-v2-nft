@@ -26,6 +26,6 @@ export class Currency {
     @ManyToOne_(() => Collection, {nullable: true})
     collection!: Collection | undefined | null
 
-    @IntColumn_({array: true, nullable: true})
-    tokenIds!: (number)[] | undefined | null
+    @StringColumn_({nullable: true})
+    tokenIds!: string | undefined | null
 }

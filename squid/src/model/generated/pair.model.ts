@@ -1,5 +1,5 @@
 import {BigDecimal} from "@subsquid/big-decimal"
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, BooleanColumn as BooleanColumn_, ManyToOne as ManyToOne_, Index as Index_, BigDecimalColumn as BigDecimalColumn_} from "@subsquid/typeorm-store"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, BooleanColumn as BooleanColumn_, BigDecimalColumn as BigDecimalColumn_} from "@subsquid/typeorm-store"
 import {Currency} from "./currency.model"
 
 @Entity_()
@@ -11,12 +11,6 @@ export class Pair {
     @PrimaryColumn_()
     id!: string
 
-    @BooleanColumn_({nullable: false})
-    discrete0!: boolean
-
-    @BooleanColumn_({nullable: false})
-    discrete1!: boolean
-
     @Index_()
     @ManyToOne_(() => Currency, {nullable: true})
     token0!: Currency
@@ -24,6 +18,12 @@ export class Pair {
     @Index_()
     @ManyToOne_(() => Currency, {nullable: true})
     token1!: Currency
+
+    @BooleanColumn_({nullable: false})
+    discrete0!: boolean
+
+    @BooleanColumn_({nullable: false})
+    discrete1!: boolean
 
     @BigDecimalColumn_({nullable: false})
     reserve0!: BigDecimal

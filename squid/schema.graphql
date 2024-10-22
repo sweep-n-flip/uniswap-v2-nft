@@ -1,35 +1,35 @@
 type Collection @entity {
-  id: ID!
+  id: ID! # collection address
   name: String
   symbol: String
-  wrapper: Currency!
+  wrapper: Currency! @index
 }
 
 type Currency @entity {
-  id: ID!
+  id: ID! # token address
   name: String
   symbol: String
   decimals: Int!
   wrapping: Boolean!
   collection: Collection
-  tokenIds: [Int!]
+  tokenIds: String # Will store JSON stringified array of BigInts
 }
 
 type Pair @entity {
-  id: ID!
+  id: ID! # pair address
+  token0: Currency! @index
+  token1: Currency! @index
   discrete0: Boolean!
   discrete1: Boolean!
-  token0: Currency!
-  token1: Currency!
   reserve0: BigDecimal!
   reserve1: BigDecimal!
   totalSupply: BigDecimal!
 }
 
 type PairDay @entity {
-  id: ID!
-  pair: Pair!
-  day: Int!
+  id: ID! # pair-timestamp
+  pair: Pair! @index
+  day: Int! @index
   volume0: BigDecimal!
   volume1: BigDecimal!
   reserve0: BigDecimal!
@@ -38,9 +38,9 @@ type PairDay @entity {
 }
 
 type PairMonth @entity {
-  id: ID!
-  pair: Pair!
-  month: Int!
+  id: ID! # pair-timestamp
+  pair: Pair! @index
+  month: Int! @index
   volume0: BigDecimal!
   volume1: BigDecimal!
   reserve0: BigDecimal!
@@ -52,11 +52,11 @@ type Swap @entity {
   id: ID!
   txId: Bytes!
   origin: Bytes!
-  pair: Pair!
+  pair: Pair! @index
   type: String!
   volume0: BigDecimal!
   volume1: BigDecimal!
-  timestamp: Int!
+  timestamp: Int! @index
 }
 
 type Counter @entity {

@@ -5,6 +5,8 @@
     "build": "rm -rf lib && tsc"
   },
   "dependencies": {
+    "@subsquid/archive-registry": "^3.3.2",
+    "@subsquid/big-decimal": "^1.0.0",
     "@subsquid/evm-abi": "^0.3.0",
     "@subsquid/evm-processor": "^1.19.1",
     "@subsquid/graphql-server": "^4.6.0",

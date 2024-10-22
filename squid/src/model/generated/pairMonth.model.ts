@@ -15,6 +15,7 @@ export class PairMonth {
     @ManyToOne_(() => Pair, {nullable: true})
     pair!: Pair
 
+    @Index_()
     @IntColumn_({nullable: false})
     month!: number
 
