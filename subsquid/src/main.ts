@@ -82,8 +82,6 @@ processor.run(new TypeormDatabase(), async (ctx) => {
     for (let log of block.logs) {
       // Handle Factory Events
       if (log.address === FACTORY_ADDRESS) {
-        ctx.log.warn(`Factory event: ${log.topics[0]}`)
-        ctx.log.warn(`Block: ${block.header.height}`)
         if (log.topics[0] === factoryEvents.PairCreated.topic) {
           const { token0, token1, pair } = factoryEvents.PairCreated.decode(log)
 
@@ -137,6 +135,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
 
         if (log.topics[0] === factoryEvents.WrapperCreated.topic) {
           const { collection: collectionAddr, wrapper: wrapperAddr } = factoryEvents.WrapperCreated.decode(log)
+          ctx.log.warn(`Wrapper created for collection ${collectionAddr} with address ${wrapperAddr}`)
 
           const wrapperCurrency = new Currency({
             id: wrapperAddr.toLowerCase(),
@@ -147,8 +146,10 @@ processor.run(new TypeormDatabase(), async (ctx) => {
             tokenIds: '[]',
             collection: null
           })
-
-          currencies.set(wrapperCurrency.id, wrapperCurrency)
+          // Workaround for Bitfinity to index wrapper currency
+          if (networkConfig.chainId === 355113) {
+            await ctx.store.save(wrapperCurrency)
+          }
 
           const collection = new Collection({
             id: collectionAddr.toLowerCase(),
@@ -156,9 +157,15 @@ processor.run(new TypeormDatabase(), async (ctx) => {
             symbol: null,
             wrapper: wrapperCurrency
           })
+          // Workaround for Bitfinity to index wrapper currency
+          if (networkConfig.chainId === 355113) {
+            await ctx.store.save(collection)
+          }
 
           collections.set(collection.id, collection)
           wrapperCurrency.collection = collection
+          ctx.log.warn(`Wrapper currency collection is ${collection.id}`)
+          currencies.set(wrapperCurrency.id, wrapperCurrency)
         }
       }
 
