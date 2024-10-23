@@ -89,7 +89,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
           let token1Currency = await ctx.store.get(Currency, token1.toLowerCase())
 
           if (!token0Currency) {
-            ctx.log.error(`Currency ${token0} not found. Adding it to the store`)
+            ctx.log.info(`Currency ${token0} not found. Adding it to the store`)
             token0Currency = new Currency({
               id: token0.toLowerCase(),
               name: null,
@@ -103,7 +103,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
           }
 
           if (!token1Currency) {
-            ctx.log.error(`Currency ${token1} not found. Adding it to the store`)
+            ctx.log.info(`Currency ${token1} not found. Adding it to the store`)
             token1Currency = new Currency({
               id: token1.toLowerCase(),
               name: null,
@@ -127,7 +127,6 @@ processor.run(new TypeormDatabase(), async (ctx) => {
               reserve1: ZERO_BD,
               totalSupply: ZERO_BD
             })
-            ctx.log.trace(`New pair created: ${newPair.id}`)
 
             pairs.set(newPair.id, newPair)
           }
@@ -135,7 +134,6 @@ processor.run(new TypeormDatabase(), async (ctx) => {
 
         if (log.topics[0] === factoryEvents.WrapperCreated.topic) {
           const { collection: collectionAddr, wrapper: wrapperAddr } = factoryEvents.WrapperCreated.decode(log)
-          ctx.log.warn(`Wrapper created for collection ${collectionAddr} with address ${wrapperAddr}`)
 
           const wrapperCurrency = new Currency({
             id: wrapperAddr.toLowerCase(),
@@ -164,7 +162,6 @@ processor.run(new TypeormDatabase(), async (ctx) => {
 
           collections.set(collection.id, collection)
           wrapperCurrency.collection = collection
-          ctx.log.warn(`Wrapper currency collection is ${collection.id}`)
           currencies.set(wrapperCurrency.id, wrapperCurrency)
         }
       }
@@ -286,10 +283,6 @@ processor.run(new TypeormDatabase(), async (ctx) => {
     }
   }
 
-  ctx.log.warn(`Saving ${currencies.size} currencies`)
-  ctx.log.warn(`Saving ${collections.size} collections`)
-  ctx.log.warn(`Saving ${pairs.size} pairs`)
-  ctx.log.warn(`Saving ${pairDays.size} pair days`)
   // Save all accumulated entities
   await ctx.store.save([...currencies.values()])
   await ctx.store.save([...collections.values()])
