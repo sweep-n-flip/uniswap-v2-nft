@@ -91,11 +91,31 @@ processor.run(new TypeormDatabase(), async (ctx) => {
           let token1Currency = await ctx.store.get(Currency, token1.toLowerCase())
 
           if (!token0Currency) {
-            ctx.log.error(`Token0 not found: ${token0}`)
+            ctx.log.error(`Currency ${token0} not found. Adding it to the store`)
+            token0Currency = new Currency({
+              id: token0.toLowerCase(),
+              name: null,
+              symbol: null,
+              decimals: 18,
+              wrapping: false,
+              tokenIds: '[]',
+              collection: null
+            })
+            currencies.set(token0Currency.id, token0Currency)
           }
 
           if (!token1Currency) {
-            ctx.log.error(`Token1 not found: ${token1}`)
+            ctx.log.error(`Currency ${token1} not found. Adding it to the store`)
+            token1Currency = new Currency({
+              id: token1.toLowerCase(),
+              name: null,
+              symbol: null,
+              decimals: 18,
+              wrapping: false,
+              tokenIds: '[]',
+              collection: null
+            })
+            currencies.set(token1Currency.id, token1Currency)
           }
 
           if (token0Currency && token1Currency) {
@@ -189,6 +209,28 @@ processor.run(new TypeormDatabase(), async (ctx) => {
           pairDay.volume0 = pairDay.volume0.add(toDecimal(volume0, pair.token0.decimals))
           pairDay.volume1 = pairDay.volume1.add(toDecimal(volume1, pair.token1.decimals))
           pairDays.set(pairDayId, pairDay)
+
+
+          const month = Math.floor(block.header.timestamp / 2592000) * 2592000
+          const pairMonthId = `${pair.id}-${month}`
+
+          let pairMonth = pairMonths.get(pairMonthId) || await ctx.store.get(PairMonth, pairMonthId)
+          if (!pairMonth) {
+            pairMonth = new PairMonth({
+              id: pairMonthId,
+              pair: pair,
+              month,
+              volume0: ZERO_BD,
+              volume1: ZERO_BD,
+              reserve0: pair.reserve0,
+              reserve1: pair.reserve1,
+              totalSupply: pair.totalSupply
+            })
+          }
+
+          pairMonth.volume0 = pairMonth.volume0.add(toDecimal(volume0, pair.token0.decimals))
+          pairMonth.volume1 = pairMonth.volume1.add(toDecimal(volume1, pair.token1.decimals))
+          pairMonths.set(pairMonthId, pairMonth)
         }
       }
 
@@ -237,7 +279,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
     }
   }
 
-  ctx.log.warn(`Saving ${JSON.stringify(currencies.values().next().value.toString(), null, 4)} currencies`)
+  ctx.log.warn(`Saving ${currencies.size} currencies`)
   ctx.log.warn(`Saving ${collections.size} collections`)
   ctx.log.warn(`Saving ${pairs.size} pairs`)
   ctx.log.warn(`Saving ${pairDays.size} pair days`)
