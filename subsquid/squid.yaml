@@ -1,5 +1,5 @@
 manifestVersion: subsquid.io/v0.1
-name: sweepnflip-amm-squid
+name: sweepnflip-amm-subsquid
 version: 1
 description: 'A decentralized protocol for NFT fractionalization.'
 build: 
