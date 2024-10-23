@@ -15,6 +15,7 @@ export const networkConfig = JSON.parse(
 );
 
 export const FACTORY_ADDRESS = networkConfig.contractAddress.factory.toLowerCase()
+export const ROUTER_ADDRESS = networkConfig.contractAddress.router.toLowerCase()
 
 
 export const processor = new EvmBatchProcessor()
@@ -31,6 +32,7 @@ export const processor = new EvmBatchProcessor()
     ]
   })
   .addLog({
+    address: [ROUTER_ADDRESS],
     topic0: [
       pairEvents.Swap.topic,
       pairEvents.Sync.topic,

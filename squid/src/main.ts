@@ -1,5 +1,5 @@
 import { TypeormDatabase, Store } from '@subsquid/typeorm-store'
-import { processor } from './processor'
+import {networkConfig, processor} from './processor'
 import { Collection, Counter, Currency, Pair, PairDay, PairMonth, Swap } from './model'
 import { BigDecimal } from '@subsquid/big-decimal'
 import { events as factoryEvents } from './abi/IUniswapV2Factory'
@@ -14,7 +14,7 @@ export const IWERC721 = wrapperEvents
 // Constants
 const ZERO_BI = 0n
 const ZERO_BD = BigDecimal(0)
-const FACTORY_ADDRESS = '0x65624436e377c8A4A6918B69927e56982331b590'.toLowerCase()
+const FACTORY_ADDRESS = networkConfig.contractAddress.factory.toLowerCase()
 
 // Helper function to convert hex string to Uint8Array
 function hexStringToUint8Array(hex: string): Uint8Array {
@@ -82,11 +82,21 @@ processor.run(new TypeormDatabase(), async (ctx) => {
     for (let log of block.logs) {
       // Handle Factory Events
       if (log.address === FACTORY_ADDRESS) {
+        ctx.log.warn(`Factory event: ${log.topics[0]}`)
+        ctx.log.warn(`Block: ${block.header.height}`)
         if (log.topics[0] === factoryEvents.PairCreated.topic) {
           const { token0, token1, pair } = factoryEvents.PairCreated.decode(log)
 
           let token0Currency = await ctx.store.get(Currency, token0.toLowerCase())
           let token1Currency = await ctx.store.get(Currency, token1.toLowerCase())
+
+          if (!token0Currency) {
+            ctx.log.error(`Token0 not found: ${token0}`)
+          }
+
+          if (!token1Currency) {
+            ctx.log.error(`Token1 not found: ${token1}`)
+          }
 
           if (token0Currency && token1Currency) {
             const newPair = new Pair({
@@ -99,6 +109,7 @@ processor.run(new TypeormDatabase(), async (ctx) => {
               reserve1: ZERO_BD,
               totalSupply: ZERO_BD
             })
+            ctx.log.trace(`New pair created: ${newPair.id}`)
 
             pairs.set(newPair.id, newPair)
           }
@@ -226,6 +237,10 @@ processor.run(new TypeormDatabase(), async (ctx) => {
     }
   }
 
+  ctx.log.warn(`Saving ${JSON.stringify(currencies.values().next().value.toString(), null, 4)} currencies`)
+  ctx.log.warn(`Saving ${collections.size} collections`)
+  ctx.log.warn(`Saving ${pairs.size} pairs`)
+  ctx.log.warn(`Saving ${pairDays.size} pair days`)
   // Save all accumulated entities
   await ctx.store.save([...currencies.values()])
   await ctx.store.save([...collections.values()])

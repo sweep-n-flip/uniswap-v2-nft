@@ -4,6 +4,8 @@ version: 1
 description: 'A decentralized protocol for NFT fractionalization.'
 build: 
 deploy:
+  env:
+    NETWORK: ${{ secrets.NETWORK }}
   init:
     cmd: ['sqd', 'migration:apply']
   addons:
@@ -11,8 +13,6 @@ deploy:
     rpc:
       - eth.http
   processor:
-    env:
-      NETWORK: ${{ secrets.NETWORK }}
     cmd:
       - sqd
       - process:prod

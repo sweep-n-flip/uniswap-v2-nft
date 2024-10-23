@@ -2,7 +2,7 @@
   "chainId": 93747,
   "name": "StratoVM Sepolia",
   "gatewayUrl": "https://v2.archive.subsquid.io/network/stratovm-sepolia",
-  "fromBlock": 0,
+  "fromBlock": 4204060,
   "finalityConfirmation": 20,
   "contractAddress": {
     "router": "0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94",
