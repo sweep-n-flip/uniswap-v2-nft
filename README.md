@@ -154,9 +154,9 @@ Strato VM:
 | ROUTER       | stratovm (93747) | [0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94](https://explorer.stratovm.io/address/0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94)  |
 | FACTORY      | stratovm (93747) | [0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA](https://explorer.stratovm.io/address/0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA)  |
 
-| Subgraph                        | Target | Network (ID)     | Endpoint |
-| ------------------------------- | ------ | ---------------- |----------|
-| [ALL](/subgraph/schema.graphql) | Studio | stratovm (93747) | N/A      |
+| Subsquid                        | Target | Network (ID)     | Endpoint                                                                                                                        |
+|---------------------------------| ------ | ---------------- |---------------------------------------------------------------------------------------------------------------------------------|
+| [ALL](/subsquid/schema.graphql) | Studio | stratovm (93747) | [`sweepnflip-amm-subsquid@v1`](https://736998a3-c1a8-4216-ab1f-90b065e35097.squids.live/sweepnflip-amm-subsquid@v1/api/graphql) |
 
 Bitfinity:
 
@@ -165,6 +165,6 @@ Bitfinity:
 | ROUTER       | bitfinity (355113)   | [0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94](https://explorer.testnet.bitfinity.network/address/0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94) |
 | FACTORY      | bitfinity (355113)   | [0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA](https://explorer.testnet.bitfinity.network/address/0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA) |
 
-| Subgraph                        | Target | Network (ID)        | Endpoint |
-| ------------------------------- | ------ |---------------------|----------|
-| [ALL](/subgraph/schema.graphql) | Studio | bitfinity (355113)  | N/A      |
+| Subsquid                        | Target | Network (ID)        | Endpoint                                                                                                                     |
+|---------------------------------| ------ |---------------------|------------------------------------------------------------------------------------------------------------------------------|
+| [ALL](/subsquid/schema.graphql) | Studio | bitfinity (355113)  | [`sweepnflip-amm-subsquid@v1`](https://242ed9ab-9df0-4458-98fd-529803ec78a5.squids.live/sweepnflip-amm-squid@v1/api/graphql) |
