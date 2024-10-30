@@ -12,7 +12,7 @@ type Currency @entity {
   decimals: Int!
   wrapping: Boolean!
   collection: Collection
-  tokenIds: [BigInt!]
+  tokenIds: [BigInt!]!
 }
 
 type Pair @entity {

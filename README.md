@@ -74,8 +74,8 @@ BNB Smart Chain:
 
 | Contract     | Network (ID)      | Address                                                                                                                       |
 | ------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| ROUTER       | bscmain (56)      | [0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc](https://bscscan.com/address/0x46ed13B4EdDa147fA7eF018FB178300FA24C4Efc)          |
-| FACTORY      | bscmain (56)      | [0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A](https://bscscan.com/address/0xFc42221594c07F2EFCEDfb11f4763FCa03248B5A)          |
+| ROUTER       | bscmain (56)      | [0x790488868E4b2eDb166778D67142035091eb130A](https://bscscan.com/address/0x790488868E4b2eDb166778D67142035091eb130A)          |
+| FACTORY      | bscmain (56)      | [0x1fC0D65ae98F69cD8DCDA4ec0F6155A5F2a7b0ab](https://bscscan.com/address/0x1fC0D65ae98F69cD8DCDA4ec0F6155A5F2a7b0ab)          |
 
 | Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
 | ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
