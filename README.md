@@ -77,9 +77,9 @@ BNB Smart Chain:
 | ROUTER       | bscmain (56)      | [0x790488868E4b2eDb166778D67142035091eb130A](https://bscscan.com/address/0x790488868E4b2eDb166778D67142035091eb130A)          |
 | FACTORY      | bscmain (56)      | [0x1fC0D65ae98F69cD8DCDA4ec0F6155A5F2a7b0ab](https://bscscan.com/address/0x1fC0D65ae98F69cD8DCDA4ec0F6155A5F2a7b0ab)          |
 
-| Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                 |
-| ------------------------------- | ------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| [ALL](/subgraph/schema.graphql) | Studio | bscmain (56)      | [`QmSVceRG33Sy1kBp6uZQGsTE5t1yuatYqzNEotXK8Wxao9`](https://api.thegraph.com/subgraphs/id/QmSVceRG33Sy1kBp6uZQGsTE5t1yuatYqzNEotXK8Wxao9) |
+| Subgraph                        | Target | Network (ID)      | Endpoint                                                                                                                                |
+| ------------------------------- | ------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| [ALL](/subgraph/schema.graphql) | Studio | bscmain (56)      | [`QmNQBgfJRuGUvZXPzRPBGiBTboFpMW7VEXDFFF8BLyNyt1`](https://api.studio.thegraph.com/query/93076/sweep-n-flip-amm/version/latest) |
 
 Linea:
 
