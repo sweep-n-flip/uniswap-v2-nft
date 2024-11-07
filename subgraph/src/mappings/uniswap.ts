@@ -54,7 +54,7 @@ function registerCurrency(address: Address): Currency {
     currency.decimals = decimals.reverted ? 0 : decimals.value;
     currency.wrapping = false;
     currency.collection = null;
-    currency.tokenIds = null;
+    currency.tokenIds = [];
     currency.save();
   }
   return currency as Currency;
@@ -86,9 +86,9 @@ function updateCurrencyAsWrapper(wrapper: Currency, collection: Collection): voi
 
 function updateDailyVolume(address: Address, timestamp: BigInt, volume0: BigInt, volume1: BigInt): void {
   let pairId = address.toHexString();
-  let pair = Pair.load(pairId);
-  let token0 = Currency.load(pair.token0);
-  let token1 = Currency.load(pair.token1);
+  let pair = loadPair(address.toHexString());
+  let token0 = loadCurrency(pair.token0);
+  let token1 = loadCurrency(pair.token1);
   let DAY = 24 * 60 * 60;
   let day = (timestamp.toI32() / DAY) * DAY;
   let pairDayId = pairId.concat(':').concat(day.toString());
@@ -103,16 +103,16 @@ function updateDailyVolume(address: Address, timestamp: BigInt, volume0: BigInt,
     pairDay.reserve1 = pair.reserve1;
     pairDay.totalSupply = pair.totalSupply;
   }
-  pairDay.volume0 = pairDay.volume0 + coins(volume0, token0.decimals);
-  pairDay.volume1 = pairDay.volume1 + coins(volume1, token1.decimals);
+  pairDay.volume0 = pairDay.volume0.plus(coins(volume0, token0.decimals));
+  pairDay.volume1 = pairDay.volume1.plus(coins(volume1, token1.decimals));
   pairDay.save();
 }
 
 function updateMonthlyVolume(address: Address, timestamp: BigInt, volume0: BigInt, volume1: BigInt): void {
   let pairId = address.toHexString();
-  let pair = Pair.load(pairId);
-  let token0 = Currency.load(pair.token0);
-  let token1 = Currency.load(pair.token1);
+  let pair = loadPair(pairId);
+  let token0 = loadCurrency(pair.token0);
+  let token1 = loadCurrency(pair.token1);
   let MONTH = 730 * 60 * 60;
   let month = (timestamp.toI32() / MONTH) * MONTH;
   let pairMonthId = pairId.concat(':').concat(month.toString());
@@ -127,8 +127,8 @@ function updateMonthlyVolume(address: Address, timestamp: BigInt, volume0: BigIn
     pairMonth.reserve1 = pair.reserve1;
     pairMonth.totalSupply = pair.totalSupply;
   }
-  pairMonth.volume0 = pairMonth.volume0 + coins(volume0, token0.decimals);
-  pairMonth.volume1 = pairMonth.volume1 + coins(volume1, token1.decimals);
+  pairMonth.volume0 = pairMonth.volume0.plus(coins(volume0, token0.decimals));
+  pairMonth.volume1 = pairMonth.volume1.plus(coins(volume1, token1.decimals));
   pairMonth.save();
 }
 
@@ -136,9 +136,9 @@ function updatePairState(address: Address, reserve0: BigInt, reserve1: BigInt): 
   let contract = IERC20.bind(address);
   let totalSupply = contract.try_totalSupply();
   let pairId = address.toHexString();
-  let pair = Pair.load(pairId);
-  let token0 = Currency.load(pair.token0);
-  let token1 = Currency.load(pair.token1);
+  let pair = loadPair(pairId);
+  let token0 = loadCurrency(pair.token0);
+  let token1 = loadCurrency(pair.token1);
   pair.reserve0 = coins(reserve0, token0.decimals);
   pair.reserve1 = coins(reserve1, token1.decimals);
   if (!totalSupply.reverted) {
@@ -149,8 +149,13 @@ function updatePairState(address: Address, reserve0: BigInt, reserve1: BigInt): 
 
 function insertWrapperItems(address: Address, items: BigInt[]): void {
   let currencyId = address.toHexString();
-  let currency = Currency.load(currencyId);
+  let currency = loadCurrency(currencyId);
   let list = currency.tokenIds;
+
+  if (list === null) {
+    list = [];
+  }
+
   for (let i = 0; i < items.length; i++) {
     let index = list.indexOf(items[i]);
     if (index < 0) {
@@ -163,8 +168,13 @@ function insertWrapperItems(address: Address, items: BigInt[]): void {
 
 function removeWrapperItems(address: Address, items: BigInt[]): void {
   let currencyId = address.toHexString();
-  let currency = Currency.load(currencyId);
+  let currency = loadCurrency(currencyId);
   let list = currency.tokenIds;
+
+  if (list === null) {
+    list = [];
+  }
+
   for (let i = 0; i < items.length; i++) {
     let index = list.indexOf(items[i]);
     if (index >= 0) {
@@ -181,17 +191,17 @@ function nextSwapId(): BigInt {
     counter = new Counter('SwapCount');
     counter.value = ZERO_BIGINT;
   }
-  let swapId = counter.value + BigInt.fromI32(1);
+  let swapId = counter.value.plus(BigInt.fromI32(1));
   counter.value = swapId;
   counter.save();
   return swapId;
 }
 
-function registerSwap(_swapId: BigInt, txId: Bytes, origin: Address, address: Address, type: String, volume0: BigInt, volume1: BigInt, timestamp: BigInt): void {
+function registerSwap(_swapId: BigInt, txId: Bytes, origin: Address, address: Address, type: string, volume0: BigInt, volume1: BigInt, timestamp: BigInt): void {
   let pairId = address.toHexString();
-  let pair = Pair.load(pairId);
-  let token0 = Currency.load(pair.token0);
-  let token1 = Currency.load(pair.token1);
+  let pair = loadPair(pairId);
+  let token0 = loadCurrency(pair.token0);
+  let token1 = loadCurrency(pair.token1);
   let swapId = _swapId.toString();
   let swap = new Swap(swapId);
   swap.txId = txId;
@@ -221,8 +231,8 @@ export function handleWrapperCreated(event: WrapperCreatedEvent): void {
 export function handleSwap(event: SwapEvent): void {
   let sell0 = event.params.amount0In > event.params.amount0Out;
   let sell1 = event.params.amount1In > event.params.amount1Out;
-  let volume0 = sell0 ? event.params.amount0In - event.params.amount0Out : event.params.amount0Out - event.params.amount0In;
-  let volume1 = sell1 ? event.params.amount1In - event.params.amount1Out : event.params.amount1Out - event.params.amount1In;
+  let volume0 = sell0 ? event.params.amount0In.minus(event.params.amount0Out) : event.params.amount0Out.minus(event.params.amount0In);
+  let volume1 = sell1 ? event.params.amount1In.minus(event.params.amount1Out) : event.params.amount1Out.minus(event.params.amount1In);
   updateDailyVolume(event.address, event.block.timestamp, volume0, volume1);
   updateMonthlyVolume(event.address, event.block.timestamp, volume0, volume1);
   let swapId = nextSwapId();
@@ -240,4 +250,39 @@ export function handleMint(event: MintEvent): void {
 
 export function handleBurn(event: BurnEvent): void {
   removeWrapperItems(event.address, event.params.tokenIds);
+}
+
+function loadPair(hexAddress: string): Pair {
+  let pairId = hexAddress
+  let pair = Pair.load(pairId);
+
+  if (pair == null) {
+    pair = new Pair(pairId);
+    pair.token0 = '';
+    pair.token1 = '';
+    pair.discrete0 = false;
+    pair.discrete1 = false;
+    pair.reserve0 = ZERO_BIGDECIMAL;
+    pair.reserve1 = ZERO_BIGDECIMAL;
+    pair.totalSupply = ZERO_BIGDECIMAL;
+  }
+
+  return pair;
+}
+
+function loadCurrency(hexAddress: string): Currency {
+  let currencyId = hexAddress;
+  let currency = Currency.load(currencyId);
+
+  if (currency == null) {
+    currency = new Currency(currencyId);
+    currency.name = '';
+    currency.symbol = '';
+    currency.decimals = 0;
+    currency.wrapping = false;
+    currency.collection = '';
+    currency.tokenIds = [];
+  }
+
+  return currency;
 }

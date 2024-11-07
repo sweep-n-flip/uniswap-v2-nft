@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 1.2.0
 description: A decentralized protocol for NFT fractionalization.
 repository: https://github.com/nftfy/uniswap-v2-nft
 schema:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: {{factoryStartBlock}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/uniswap.ts
       entities:
@@ -46,7 +46,7 @@ templates:
       abi: IUniswapV2Pair
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/uniswap.ts
       entities:
@@ -78,7 +78,7 @@ templates:
       abi: IWERC721
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/uniswap.ts
       entities:

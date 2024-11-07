@@ -35,8 +35,8 @@
   },
   "devDependencies": {
     "@goldskycom/cli": "^9.6.0",
-    "@graphprotocol/graph-cli": "^0.21.1",
-    "@graphprotocol/graph-ts": "^0.20.1",
+    "@graphprotocol/graph-cli": "^0.87.0",
+    "@graphprotocol/graph-ts": "^0.35.1",
     "mustache": "^4.2.0"
   }
 }
