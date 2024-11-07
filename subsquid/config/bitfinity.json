@@ -1,0 +1,12 @@
+{
+  "chainId": 355113,
+  "name": "Bitfinity Testnet",
+  "gatewayUrl": "https://v2.archive.subsquid.io/network/bitfinity-testnet",
+  "fromBlock": 4205176,
+  "finalityConfirmation": 20,
+  "contractAddress": {
+    "router": "0x578F1F1497fFB6E26Cc039D3729b4Db9B8263B94",
+    "factory": "0xb9456FBf1F17b46c69361Cd9d42CAe12138225FA"
+  },
+  "rpcUrl": "https://testnet.bitfinity.network"
+}
