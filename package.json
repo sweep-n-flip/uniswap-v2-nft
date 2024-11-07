@@ -7,6 +7,7 @@
     "@matterlabs/hardhat-zksync-verify": "^0.2.1",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@nomiclabs/hardhat-etherscan": "^3.1.8",
+    "@subsquid/cli": "^2.13.0",
     "ethers": "^5.7.1",
     "hardhat": "^2.22.13",
     "hardhat-contract-sizer": "^2.10.0",
@@ -17,8 +18,5 @@
   "scripts": {
     "build": "hardhat compile && tsc",
     "clean": "hardhat clean"
-  },
-  "dependencies": {
-    "@subsquid/cli": "^2.13.0"
   }
 }

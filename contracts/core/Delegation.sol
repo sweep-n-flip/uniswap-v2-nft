@@ -12,7 +12,7 @@ address constant DELEGATE_FACTORY = 0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac; 
 //address constant DELEGATE_FACTORY = 0x68A384D826D3678f78BB9FB1533c7E9577dACc0E; // StellaSwap (Moombeam mainnet)
 //address constant DELEGATE_FACTORY = 0xb08Bfed214ba87d5d5D07B7DA573010016C44488; // Kodiak (Berachain testnet)
 //address constant DELEGATE_FACTORY = 0xE578184bC88EB48485Bba23a37B5509578d2aE38; // IceSwap (StratoVM testnet)
-//address constant DELEGATE_FACTORY = 0x9945f4a1eC4C4FC74a70276CCf60b8b1B2D7m9 ,gE1F4A; // - (Bitfinity testnet)
+//address constant DELEGATE_FACTORY = 0x9945f4a1eC4C4FC74a70276CCf60b8b1B2DE1F4A; // - (Bitfinity testnet)
 
 bytes constant DELEGATE_INIT_CODE_HASH = hex"e18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303"; // SushiSwap (all)
 //bytes constant DELEGATE_INIT_CODE_HASH = hex"57224589c67f3f30a6b0d7a1b54cf3153ab84563bc609ef41dfb34f8b2974d2d"; // PancakeSwap (Linea mainnet)
