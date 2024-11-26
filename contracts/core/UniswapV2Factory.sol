@@ -52,6 +52,7 @@ contract UniswapV2Factory is IUniswapV2Factory {
             pair = address(new UniswapV2Pair{salt: salt}());
             IUniswapV2Pair(pair).initialize(token0, token1, discrete0, discrete1);
         } else {
+            require(tokenA.code.length != 0 && tokenB.code.length != 0, "SweepnFlip: DELEGATION_RESTRICTED");
             if (DELEGATE_VELODROME) {
                 pair = IUniswapV2FactoryExt(DELEGATE_FACTORY).getPair(tokenA, tokenB, false);
                 if (pair == address(0)) {
