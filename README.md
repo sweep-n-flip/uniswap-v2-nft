@@ -168,3 +168,14 @@ Bitfinity:
 | Subsquid                        | Target | Network (ID)        | Endpoint                                                                                                                     |
 |---------------------------------| ------ |---------------------|------------------------------------------------------------------------------------------------------------------------------|
 | [ALL](/subsquid/schema.graphql) | Studio | bitfinity (355113)  | [`sweepnflip-amm-subsquid@v1`](https://242ed9ab-9df0-4458-98fd-529803ec78a5.squids.live/sweepnflip-amm-squid@v1/api/graphql) |
+
+Apechain:
+
+| Contract     | Network (ID)     | Address                                                                                                                                     |
+| ------------ |------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| ROUTER       | apechain (33139) | [0x4C91AE2260c713EE61b7094141E9494fA7947Cfe](https://apescan.io/address/0x4C91AE2260c713EE61b7094141E9494fA7947Cfe) |
+| FACTORY      | apechain (33139) | [0x58ac416c2A8A217f3aF4acb1F5490efd2bE4652a](https://apescan.io/address/0x58ac416c2a8a217f3af4acb1f5490efd2be4652a) |
+
+| Subgraph                        | Target | Network (ID)     | Endpoint                                                                                                                             |
+|---------------------------------| ------ |------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| [ALL](/subgraph/schema.graphql) | Studio | apechain (33139) | [`snf-amm-apechain@1.0.0`](https://api.goldsky.com/api/public/project_cm6owlz0w193201ur7900d42s/subgraphs/snf-amm-apechain/1.0.0/gn) |
