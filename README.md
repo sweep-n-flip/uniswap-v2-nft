@@ -189,4 +189,4 @@ Hyperliquid:
 
 | Subgraph                        | Target | Network (ID)       | Endpoint                                                                                                                         |
 |---------------------------------| ------ |--------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| [ALL](/subgraph/schema.graphql) | TBD    | hyperliquid (999)  | TBD - Pending subgraph deployment |
+| [ALL](/subgraph/schema.graphql) | TBD    | hyperliquid (999)  | [`QmSJdPe6TfVy9wVh6D3pct5bbS9aJPzvKXrwYYsueSPFrY`] (https://api.goldsky.com/api/public/project_cmejhyc7rqen501wed6sxgbn3/subgraphs/snf-hyperevm/v1.0.13-uni/gn) |

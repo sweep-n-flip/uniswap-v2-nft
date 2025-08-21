@@ -31,7 +31,8 @@
     "set:optmain": "mustache config/optmain.json subgraph.template.yaml subgraph.yaml && mustache config/optmain.json ../.env .env",
     "set:modemain": "mustache config/modemain.json subgraph.template.yaml subgraph.yaml && mustache config/modemain.json ../.env .env",
     "set:moonbeammain": "mustache config/moonbeammain.json subgraph.template.yaml subgraph.yaml && mustache config/moonbeammain.json ../.env .env",
-    "set:beratest": "mustache config/beratest.json subgraph.template.yaml subgraph.yaml && mustache config/beratest.json ../.env .env"
+    "set:beratest": "mustache config/beratest.json subgraph.template.yaml subgraph.yaml && mustache config/beratest.json ../.env .env",
+    "set:hyperevm": "mustache config/hyperevm.json subgraph.template.yaml subgraph.yaml && mustache config/hyperevm.json ../.env .env"
   },
   "devDependencies": {
     "@goldskycom/cli": "^9.6.0",
