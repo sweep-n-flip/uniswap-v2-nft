@@ -19,6 +19,7 @@ const NETWORK_CONFIG: { [chainId: number]: [string, string, string] } = {
   10: ['0x6EA629Db85e9F7aeC219BB625C585DA0dB84fc1D', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x9c12939390052919aF3155f41Bf4160Fd3666A6f'], // optimism
   34443: ['0x5E9624a458A659885a1d6f7378880e1F920992FB', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xc1e624C810D297FD70eF53B0E08F44FABE468591'], // mode
   1284: ['0x5E9624a458A659885a1d6f7378880e1F920992FB', '0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0x70085a09D30D6f8C4ecF6eE10120d1847383BB57'], // moombeam
+  999: ['0xF3d1Fb6F6B2702C937e6568f918c758F3efd573d', '0x1b294Cc80c8B4B6e4Af7Dd61589f6a9d7138DCD3', '0xb4a9C4e6Ea8E2191d2FA5B380452a634Fb21240A'], // hyperliquid
   // testnets
   3: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // ropsten
   4: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506'], // rinkeby
@@ -34,7 +35,8 @@ const NETWORK_CONFIG: { [chainId: number]: [string, string, string] } = {
   80084: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0x406846114B2A9b65a8A2Ab702C2C57d27784dBA2'], // berachain bartio
   93747: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0xf8ac4BEB2F75d2cFFb588c63251347fdD629B92c'], // stratovm testnet
   355113: ['0x3112eb8e651611Fdb8C9a5b9f80222b090e36601', '0xFDf35F1Bfe270e636f535a45Ce8D02457676e050', '0xD82d333a2BeB122842094459652107F9154E7745'], // bitfinity testnet
-  33139: ['0xa12916d8CaC62dA6FdC06807514194a778810b0e', '0xa12916d8CaC62dA6FdC06807514194a778810b0e', '0x18E621B64d7808c3C47bccbbD7485d23F257D26f'] // apechain
+  33139: ['0xa12916d8CaC62dA6FdC06807514194a778810b0e', '0xa12916d8CaC62dA6FdC06807514194a778810b0e', '0x18E621B64d7808c3C47bccbbD7485d23F257D26f'], // apechain
+  998: ['0xF3d1Fb6F6B2702C937e6568f918c758F3efd573d', '0x1b294Cc80c8B4B6e4Af7Dd61589f6a9d7138DCD3', '0x0000000000000000000000000000000000000000'], // hyperliquid testnet - usar zero address
 };
 
 async function main(args: string[]): Promise<void> {
@@ -133,17 +135,17 @@ async function main(args: string[]): Promise<void> {
     }
   }
 
-  {
-    console.log('Transferring change...');
-    const balance = await getBalance(FROM);
-    const gasPrice = await getGasPrice();
-    const gasLimit = 21000n;
-    const fee = gasPrice * gasLimit;
-    const value = balance - fee;
-    const to = FUNDING;
-    const tx = await signer.sendTransaction({ to, value, gasLimit, gasPrice });
-    await tx.wait();
-  }
+  // {
+  //   console.log('Transferring change...');
+  //   const balance = await getBalance(FROM);
+  //   const gasPrice = await getGasPrice();
+  //   const gasLimit = 21000n;
+  //   const fee = gasPrice * gasLimit;
+  //   const value = balance - fee;
+  //   const to = FUNDING;
+  //   const tx = await signer.sendTransaction({ to, value, gasLimit, gasPrice });
+  //   await tx.wait();
+  // }
 
 }
 

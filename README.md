@@ -179,3 +179,14 @@ Apechain:
 | Subgraph                        | Target | Network (ID)     | Endpoint                                                                                                                             |
 |---------------------------------| ------ |------------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | [ALL](/subgraph/schema.graphql) | Studio | apechain (33139) | [`snf-amm-apechain@1.0.0`](https://api.goldsky.com/api/public/project_cm6owlz0w193201ur7900d42s/subgraphs/snf-amm-apechain/1.0.0/gn) |
+
+Hyperliquid:
+
+| Contract     | Network (ID)       | Address                                                                                                                           |
+| ------------ |--------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| ROUTER       | hyperliquid (999)  | [0x1c865C75ab96aEbe4F3beEb4388036047240096b](https://hyperevmscan.io/address/0x1c865C75ab96aEbe4F3beEb4388036047240096b) |
+| FACTORY      | hyperliquid (999)  | [0xa575959Ab114BF3a84A9B7D92838aC3b77324E65](https://hyperevmscan.io/address/0xa575959Ab114BF3a84A9B7D92838aC3b77324E65) |
+
+| Subgraph                        | Target | Network (ID)       | Endpoint                                                                                                                         |
+|---------------------------------| ------ |--------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| [ALL](/subgraph/schema.graphql) | TBD    | hyperliquid (999)  | TBD - Pending subgraph deployment |

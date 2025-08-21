@@ -34,6 +34,7 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
   'optmain': [10, 'https://mainnet.optimism.io'], // optimism
   'modemain': [34443, 'https://mainnet.mode.network'], // mode
   'moonbeammain': [1284, 'https://rpc.api.moonbeam.network/'], // moonbeam
+  'hyperliquid': [999, 'https://rpc.hyperliquid.xyz/evm'], // hyperliquid
   // testnets
   'ropsten': [3, 'https://ropsten.infura.io/v3/' + infuraProjectId], // ropsten
   'rinkeby': [4, 'https://rinkeby.infura.io/v3/' + infuraProjectId], // rinkeby
@@ -49,7 +50,8 @@ const NETWORK_CONFIG: { [name: string]: [number, string] | [number, string, stri
   'beratest': [80084, 'https://bartio.rpc.berachain.com'], // berachain bartio,
   'stratovm': [93747, 'https://rpc.stratovm.io'], // strato vm,
   'bitfinity': [355113, 'https://testnet.bitfinity.network'], // bitfinity,
-  'apechain': [33139, 'https://apechain.drpc.org'] //apechain
+  'apechain': [33139, 'https://apechain.drpc.org'], //apechain
+  'hyperliquidtest': [998, 'https://rpc.hyperliquid-testnet.xyz/evm'], // hyperliquid testnet
 };
 
 const networkConfig = NETWORK_CONFIG[network] || _throw('Unknown network: ' + network);
@@ -93,6 +95,7 @@ export default {
       optimisticEthereum: etherscan['optmain'], // optimism
       moonbeam: etherscan['moonbeammain'], // moonbeam
       modemain: randomApiKey,
+      hyperliquid: etherscan['hyperliquid'],
       // testnets
       ropsten: etherscan['mainnet'], // ropsten
       rinkeby: etherscan['mainnet'], // rinkeby
@@ -107,7 +110,8 @@ export default {
       beratest: randomApiKey,
       stratovm: randomApiKey,
       bitfinity: randomApiKey,
-      apechain: etherscan['apechain'] // apechain,
+      apechain: etherscan['apechain'], // apechain,
+      hyperliquidtest: etherscan['hyperliquidtest'],
     },
     customChains: [
       {
@@ -189,7 +193,23 @@ export default {
           apiURL: 'https://api.apescan.io/api',
           browserURL: 'https://apescan.io/',
         },
-      }
+      },
+      {
+        network: 'hyperliquid',
+        chainId: 999,
+        urls: {
+          apiURL: 'https://api.etherscan.io/v2/api/api?chainid=999',
+          browserURL: 'https://hyperevmscan.io',
+        },
+      },
+      {
+        network: 'hyperliquidtest', 
+        chainId: 998,
+        urls: {
+          apiURL: 'https://testnet.hyperevmscan.io/api',
+          browserURL: 'https://testnet.hyperevmscan.io',
+        },
+      },
     ],
   },
 };
