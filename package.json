@@ -18,5 +18,9 @@
   "scripts": {
     "build": "hardhat compile && tsc",
     "clean": "hardhat clean"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.4.0",
+    "erc721a": "^4.3.0"
   }
 }

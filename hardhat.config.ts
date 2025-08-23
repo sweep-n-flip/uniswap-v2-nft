@@ -61,13 +61,26 @@ const randomApiKey = Math.random().toString(10).substring(2)
 
 export default {
   solidity: {
-    version: '0.8.9',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 222,
+    compilers: [
+      {
+        version: '0.8.9',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 222,
+          },
+        },
       },
-    },
+      {
+        version: '0.8.20',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 222,
+          },
+        },
+      },
+    ],
   },
   zksolc: {
     version: '1.3.16',
@@ -75,6 +88,12 @@ export default {
   contractSizer: {
     alphaSort: true,
     runOnCompile: true,
+  },
+  paths: {
+    sources: "./contracts",
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts"
   },
   networks: {
     livenet: { url, accounts: [privateKey], zksync, ethNetwork, verifyURL },
