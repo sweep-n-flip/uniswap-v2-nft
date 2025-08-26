@@ -3,25 +3,25 @@ import { deployContract, initialize, verifyContract } from './library';
 async function main(): Promise<void> {
   const { chainId, FROM } = await initialize();
   
-  console.log('=== DEPLOY MOCKDROP NFT ===');
+  console.log('=== DEPLOY GenesisHLOgs NFT ===');
   console.log('Chain ID:', chainId);
   console.log('Deployer:', FROM);
   console.log('Network: Hyperliquid');
   
   try {
     console.log('\n🚀 Starting deployment...');
-    const nftAddress = await deployContract('Mockdrop');
+    const nftAddress = await deployContract('GenesisHLOgs');
     
     console.log('\n✅ Deployment successful!');
     console.log('📍 Contract Address:', nftAddress);
-    console.log('📱 Contract Name: Mockdrop');
-    console.log('🔖 Symbol: MOCK');
+    console.log('📱 Contract Name: GenesisHLOgs');
+    console.log('🔖 Symbol: GHLOG');
     console.log('👤 Deployer:', FROM);
     
     // Verify contract
     console.log('\n🔍 Verifying contract...');
     try {
-      const verified = await verifyContract(nftAddress, 'contracts/tokens/Mockdrop.sol:Mockdrop');
+      const verified = await verifyContract(nftAddress, 'contracts/tokens/GenesisHLOgs.sol:GenesisHLOgs');
       if (verified) {
         console.log('✅ Contract verification successful!');
       } else {

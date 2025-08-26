@@ -1,0 +1,9 @@
+{
+  "name": "Genesis HL-OGs",
+  "description": "Collectible cards to celebrate the launch of Sweep n' Flip on Hyperliquid.",
+  "image": "https://bafybeialsxqvna5fqc43epcllw4l7ltt7yvzysuk2efdeczv3ekaqeughe.ipfs.w3s.link/GenesisHLOgs-icon.png",
+  "featured_image": "https://bafybeicyrzfnlmqeislmfzkla4yxmcxch6aad6xthtghhlqafkvhybgyta.ipfs.w3s.link/GenesisHLOgs.jpg",
+  "external_link": "https://sweepnflip.io/",
+  "seller_fee_basis_points": 500,
+  "fee_recipient": "0x1b294Cc80c8B4B6e4Af7Dd61589f6a9d7138DCD3"
+}
